@@ -41,3 +41,4 @@ DEVELOPERS
 
 Marina Vega Fernández 
 Jorge Arias Tosar
+Jesus Alonso Garcia
