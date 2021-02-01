@@ -40,3 +40,4 @@ You should be able to access the application in [http://localhost:3000](http://l
 DEVELOPERS 
 
 Marina Vega Fernández 
+Jorge Arias Tosar
