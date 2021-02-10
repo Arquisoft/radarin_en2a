@@ -1,19 +1,32 @@
 [[section-architecture-constraints]]
 == Architecture Constraints
 
+=== Technical Constraints
+[options="header",cols="1,2"]
+|===
+|Constraint|Explanation
+| Solid | The application must follow the link:https://github.com/solid/solid-spec[Solid specifications] and make use of Solid pods, without storing data in a centralized way.
+| Docker | The system will be deployed from docker containers.
+| Heroku | The system will be also deployed in a cloud data-storage service called Heroku.
+| Tests | Unit tests, acceptance tests and load tests will be implemented a run automatically in a continuous integration server.
+|===
 
-[role="arc42help"]
-****
-.Contents
-Any requirement that constrains software architects in their freedom of design and implementation decisions or decision about the development process. These constraints sometimes go beyond individual systems and are valid for whole organizations and companies.
+=== Organizational Constraints
 
-.Motivation
-Architects should know exactly where they are free in their design decisions and where they must adhere to constraints.
-Constraints must always be dealt with; they may be negotiable, though.
+[options="header",cols="1,2"]
+|===
+|Constraint|Explanation
+| Experience | The team members have almost no experience with some of the technologies used in this project, so that is an important constraint.
+| Development time | There is a short development time for a "finished" version of this application due to the duration of the course.
+| Team coordination | Although every team member should have experience in working as a team from other courses, coordination between the members will be key in the project development. 
+| Non-presentiality | Due to the current circunstances we will not be able to work face-to-face with the rest of the team, so that could be an additional difficulty. 
+|===
+=== Conventions
 
-.Form
-Simple tables of constraints with explanations.
-If needed you can subdivide them into
-technical constraints, organizational and political constraints and
-conventions (e.g. programming or versioning guidelines, documentation or naming conventions)
-****
+[options="header",cols="1,2"]
+|===
+|Constraint|Explanation
+|  Documentation | This project will be documented following the AsciiDoc format and the arc42 templates. 
+|  Design | This application should be easy to use for new users, so the user interface must be intuitive. For that, we will follow the current standards for font sizes, icons, colors and general design.
+|  W3C Standards | As said in the Solid specifications, the architecture of this project must fulfil as many web standards as possible.
+|===
