@@ -1,11 +1,12 @@
 [[section-introduction-and-goals]]
 == Introduction and Goals
 
-The aim of this system is to create an application that facilitates meeting between friends using new technologies. It uses the mobile phone location of the users willing to activate it and will allow others users, their friends to know when they are near them. 
+The aim of this system is to create an application that facilitates meetings between friends using new technologies. It uses the mobile phone location of the users willing to activate it and allows them to connect other users, their friends. 
 
-The application will allow to notify a user when there is some friend nearby so they can get in contact.
+The application will allow to notify a user when there is some friend nearby so they can get in touch.
+The user will be able to be notified when one of his friends is nearby, so they can get in touch.
 
-The system will be compatible with a SOLID project and it will not store users' personal information in a centralized way, but will ask for permission to get to that information using users' pods.
+The system will be decentralized, compatible with a SOLID project and it will not store users' personal information in a centralized way, but will ask for permission to get to that information using users' pods.
 
 The system will only store locations and timestamps in which those locations happen
 
@@ -17,6 +18,7 @@ Describes the relevant requirements and the driving forces that software archite
 * quality goals for the architecture
 * relevant stakeholders and their expectations
 ****
+
 
 === Requirements Overview
 
@@ -56,6 +58,15 @@ If you as an architect do not know how the quality of your work will be judged â
 A table with quality goals and concrete scenarios, ordered by priorities
 ****
 
+[options="header",cols="1,2,2"]
+|===
+|Priority|Quality goal|Motivations
+|P01 |Decentralization | Avoids security issues since users have their data in their servers. 
+|P02| Usability | The application has to be understandable and easy to use to users with different levels of IT knowledge
+|P03| Performance | The application has to work in a fluent way
+|P04| Clean code | Code should be easy to understand and easy to change
+|P04| Testability | The system should be prepared for testing puposes.
+
 === Stakeholders
 
 [role="arc42help"]
@@ -80,7 +91,8 @@ Table with role names, person names, and their expectations with respect to the 
 
 [options="header",cols="1,2,2"]
 |===
-|Role/Name|Contact|Expectations
-| _<Role-1>_ | _<Contact-1>_ | _<Expectation-1>_
-| _<Role-2>_ | _<Contact-2>_ | _<Expectation-2>_
+|Role/Name|Description|Expectations
+|_Professor_ |In charge of supervising and evaluationg the project | Surpervises studentÂ´s work and provides guidance
+|_Users_ | The people who will use the application | They would expect a usable producto. An application than meets the expected requierements
+| _Team_ | The software developers of this application | They expect to learn about SOLID and the new proposed frameworks and technologies in order to display the best product possible. 
 |===
