@@ -1,6 +1,14 @@
 [[section-introduction-and-goals]]
 == Introduction and Goals
 
+The aim of this system is to create an application that facilitates meeting between friends using new technologies. It uses the mobile phone location of the users willing to activate it and will allow others users, their friends to know when they are near them. 
+
+The application will allow to notify a user when there is some friend nearby so they can get in contact.
+
+The system will be compatible with a SOLID project and it will not store users' personal information in a centralized way, but will ask for permission to get to that information using users' pods.
+
+The system will only store locations and timestamps in which those locations happen
+
 [role="arc42help"]
 ****
 Describes the relevant requirements and the driving forces that software architects and development team must consider. These include
@@ -14,6 +22,7 @@ Describes the relevant requirements and the driving forces that software archite
 
 [role="arc42help"]
 ****
+
 .Contents
 Short description of the functional requirements, driving forces, extract (or abstract)
 of requirements. Link to (hopefully existing) requirements documents
@@ -29,6 +38,8 @@ If requirements documents exist this overview should refer to these documents.
 
 Keep these excerpts as short as possible. Balance readability of this document with potential redundancy w.r.t to requirements documents.
 ****
+
+The 
 
 === Quality Goals
 
