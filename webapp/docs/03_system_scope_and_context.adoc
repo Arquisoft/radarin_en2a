@@ -1,5 +1,12 @@
 [[section-system-scope-and-context]]
 == System Scope and Context
+.What are the goals of the system?
+The main idea of this project is to create a decentralised application to facilitate meetings between friends by accessing the user's mobile phone location 
+and notifying the user's friens who use Radarin aswell when they are close to each other. The system will use the SOLID technology and pods to let the users communicate 
+between them ins a simple and safe way.
+
+The communication is accomplished throught the users' SOLID pods, which allow the user to have access to its own information and the information other users share with him, 
+which in this case is their location. 
 
 
 [role="arc42help"]
