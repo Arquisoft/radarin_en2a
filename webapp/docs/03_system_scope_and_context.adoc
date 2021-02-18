@@ -30,6 +30,9 @@ Various options:
 
 === Business Context
 
+Due to the requirement that states that the decentralized application must implement SOLID technology, each user of the system will have a POD where its data will be stored.
+ The application will establish a communication with the user’s POD to read/write the required data from it.
+
 [cols="^.^2,^.^3,^.^3"] [cols=3*,options="header"]
 .Application context
 |===
