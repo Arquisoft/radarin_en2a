@@ -37,13 +37,13 @@ Various options:
 |Inputs
 |Outputs
 
-|User 1 
+|User 1 (transmitter)
 |-
 |His location (to Radarin app)
 
 |Radarin app
 |Location from user 1 phone
-|Location to user 2 pod
+|Location to user 2 
 
 |User 2 Pod
 |User 1 location (from Radarin)
@@ -52,28 +52,9 @@ Various options:
 |User 2 (receiver)
 |User 1 location (from Radarin)
 |-
+|===
 
 
-
-[role="arc42help"]
-****
-.Contents
-Specification of *all* communication partners (users, IT-systems, ...) with explanations of domain specific inputs and outputs or interfaces.
-Optionally you can add domain specific formats or communication protocols.
-
-.Motivation
-All stakeholders should understand which data are exchanged with the environment of the system.
-
-.Form
-All kinds of diagrams that show the system as a black box and specify the domain interfaces to communication partners.
-
-Alternatively (or additionally) you can use a table.
-The title of the table is the name of your system, the three columns contain the name of the communication partner, the inputs, and the outputs.
-****
-
-**<Diagram or Table>**
-
-**<optionally: Explanation of external domain interfaces>**
 
 === Technical Context
 
@@ -91,8 +72,7 @@ together with a mapping table showing the relationships between channels and inp
 
 ****
 
-**<Diagram or Table>**
+The system is initially designed to be a web application but it is expected to work on all kinds of devices. The main idea is to build a decentralized application using the solid data pods to store users information safely.
+Other technologies the system will use are the REACT framework, Docker...
 
-**<optionally: Explanation of technical interfaces>**
-
-**<Mapping Input/Output to Channels>**
+**Falta el dibujo**
