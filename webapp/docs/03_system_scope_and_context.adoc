@@ -30,6 +30,31 @@ Various options:
 
 === Business Context
 
+[cols="^.^2,^.^3,^.^3"] [cols=3*,options="header"]
+.Application context
+|===
+|Name
+|Inputs
+|Outputs
+
+|User 1 
+|-
+|His location (to Radarin app)
+
+|Radarin app
+|Location from user 1 phone
+|Location to user 2 pod
+
+|User 2 Pod
+|User 1 location (from Radarin)
+|User 1 location (to user 2 app)
+
+|User 2 (receiver)
+|User 1 location (from Radarin)
+|-
+
+
+
 [role="arc42help"]
 ****
 .Contents
