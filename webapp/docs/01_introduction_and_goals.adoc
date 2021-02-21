@@ -8,7 +8,7 @@ The user will be able to be notified when one of his friends is nearby, so they 
 
 The system will be decentralized, compatible with a SOLID project and it will not store users' personal information in a centralized way, but will ask for permission to get to that information using users' pods.
 
-The system will only store locations and timestamps in which those locations happen
+The system will only store locations and timestamps in which those locations happen.
 
 [role="arc42help"]
 ****
@@ -43,11 +43,11 @@ Keep these excerpts as short as possible. Balance readability of this document w
 
 The requirements for the Radarin application are the following 
 
-*Users should be able to know the ubications of other users who allow it. 
-*Users would be able to accept others as their friends in order to share information. 
-*Users would have the option to share their routes with friends. 
-*Routes' data should be stored in the users' PODs.
-*Notifications on demand would be available.
+* Users should be able to know the ubications of other users who allow it. 
+* Users would be able to accept others as their friends in order to share information. 
+* Users would have the option to share their information with friends. 
+* Users' data should be stored in the users' PODs.
+* Notifications on demand would be available.
 
 
 === Quality Goals
@@ -70,7 +70,7 @@ A table with quality goals and concrete scenarios, ordered by priorities
 |Priority|Quality goal|Motivations
 |P01 |Decentralization | Avoids security issues since users have their data in their servers. 
 |P02| Usability | The application must be understandable and easy to use for users with different levels of IT knowledge.
-|P03| Performance | The application must work in a fluent way.
+|P03| Performance | The application must load each web page in less than 5 seconds.
 |P04| Clean code | Code should be easy to understand and easy to change.
 |P05| Testability | The system should be prepared for testing puposes.
 |===
