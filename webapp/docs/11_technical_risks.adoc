@@ -2,6 +2,15 @@
 == Risks and Technical Debts
 
 
+[options="header"]
+|===
+| Priority         | Risk  | Consequence | Possible Solution
+| 1     | New technologies |  The project requires the usage of a new technologies that are completely new for the developers. No one has ever worked with SOLID or React and some others never used javascript | Initial period of investigation and learning of the needed tools, good division of the tasks
+
+| 2     | Team organization | Working with other people in a team always leads to some problems, specially when no member of the team has ever worked with the others | Frequent meetings allowing a fluent communication, good organization of the tasks.
+|===
+
+
 [role="arc42help"]
 ****
 .Contents

@@ -1,5 +1,12 @@
 [[section-design-decisions]]
-== Design Decisions
+== Design 
+
+.*Constraints*
+* Use SOLID as a technology to make the project decentralized. Supports the librarie React.
+* Use React to desing the user interface.
+
+.*Problems*
+* Decision making related to architecture, model of domian... etc 
 
 
 [role="arc42help"]
