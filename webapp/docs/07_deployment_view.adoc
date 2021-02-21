@@ -62,25 +62,10 @@ Mapping of Building Blocks to Infrastructure::
 _<description of the mapping>_
 
 
-=== Infrastructure Level 2
-
-[role="arc42help"]
-****
-Here you can include the internal structure of (some) infrastructure elements from level 1.
-
-Please copy the structure from level 1 for each selected element.
-****
-
-==== _<Infrastructure Element 1>_
-
-_<diagram + explanation>_
-
-==== _<Infrastructure Element 2>_
-
-_<diagram + explanation>_
-
-...
-
-==== _<Infrastructure Element n>_
-
-_<diagram + explanation>_
+|===
+|Object|Description
+| Solid | Represents the server in which all the SOLID pods are stored
+| Pod | It is the POD of the represented uses. It is a SOLID POd and it will contain the user´s data. 
+| Radarin | The actual application. 
+| User | It represents the user that uses the application
+|===
