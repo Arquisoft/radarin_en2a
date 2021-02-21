@@ -33,4 +33,11 @@ Potentially more columns in case you need translations.
 | Unit test    | Unit testing is a software testing method by which individual units of source code—sets of one or more computer program modules together with associated control data, usage procedures, and operating procedures—are tested to determine whether they are fit for use.
 | Domain layer  | The domain layer or business layer is the part of the program that encodes the real-world business rules that determine how data can be created, stored, and changed.
 | Presentation layer | The presentation layer is used to present data to the application layer (layer 7) in an accurate, well-defined and standardized format.
+| Model View Controller (MVC) a|
+Design pattern based on the separation of concerns, with three interconnected elements:
+
+* Model: manages the data and business logic.
+* View: what the user sees, displays the data from the Model.
+* Controller: receives the user input and sends commands to the Model.
+| Object Oriented Programming (OOP) | Programming paradigm based on objects which can contain data and code.
 |===
