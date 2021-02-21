@@ -33,6 +33,7 @@ zoom into this black box using additional deployment diagrams:
 when your infrastructure is more complex.
 * When your (hardware) stakeholders prefer other kinds of diagrams rather than the deployment diagram, let them use any kind that is able to show nodes and channels of the infrastructure.
 ****
+image::03_System_scope_and_context.png[]
 
 === Infrastructure Level 1
 
