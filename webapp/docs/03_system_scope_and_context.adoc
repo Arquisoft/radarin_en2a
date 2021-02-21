@@ -78,4 +78,4 @@ together with a mapping table showing the relationships between channels and inp
 The system is initially designed to be a web application but it is expected to work on all kinds of devices. The main idea is to build a decentralized application using the solid data pods to store users information safely.
 Other technologies the system will use are the REACT framework, Docker...
 
-**Falta el dibujo**
+image::03_System_scope_and_context.png[]
