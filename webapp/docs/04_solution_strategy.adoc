@@ -22,3 +22,29 @@ Motivate what you have decided and why you decided that way,
 based upon your problem statement, the quality goals and key constraints.
 Refer to details in the following sections.
 ****
+
+=== Solutions
+
+The following table describes the solutions chosen to achieve the quality goals specified in section <<Quality Goals,1.2>>.
+
+[options="header",cols="1,2"]
+|===
+|Quality goal|Solution
+|Decentralization a|
+* https://solidproject.org/[Solid] for storing user data in their own Pods, through the https://github.com/inrupt/solid-client-js[solid-client] library.
+|Usability a|
+* https://react-bootstrap.github.io[React-Bootstrap] with its ready-made styles to give the web app a familiar look for the users.
+* https://github.com/inrupt/solid-ui-react[solid-ui-react] to provide React components to interact with Solid Pods.
+* https://www.openstreetmap.org[OpenStreetMap] for displaying interactive maps, through the https://leafletjs.com[Leaflet] library.
+|Performance a|
+* https://nodejs.org[Node.js] for the server using an asynchronous coding style.
+* https://reactjs.org[React] framework which minimizes UI update operations and provides profiling tools.
+|Clean code a|
+* https://reactnative.dev[React Native] to be able to share code between the web and mobile apps.
+* Model View Controller (MVC) design pattern because the members of the team are experienced with it.
+* React components using classes instead of hooks due to the familiarity of the team with Object Oriented Programming (OOP).
+|Testability a|
+* MVC design with its separation of concerns that facilitates unit testing.
+* https://jestjs.io/[Jest] test runner which integrates well with React through https://testing-library.com/docs/react-testing-library/intro/[React Testing Library].
+|===
+ 
