@@ -30,25 +30,31 @@ There are many notations for describing scenarios, e.g.
 
 ****
 
-=== <Runtime Scenario 1>
+=== Login
 
+For the login, the app asks the user for their Solid Identity Provider of choice.
+Then the user is redirected to the identity provider which handles the authentication.
+Once the user successfully logs in, the identity provider gives the web app the
+session information needed to interact with the user Pod, and redirects back to the app.
 
-* _<insert runtime diagram or textual description of the scenario>_
-* _<insert description of the notable aspects of the interactions between the
-building block instances depicted in this diagram.>_
-
-It is possible to use a sequence diagram:
-
-[plantuml,"Sequence diagram",png]
+[plantuml,"Sequence diagram - Login",png]
 ----
-actor Alice
-actor Bob
-database Pod as "Bob's Pod"
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
-Alice  --> Pod: Store route
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+actor User as U
+participant "Web App" as W
+participant "Solid Identity Provider" as P
+U -> W: Chooses Solid Identity Provider
+activate W
+W -> P: Redirect to the provider login form
+deactivate W
+activate P
+P --> U: Asks for credentials
+activate U
+U -> P: Logs in
+deactivate U
+P --> W: Provides session information
+activate W
+P -> W: Redirects to the web app
+deactivate P
 ----
 === <Runtime Scenario 2>
 
