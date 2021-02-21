@@ -34,7 +34,14 @@ when your infrastructure is more complex.
 * When your (hardware) stakeholders prefer other kinds of diagrams rather than the deployment diagram, let them use any kind that is able to show nodes and channels of the infrastructure.
 ****
 
+As we are working with a decentralized application, our focus is the interaction between the user and the SOLID platform.
+Users can interact withe platform via POD. As mentioned previously, these PODs are unique for each user. 
+
+We will use again the schema used in part 3 to illustrate the deployment view.
+
 === Infrastructure Level 1
+
+image::03_System_scope_and_context.png[]
 
 [role="arc42help"]
 ****
@@ -48,24 +55,15 @@ Describe (usually in a combination of diagrams, tables, and text):
 For multiple environments or alternative deployments please copy that section of arc42 for all relevant environments.
 ****
 
-_**<Overview Diagram>**_
 
-Motivation::
-
-_<explanation in text form>_
-
-Quality and/or Performance Features::
-
-_<explanation in text form>_
-
-Mapping of Building Blocks to Infrastructure::
-_<description of the mapping>_
-
-
+[options="header",cols="1,2"]
 |===
 |Object|Description
-| Solid | Represents the server in which all the SOLID pods are stored
 | Pod | It is the POD of the represented uses. It is a SOLID POd and it will contain the user´s data. 
-| Radarin | The actual application. 
-| User | It represents the user that uses the application
+| User App | Is the Radarin actual application. It recieves and transmits information.
+| User |The two ragdolls represent two different users of the application. They can share their information (in this case location) between them.
 |===
+
+SOLID is not represented in this diagram but it is the platform that stores the users's PODs.
+
+Users can connect themselves to the user app using a mobile phone application or a web application hosted in SOLID as well.
