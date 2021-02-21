@@ -40,4 +40,6 @@ Design pattern based on the separation of concerns, with three interconnected el
 * View: what the user sees, displays the data from the Model.
 * Controller: receives the user input and sends commands to the Model.
 | Object Oriented Programming (OOP) | Programming paradigm based on objects which can contain data and code.
+| Usability | The extent to which a product can be used by specified users to achieve specified goals with effectiveness , efficiency and satisfaction in a specified context of use.
+|Decentralization | The transfer of control of an activity to several separated sources rather than justa a single one
 |===
