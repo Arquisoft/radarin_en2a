@@ -6,7 +6,13 @@
 * Use React to desing the user interface.
 
 .*Problems*
-* Decision making related to architecture, model of domian... etc 
+* Decision making related to architecture, model of domian... etc.
+* Lack of experience of the team regarding the technologies needed to the project.
+
+.*Decisions*
+* Use JavaScript not just because it is a constraint but because its support of SOLID makes the development of the project much more fluid
+* Incorporate the react framework because it is a great and extended way to create graphical user interfaces based in JavaScript.
+* Research the new technologies and features that the team is not used to deal with in order to get familiarized with them.
 
 
 [role="arc42help"]
