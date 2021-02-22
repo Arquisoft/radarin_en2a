@@ -44,7 +44,7 @@ participant "Web App" as W
 participant "Solid Identity Provider" as P
 U -> W: Chooses Solid Identity Provider
 activate W
-W -> P: Redirect to the provider login form
+W -> P: Redirects to the provider login form
 deactivate W
 activate P
 P --> U: Asks for credentials
@@ -56,8 +56,34 @@ activate W
 P -> W: Redirects to the web app
 deactivate P
 ----
-=== <Runtime Scenario 2>
+=== Nearby friends
 
-=== ...
+If the user allows the "nearby friends" notifications, a check will be done periodically which accesses
+their friends list to get their latest location from their Pods. If any friend location is nearby enough,
+a notification will be sent to the user. How often the check is done and which distance is considered
+nearby can be configured by the user.
 
-=== <Runtime Scenario n>
+[plantuml,"Sequence diagram - Nearby friends",png]
+----
+actor "User" as U
+participant "Mobile App" as M
+database "User Pod" as UPod
+database "Friend Pod" as FPod
+
+U -> M: Allows "nearby friends" notifications
+activate M
+loop periodically
+    ...
+    M -> UPod: Requests friend list
+    activate UPod
+    return friend list
+    loop for each friend
+        M -> FPod: Requests latest location
+        activate FPod
+        return latest location
+        opt If latest location is nearby
+            M -> M: Notify user
+        end
+    end
+end
+----
