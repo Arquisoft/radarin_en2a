@@ -45,23 +45,34 @@ A potential (but not mandatory) structure for this section could be:
 
 Note: it might be difficult to assign individual concepts to one specific topic
 on this list.
-
-image:08-Crosscutting-Concepts-Structure-EN.png["Possible topics for crosscutting concepts"]
 ****
+image:08-Crosscutting-Concepts-Structure-EN.png["Possible topics for crosscutting concepts"]
+
 
 
 === Domain model
 
-image:UmlDiagram.png["Example UML Diagram"]
+image:08-Model-diagram.png[" Model Diagram"]
 
 
+=== Domain concepts
 
-=== _<Concept 2>_
+In this domain model we have represented seven different entities. 
 
-_<explanation>_
+* Users can be friends to other users, they can send and recieve messages and they can access to multimedia resources. Users can also share their location and write comments.
+* Locations have Time, Coordinates and Comments. 
+* Multimedia resources can be linked to multimedia resources. 
 
-...
 
-=== _<Concept n>_
+=== User Experience concepts (UX)
+We are going to take into account three aspects of the UX fundamental concepts: 
+* Functionality: We want our application to work in the desired way. Users must be able to share their location with others as well as to store information in their PODs. 
+* User interface. It is important for us that our interface is intuitive, clean and easy to manage. 
+* Usability. Thr system's usability must be effortless. The less attention users have to pay to figure out how the system works, the easier will be for them to accomplish their objectives. 
 
-_<explanation>_
+=== Security and safety
+SOLID enables us to store users' information in a safe way. Users can give Radarin permission to share their information with whom they want. This private information can not be shared otherwirse. 
+
+=== Architecture and design patters. 
+Radarin uses the MVC (Model Controller Architecture). 
+We will use React and SOLID to develop the application. 
