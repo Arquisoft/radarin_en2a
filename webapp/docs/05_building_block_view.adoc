@@ -111,6 +111,8 @@ These are the entities needed in order to have the domain layer well organized.
 | Multimedia resource | Represents geolocalized pictures or multimedia, to enrinch specific locations.
 | Message | Models messages between nearby users so they get in touch.
 | Comment |  Models comments made by users in order to enrich the locations.
+| Time |  Represents a timestamp of the moment when a location is recorded.
+| Geo Coordinate |  Models an specific coordinate of a location in the map.
 |===
 
 ==== Components
