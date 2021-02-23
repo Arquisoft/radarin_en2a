@@ -24,6 +24,8 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import Welcome from './components/Welcome';
+
 class App extends React.Component {
   render() {
     return (
@@ -40,6 +42,7 @@ class App extends React.Component {
               </View>
             )}
             <View style={styles.body}>
+              <Welcome name="ASW students"/>
               <View style={styles.sectionContainer}>
                 <Text style={styles.sectionTitle}>Step One</Text>
                 <Text style={styles.sectionDescription}>
