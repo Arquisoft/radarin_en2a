@@ -33,4 +33,6 @@ https://stackoverflow.com/a/61163091 (Java 14)
 
 ```
 npx react-native run-android
+#or
+npm run android
 ```
