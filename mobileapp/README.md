@@ -1,38 +1,21 @@
 ## The mobileapp
 
+This project was created from the `react-native` CLI.
 ```
 npx react-native init mobileapp
 ```
 
-Run on Android, needs an Android emulator or a device connected.
-For the emulator, download the [Android SDK](https://developer.android.com/studio#downloads) (command-line tools, no white-spaces in path, "C:\AndroidSDK\cmdline-tools\latest").
-Follow
-https://www.decoide.org/react-native/docs/android-setup.html
-https://dev.to/enriquem/android-sdk-without-studio-3idg
+### Android development
+First setup the [Android development environment](docs/android-development.md).
 
-```
-.\sdkmanager.bat "system-images;android-29;default;x86_64" "platforms;android-29" "build-tools;29.0.3" "extras;google;m2repository" "extras;android;m2repository"
-```
-```
-.\avdmanager.bat create avd --name test-avd --package "system-images;android-29;default;x86_64"
-```
-```
-.\emulator.exe -avd test-avd
-```
-https://developer.android.com/studio/run/emulator-acceleration#vm-windows
-my case
-```
-.\sdkmanager.bat "extras;intel;Hardware_Accelerated_Execution_Manager"
-```
-and run the installer in `\extras\intel\Hardware_Accelerated_Execution_Manager`
+Once setup, execute the following to download the npm packages.
 
+```bat
+npm install
 ```
-.\emulator.exe -avd test-avd
-```
-https://stackoverflow.com/a/61163091 (Java 14)
 
-```
-npx react-native run-android
-#or
+And the following will run the application on the Android emulator or on a device if there is one attached via USB.
+
+```bat
 npm run android
 ```
