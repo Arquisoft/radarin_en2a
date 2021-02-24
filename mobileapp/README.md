@@ -11,6 +11,7 @@ First setup the [Android development environment](docs/android-development.md).
 Once setup, execute the following to download the npm packages.
 
 ```bat
+cd mobileapp
 npm install
 ```
 
