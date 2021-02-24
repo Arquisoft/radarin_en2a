@@ -13,7 +13,8 @@ Finally, create an [Android Virtual Device](https://developer.android.com/studio
 
 ## Troubleshooting
 
-- `Android project not found` when running `npm run android`: [Solution](https://reactnativecode.com/android-project-not-found/)
+- `Android project not found` when running `npm run android`: [Delete signing-config.json](https://reactnativecode.com/android-project-not-found/) or [fix its permissions](https://stackoverflow.com/a/56429492)
+
 ```
 error Android project not found. Are you sure this is a React Native project? If your Android files are located in a non-standard location (e.g. not inside 'android' folder), consider setting `project.android.sourceDir` option to point to a new location.
 ```
