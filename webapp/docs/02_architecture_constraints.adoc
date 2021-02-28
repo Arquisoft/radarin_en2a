@@ -7,7 +7,7 @@
 |Constraint|Explanation
 | Solid | The application must follow the link:https://github.com/solid/solid-spec[Solid specifications] and make use of Solid pods, without storing data in a centralized way.
 | Docker | The system will be deployed from docker containers.
-| Tests | Unit tests, acceptance tests and load tests will be implemented a run automatically in a continuous integration server.
+| Continuous integration server | Unit tests, acceptance tests and load tests will be implemented a run automatically in a continuous integration server.
 |===
 
 === Organizational Constraints
