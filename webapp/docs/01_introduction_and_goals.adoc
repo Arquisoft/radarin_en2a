@@ -68,7 +68,7 @@ A table with quality goals and concrete scenarios, ordered by priorities
 [options="header",cols="1,2,2"]
 |===
 |Priority|Quality goal|Motivations
-|P01 |Decentralization | Avoids security issues since users have their data in their servers. 
+|P01 |Decentralization | Avoids security issues. We reach this goal by storing information in SOLID pods. 
 |P02| Usability | The application must be understandable and easy to use for users with different levels of IT knowledge.
 |P03| Performance | The application must load each web page in less than 5 seconds.
 |P04| Clean code | Code should be easy to understand and easy to change.
@@ -103,4 +103,5 @@ Table with role names, person names, and their expectations with respect to the 
 |_Professor_ |In charge of supervising and evaluating the project | Surpervises student´s work and provides guidance
 |_Users_ | The people who will use the application | They would expect a usable producto. An application than meets the expected requierements
 | _Team_ | The software developers of this application | They expect to learn about SOLID and the new proposed frameworks and technologies in order to display the best product possible. 
+| _Project sponsor_ | Inrupt/Empathy | They encourage us to participate in the SOLID challenge. 
 |===
