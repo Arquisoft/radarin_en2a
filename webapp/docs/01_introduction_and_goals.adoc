@@ -103,5 +103,5 @@ Table with role names, person names, and their expectations with respect to the 
 |_Professor_ |In charge of supervising and evaluating the project | Surpervises student´s work and provides guidance
 |_Users_ | The people who will use the application | They would expect a usable producto. An application than meets the expected requierements
 | _Team_ | The software developers of this application | They expect to learn about SOLID and the new proposed frameworks and technologies in order to display the best product possible. 
-|SOLID creators/inrupt | They aim us to use SOLID to achieve their decentralization objective.
+| _Project sponsor_ | Inrupt/Empathy | They encourage us to participate in the SOLID challenge. 
 |===
