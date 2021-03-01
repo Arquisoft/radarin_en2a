@@ -41,7 +41,7 @@ We will use again the schema used in part 3 to illustrate the deployment view.
 
 === Infrastructure Level 1
 
-image::03_System_scope_and_context.png[]
+image::07_deployment_view.jpg[]
 
 [role="arc42help"]
 ****
@@ -59,11 +59,11 @@ For multiple environments or alternative deployments please copy that section of
 [options="header",cols="1,2"]
 |===
 |Object|Description
-| Pod | It is the POD of the represented uses. It is a SOLID POd and it will contain the user´s data. 
-| User App | Is the Radarin actual application. It recieves and transmits information.
-| User |The two ragdolls represent two different users of the application. They can share their information (in this case location) between them.
+
+| _Users' device_ | The hardware which the users use to connect to our application. Since Radarin can be accessed from a Web browser or from a mobile app, one of the devices could be a mobile phone or a tablet. 
+| _Web browser_ |Web browser to enter the application. 
+|_Mobile application_ | App to enter the application.
+|_SOLID_| The SOLID server where are located users' PODS.
+| _PODs_ |Represent one POD per user. They will contain the users' data. 
 |===
 
-SOLID is not represented in this diagram but it is the platform that stores the users's PODs.
-
-Users can connect themselves to the user app using a mobile phone application or a web application hosted in SOLID as well.
