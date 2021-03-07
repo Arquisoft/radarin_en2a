@@ -3,7 +3,6 @@ import { SessionProvider} from "@inrupt/solid-ui-react";
 import './App.css';
 import logo from './logo.svg';
 import Welcome from './components/Welcome';
-import EmailForm from "./components/EmailForm";
 import LoginForm from "./components/LoginForm";
 import UserList from "./components/UserList";
 import 'bootstrap/dist/css/bootstrap.min.css';
