@@ -30,7 +30,7 @@ class App extends React.Component{
             <LoginForm/>
             <UserList users={this.state.users}/>
             <a className="App-link"
-              href="https://github.com/pglez82/radarin_0"
+              href="https://github.com/Arquisoft/radarin_en2a"
               target="_blank"
               rel="noopener noreferrer">Source code</a>
           </div>
