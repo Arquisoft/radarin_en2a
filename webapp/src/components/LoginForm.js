@@ -8,7 +8,7 @@ class LoginForm extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {idp: '', currentUrl: "https://localhost:3000"}
+        this.state = {idp: "https://inrupt.net", currentUrl: "https://localhost:3000"}
     }
 
     componentDidMount(){
