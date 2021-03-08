@@ -7,7 +7,8 @@ defineFeature(feature, test => {
     await global.page.goto('http://localhost:3000')
   })
 
-  test('The user is not registered in the site', ({given,when,then}) => {
+  // skipped because we no longer use EmailForm but LoginForm instead
+  test.skip('The user is not registered in the site', ({given,when,then}) => {
     
     let email;
     let username;
