@@ -13,8 +13,8 @@ async function getAll() {
  * Adds a new location for a user with the specified latitude and longitude.
  * @returns the new Location; or null if the user does not exist.
  */
-async function add(userEmail, latitude, longitude) {
-    const user = await UsersService.findByEmail(userEmail)
+async function add(userWebId, latitude, longitude) {
+    const user = await UsersService.findByWebId(userWebId)
 
     if (user != null) {
         const newLocation = new Location({

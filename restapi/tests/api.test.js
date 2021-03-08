@@ -38,12 +38,10 @@ describe('user ', () => {
      * Tests that a user can be created through the productService without throwing any errors.
      */
     it('can be created correctly', async () => {
-        username = 'Pablo'
-        email = 'pablo@uniovi.es'
-        const response = await request(app).post('/api/users/add').send({name: username,email: email}).set('Accept', 'application/json')
+        webId = 'https://uo269911.inrupt.net/profile/card#me'
+        const response = await request(app).post('/api/users/add').send({webId: webId}).set('Accept', 'application/json')
         expect(response.statusCode).toBe(200);
-        expect(response.body.name).toBe(username);
-        expect(response.body.email).toBe(email);
+        expect(response.body.webId).toBe(webId);
     });
 });
 
@@ -60,10 +58,10 @@ describe('locations', () => {
      * Tests that a location can be added without throwing any errors.
      */
     it('can be added', async () => {
-        const user = { name: "Test", email: "test@email.com" }
+        const user = { webId: "https://uo269911.inrupt.net/profile/card#me" }
         await request(app).post('/api/users/add').send(user).set('Accept', 'application/json')
 
-        const oviedo = { userEmail: user.email, latitude: 43.36196825817341, longitude: -5.849390063878794 }
+        const oviedo = { userWebId: user.webId, latitude: 43.36196825817341, longitude: -5.849390063878794 }
         const minTime = new Date()
 
         const response = await request(app).post('/api/locations/add').send(oviedo).set('Accept', 'application/json')
@@ -77,11 +75,11 @@ describe('locations', () => {
     });
 
     it('can be added and listed', async () => {
-        const user = { name: "Test", email: "test@email.com" }
+        const user = { webId: "https://uo269911.inrupt.net/profile/card#me" }
         await request(app).post('/api/users/add').send(user).set('Accept', 'application/json')
 
-        const oviedo = { userEmail: user.email, latitude: 43.36196825817341, longitude: -5.849390063878794 }
-        const gijon = { userEmail: user.email, latitude: 43.53164223089106, longitude: -5.66129125890542 }
+        const oviedo = { userWebId: user.webId, latitude: 43.36196825817341, longitude: -5.849390063878794 }
+        const gijon = { userWebId: user.webId, latitude: 43.53164223089106, longitude: -5.66129125890542 }
 
         const oviedoResponse = await request(app).post('/api/locations/add').send(oviedo).set('Accept', 'application/json')
         const gijonResponse = await request(app).post('/api/locations/add').send(gijon).set('Accept', 'application/json')
@@ -103,7 +101,7 @@ describe('locations', () => {
     });
 
     it('cannot be added to non-existing user', async () => {
-        const oviedo = { userEmail: "idontexist@email.com", latitude: 43.36196825817341, longitude: -5.849390063878794 }
+        const oviedo = { webId: "https://idontexist.inrupt.net/profile/card#me", latitude: 43.36196825817341, longitude: -5.849390063878794 }
 
         const response = await request(app).post('/api/locations/add').send(oviedo).set('Accept', 'application/json')
 

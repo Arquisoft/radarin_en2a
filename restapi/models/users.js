@@ -2,8 +2,7 @@ const mongoose = require("mongoose")
 
 
 const schema = mongoose.Schema({
-    name: String,
-    email: String,
+    webId: String,
     locations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Location' }],
 })
 

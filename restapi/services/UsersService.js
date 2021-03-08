@@ -4,8 +4,8 @@ async function getAll() {
     return await User.find({}).sort('-_id') //Inverse order
 }
 
-async function findByEmail(email) {
-    return await User.findOne({ email: email })
+async function findByWebId(webId) {
+    return await User.findOne({ webId: webId })
 }
 
 async function addLocationToUser(userId, locationId) {
@@ -17,6 +17,6 @@ async function addLocationToUser(userId, locationId) {
 
 module.exports = {
     getAll,
-    findByEmail,
+    findByWebId,
     addLocationToUser,
 }
