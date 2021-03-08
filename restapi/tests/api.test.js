@@ -46,3 +46,47 @@ describe('user ', () => {
         expect(response.body.email).toBe(email);
     });
 });
+
+describe('locations', () => {
+    /**
+     * Test that we can list all locations without any error.
+     */
+    it('can be listed',async () => {
+        const response = await request(app).get("/api/locations/list");
+        expect(response.statusCode).toBe(200);
+    });
+
+    /**
+     * Tests that a location can be added without throwing any errors.
+     */
+    it('can be added', async () => {
+        const oviedo = { latitude: 43.36196825817341, longitude: -5.849390063878794 }
+        const minTime = new Date()
+
+        const response = await request(app).post('/api/locations/add').send(oviedo).set('Accept', 'application/json')
+        
+        const maxTime = new Date()
+        expect(response.statusCode).toBe(200);
+        expect(response.body.latitude).toBe(oviedo.latitude);
+        expect(response.body.longitude).toBe(oviedo.longitude);
+        expect(Date.parse(response.body.time)).toBeGreaterThanOrEqual(minTime.getTime())
+        expect(Date.parse(response.body.time)).toBeLessThan(maxTime.getTime());
+    });
+
+    it('can be added and listed', async () => {
+        const oviedo = { latitude: 43.36196825817341, longitude: -5.849390063878794 }
+        const gijon = { latitude: 43.53164223089106, longitude: -5.66129125890542 }
+
+        const oviedoResponse = await request(app).post('/api/locations/add').send(oviedo).set('Accept', 'application/json')
+        const gijonResponse = await request(app).post('/api/locations/add').send(gijon).set('Accept', 'application/json')
+        const listResponse = await request(app).get('/api/locations/list')
+
+        expect(oviedoResponse.statusCode).toBe(200);
+        expect(gijonResponse.statusCode).toBe(200);
+        expect(listResponse.statusCode).toBe(200);
+        expect(listResponse.body[0].latitude).toBe(gijon.latitude);
+        expect(listResponse.body[0].longitude).toBe(gijon.longitude);
+        expect(listResponse.body[1].latitude).toBe(oviedo.latitude);
+        expect(listResponse.body[1].longitude).toBe(oviedo.longitude);
+    });
+});

@@ -1,5 +1,6 @@
 const express = require("express")
 const User = require("./models/users")
+const LocationsService = require("./services/LocationsService")
 const router = express.Router()
 
 // Get all users
@@ -24,6 +25,18 @@ router.post("/users/add", async (req, res) => {
         await user.save()
         res.send(user)
     }
+})
+
+router.get("/locations/list", async (req, res) => {
+    res.send(await LocationsService.getAll())
+})
+
+router.post("/locations/add", async (req, res) => {
+    const latitude = req.body.latitude;
+    const longitude = req.body.longitude;
+
+    const newLocation = await LocationsService.add(latitude, longitude)
+    res.send(newLocation)
 })
 
 module.exports = router
