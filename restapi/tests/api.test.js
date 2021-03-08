@@ -60,7 +60,10 @@ describe('locations', () => {
      * Tests that a location can be added without throwing any errors.
      */
     it('can be added', async () => {
-        const oviedo = { latitude: 43.36196825817341, longitude: -5.849390063878794 }
+        const user = { name: "Test", email: "test@email.com" }
+        await request(app).post('/api/users/add').send(user).set('Accept', 'application/json')
+
+        const oviedo = { userEmail: user.email, latitude: 43.36196825817341, longitude: -5.849390063878794 }
         const minTime = new Date()
 
         const response = await request(app).post('/api/locations/add').send(oviedo).set('Accept', 'application/json')
@@ -74,13 +77,17 @@ describe('locations', () => {
     });
 
     it('can be added and listed', async () => {
-        const oviedo = { latitude: 43.36196825817341, longitude: -5.849390063878794 }
-        const gijon = { latitude: 43.53164223089106, longitude: -5.66129125890542 }
+        const user = { name: "Test", email: "test@email.com" }
+        await request(app).post('/api/users/add').send(user).set('Accept', 'application/json')
+
+        const oviedo = { userEmail: user.email, latitude: 43.36196825817341, longitude: -5.849390063878794 }
+        const gijon = { userEmail: user.email, latitude: 43.53164223089106, longitude: -5.66129125890542 }
 
         const oviedoResponse = await request(app).post('/api/locations/add').send(oviedo).set('Accept', 'application/json')
         const gijonResponse = await request(app).post('/api/locations/add').send(gijon).set('Accept', 'application/json')
         const listResponse = await request(app).get('/api/locations/list')
 
+        // check that the locations list returns all the locations
         expect(oviedoResponse.statusCode).toBe(200);
         expect(gijonResponse.statusCode).toBe(200);
         expect(listResponse.statusCode).toBe(200);
@@ -88,5 +95,19 @@ describe('locations', () => {
         expect(listResponse.body[0].longitude).toBe(gijon.longitude);
         expect(listResponse.body[1].latitude).toBe(oviedo.latitude);
         expect(listResponse.body[1].longitude).toBe(oviedo.longitude);
+
+        // check that the user contains the references to the locations
+        const userListResponse = await request(app).get("/api/users/list");
+        expect(userListResponse.body[0].locations).toContain(listResponse.body[0]._id);
+        expect(userListResponse.body[0].locations).toContain(listResponse.body[1]._id);
+    });
+
+    it('cannot be added to non-existing user', async () => {
+        const oviedo = { userEmail: "idontexist@email.com", latitude: 43.36196825817341, longitude: -5.849390063878794 }
+
+        const response = await request(app).post('/api/locations/add').send(oviedo).set('Accept', 'application/json')
+
+        expect(response.statusCode).toBe(404);
+        expect(response.error).toBeDefined();
     });
 });

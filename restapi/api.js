@@ -1,12 +1,12 @@
 const express = require("express")
 const User = require("./models/users")
 const LocationsService = require("./services/LocationsService")
+const UsersService = require("./services/UsersService")
 const router = express.Router()
 
 // Get all users
 router.get("/users/list", async (req, res) => {
-    const users = await User.find({}).sort('-_id') //Inverse order
-	res.send(users)
+	res.send(await UsersService.getAll())
 })
 
 //register a new user
@@ -32,11 +32,16 @@ router.get("/locations/list", async (req, res) => {
 })
 
 router.post("/locations/add", async (req, res) => {
+    const userEmail = req.body.userEmail;
     const latitude = req.body.latitude;
     const longitude = req.body.longitude;
 
-    const newLocation = await LocationsService.add(latitude, longitude)
-    res.send(newLocation)
+    const newLocation = await LocationsService.add(userEmail, latitude, longitude)
+    if (newLocation == null) {
+        res.status(404).send({error: "User does not exist"})
+    } else {
+        res.send(newLocation)
+    }
 })
 
 module.exports = router
