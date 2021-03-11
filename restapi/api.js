@@ -14,7 +14,7 @@ router.post("/users/add", async (req, res) => {
     let webId = req.body.webId;
     let user = await User.findOne({ webId: webId })
     if (user)
-        res.send({error:"Error: This user is already registered"})
+        res.status(409).send({error:"Error: This user is already registered"})
     else{
         user = new User({
             webId: webId,

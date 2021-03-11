@@ -8,7 +8,8 @@
     "start": "react-native start",
     "test": "jest --runInBand",
     "lint": "eslint .",
-    "preinstall": "npm pack ../restapi/client"
+    "preinstall": "npm pack ../restapi/client",
+    "update:restapi": "npm pack ../restapi/client && npm install restapi-client-0.1.0.tgz && react-native start --reset-cache"
   },
   "dependencies": {
     "react": "16.13.1",
