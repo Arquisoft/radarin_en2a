@@ -6,7 +6,7 @@ import Welcome from './components/Welcome';
 import LoginForm from "./components/LoginForm";
 import UserList from "./components/UserList";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { addUser, getUsers } from './api/api'
+import { addUser, getUsers } from 'restapi-client';
 import Button from "react-bootstrap/Button";
 
 class App extends React.Component{

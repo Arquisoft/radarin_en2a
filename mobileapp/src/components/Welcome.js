@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
+import { getUsers } from 'restapi-client';
 
 function Welcome(props) {
   return (
@@ -10,8 +11,9 @@ function Welcome(props) {
   );
 }
 
-function onButtonPress() {
-  alert("Hello");
+async function onButtonPress() {
+  const users = await getUsers();
+  alert(JSON.stringify(users));
 }
 
 const styles = StyleSheet.create({

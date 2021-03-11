@@ -1,7 +1,7 @@
 import React from 'react';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import {addUser,getUsers} from '../api/api'
+import {addUser,getUsers} from 'restapi-client';
 
 class EmailForm extends React.Component{
   constructor(props) {
