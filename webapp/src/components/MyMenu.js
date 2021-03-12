@@ -19,29 +19,29 @@ class MyMenu extends React.Component {
           }}
           items={[
             {
-              title: 'Amigos',
+              title: 'Friends',
               itemId: '/dashboard',
               // you can use your own custom Icon component as well
               // icon is optional
               elemBefore: () => <Icon name="users" />,
             },
             {
-              title: 'Comentarios',
+              title: 'Comments',
               itemId: '/management',
               elemBefore: () => <Icon name="message-circle" />,
               subNav: [
                 {
-                  title: 'Ejemplo',
+                  title: 'Example',
                   itemId: '/management/projects',
                 },
                 {
-                  title: 'Ejemplo',
+                  title: 'Example',
                   itemId: '/management/members',
                 },
               ],
             },
             {
-              title: 'Notificaciones',
+              title: 'Alerts',
               itemId: '/another',
               elemBefore: () => <Icon name="bell" />,
               subNav: [
