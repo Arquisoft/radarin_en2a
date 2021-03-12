@@ -2,8 +2,8 @@ const mongoose = require("mongoose")
 
 
 const schema = mongoose.Schema({
-    name: String,
-    email: String
+    webId: String,  // https://solidproject.org/faqs#what-is-a-webid
+    locations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Location' }],
 })
 
 module.exports = mongoose.model("User", schema)

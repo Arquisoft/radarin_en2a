@@ -3,7 +3,7 @@ import { render, fireEvent, getByText } from "@testing-library/react";
 import UserList from "./UserList";
 
 test('check that the list of users renders propertly', async () => {
-    const userList = [{name: 'Pablo', email: 'gonzalezgpablo@uniovi.es' }];
+    const userList = [{webId: 'https://fulano.pod.provider/profile/card#me' }];
     const {getByText} = render(<UserList users={userList}/>);
-    expect(getByText(userList[0].name +' ('+userList[0].email+')')).toBeInTheDocument();
+    expect(getByText('Fetching data...')).toBeInTheDocument();
   });

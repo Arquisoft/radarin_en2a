@@ -7,11 +7,14 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest --runInBand",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "preinstall": "npm pack ../restapi/client",
+    "update:restapi": "npm pack ../restapi/client && npm install restapi-client-0.1.0.tgz && react-native start --reset-cache"
   },
   "dependencies": {
     "react": "16.13.1",
-    "react-native": "0.63.4"
+    "react-native": "0.63.4",
+    "restapi-client": "file:restapi-client-0.1.0.tgz"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -24,6 +27,9 @@
     "react-test-renderer": "16.13.1"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(react-native|restapi-client)/)"
+    ]
   }
 }

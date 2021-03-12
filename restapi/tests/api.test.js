@@ -38,11 +38,74 @@ describe('user ', () => {
      * Tests that a user can be created through the productService without throwing any errors.
      */
     it('can be created correctly', async () => {
-        username = 'Pablo'
-        email = 'pablo@uniovi.es'
-        const response = await request(app).post('/api/users/add').send({name: username,email: email}).set('Accept', 'application/json')
+        webId = 'https://uo269911.inrupt.net/profile/card#me'
+        const response = await request(app).post('/api/users/add').send({webId: webId}).set('Accept', 'application/json')
         expect(response.statusCode).toBe(200);
-        expect(response.body.name).toBe(username);
-        expect(response.body.email).toBe(email);
+        expect(response.body.webId).toBe(webId);
+    });
+});
+
+describe('locations', () => {
+    /**
+     * Test that we can list all locations without any error.
+     */
+    it('can be listed',async () => {
+        const response = await request(app).get("/api/locations/list");
+        expect(response.statusCode).toBe(200);
+    });
+
+    /**
+     * Tests that a location can be added without throwing any errors.
+     */
+    it('can be added', async () => {
+        const user = { webId: "https://uo269911.inrupt.net/profile/card#me" }
+        await request(app).post('/api/users/add').send(user).set('Accept', 'application/json')
+
+        const oviedo = { userWebId: user.webId, latitude: 43.36196825817341, longitude: -5.849390063878794 }
+        const minTime = new Date()
+
+        const response = await request(app).post('/api/locations/add').send(oviedo).set('Accept', 'application/json')
+        
+        const maxTime = new Date()
+        expect(response.statusCode).toBe(200);
+        expect(response.body.latitude).toBe(oviedo.latitude);
+        expect(response.body.longitude).toBe(oviedo.longitude);
+        expect(Date.parse(response.body.time)).toBeGreaterThanOrEqual(minTime.getTime())
+        expect(Date.parse(response.body.time)).toBeLessThan(maxTime.getTime());
+    });
+
+    it('can be added and listed', async () => {
+        const user = { webId: "https://uo269911.inrupt.net/profile/card#me" }
+        await request(app).post('/api/users/add').send(user).set('Accept', 'application/json')
+
+        const oviedo = { userWebId: user.webId, latitude: 43.36196825817341, longitude: -5.849390063878794 }
+        const gijon = { userWebId: user.webId, latitude: 43.53164223089106, longitude: -5.66129125890542 }
+
+        const oviedoResponse = await request(app).post('/api/locations/add').send(oviedo).set('Accept', 'application/json')
+        const gijonResponse = await request(app).post('/api/locations/add').send(gijon).set('Accept', 'application/json')
+        const listResponse = await request(app).get('/api/locations/list')
+
+        // check that the locations list returns all the locations
+        expect(oviedoResponse.statusCode).toBe(200);
+        expect(gijonResponse.statusCode).toBe(200);
+        expect(listResponse.statusCode).toBe(200);
+        expect(listResponse.body[0].latitude).toBe(gijon.latitude);
+        expect(listResponse.body[0].longitude).toBe(gijon.longitude);
+        expect(listResponse.body[1].latitude).toBe(oviedo.latitude);
+        expect(listResponse.body[1].longitude).toBe(oviedo.longitude);
+
+        // check that the user contains the references to the locations
+        const userListResponse = await request(app).get("/api/users/list");
+        expect(userListResponse.body[0].locations).toContain(listResponse.body[0]._id);
+        expect(userListResponse.body[0].locations).toContain(listResponse.body[1]._id);
+    });
+
+    it('cannot be added to non-existing user', async () => {
+        const oviedo = { webId: "https://idontexist.inrupt.net/profile/card#me", latitude: 43.36196825817341, longitude: -5.849390063878794 }
+
+        const response = await request(app).post('/api/locations/add').send(oviedo).set('Accept', 'application/json')
+
+        expect(response.statusCode).toBe(404);
+        expect(response.error).toBeDefined();
     });
 });
