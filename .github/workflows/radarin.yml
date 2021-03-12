@@ -41,6 +41,7 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: 12.14.1
+    - run: npm run preinstall # the preinstall step (to pack restapi-client) is not run before `npm ci` on the CI server, so run it explicitly
     - run: npm ci
     - run: npm test
   e2e-tests:
@@ -59,6 +60,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - run: cp -r ./restapi/client ./webapp/restapi-client # the Dockerfile cannot access files outside the `webapp` directory, so copy this local dependency inside
       - uses: akhileshns/heroku-deploy@v3.8.9 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}

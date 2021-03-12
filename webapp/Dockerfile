@@ -1,4 +1,8 @@
 FROM node:12.14.1
+# It is required to copy `restapi/client` to `webapp/restapi-client` before building this Docker image
+# because Docker cannot access files outside the current directory, in this case `webapp`.
+# Copy restapi-client to the path specified in the package.json. 
+COPY ./restapi-client /restapi/client
 COPY . /app
 WORKDIR /app
 #Install the dependencies
