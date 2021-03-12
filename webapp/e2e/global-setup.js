@@ -14,7 +14,7 @@ module.exports = async () => {
         port: 5000,
     },
     {
-        command: 'BROWSER=none npm start',
+        command: process.platform === 'win32' ? 'SET BROWSER=none && npm start' : 'BROWSER=none npm start',
         launchTimeout: 60000,
         debug: true,
         port: 3000
