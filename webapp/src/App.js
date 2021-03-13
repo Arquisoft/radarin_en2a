@@ -8,14 +8,17 @@ import UserList from "./components/UserList";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { addUser, getUsers } from 'restapi-client';
 import Button from "react-bootstrap/Button";
+import Map from "./components/Map";
+import MyHeader from "./components/MyHeader";
+import MyMenu from "./components/MyMenu";
 
-class App extends React.Component{
+class App extends React.Component {
   static contextType = SessionContext;
 
-  constructor(){
+  constructor() {
     super()
     this.state = {
-      users:[],
+      users: [],
       isLoggedIn: false,
     }
   }
@@ -34,7 +37,7 @@ class App extends React.Component{
     try {
       let users = await getUsers()
       this.refreshUsers(users)
-    } catch(error) {
+    } catch (error) {
       console.log("Error fetching user list from restapi. Is it on?")
     }
   }
@@ -50,27 +53,30 @@ class App extends React.Component{
     this.setState({ isLoggedIn: false })
   }
 
-  render(){
-    return(
+  render() {
+    return (
       <SessionProvider sessionId="radarin_en2a">
         <div className="App">
           <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo"/>
-            <Welcome name="ASW students"/>
+            <img src={logo} className="App-logo" alt="logo" />
+            <MyHeader />
           </header>
-          <div className="App-content">
-            {!this.state.isLoggedIn ? 
-                <LoginForm/> :
-                <>
-                  <Welcome name={this.context.session.info.webId}/>
-                  <LogoutButton>
-                    <Button>
-                      Logout
+         
+            {!this.state.isLoggedIn ?
+              <LoginForm  /> :
+          <>
+            <div className="App-menu"><MyMenu /></div>
+
+            <Map />
+            <LogoutButton>
+              <Button>
+                Logout
                     </Button>
-                  </LogoutButton>
-                </>
+            </LogoutButton>
+          </>
             }
-            <UserList users={this.state.users}/>
+             <div className="App-content">
+            <UserList users={this.state.users} />
             <a className="App-link"
               href="https://github.com/Arquisoft/radarin_en2a"
               target="_blank"
