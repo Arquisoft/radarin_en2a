@@ -4,10 +4,6 @@ import 'react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css';
 import Icon from "awesome-react-icons";
 
 class MyMenu extends React.Component {
-  constructor() {
-    super();
-  }
-
   render() {
     return (
       <>
