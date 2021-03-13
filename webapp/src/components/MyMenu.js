@@ -29,27 +29,12 @@ class MyMenu extends React.Component {
               title: 'Comments',
               itemId: '/management',
               elemBefore: () => <Icon name="message-circle" />,
-              subNav: [
-                {
-                  title: 'Example',
-                  itemId: '/management/projects',
-                },
-                {
-                  title: 'Example',
-                  itemId: '/management/members',
-                },
-              ],
+              
             },
             {
               title: 'Alerts',
               itemId: '/another',
               elemBefore: () => <Icon name="bell" />,
-              subNav: [
-                {
-                  title: 'Ejemplo',
-                  itemId: '/management/teams',
-                },
-              ],
             },
           ]}
         />

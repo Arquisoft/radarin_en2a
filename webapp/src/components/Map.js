@@ -11,14 +11,14 @@ class Map extends React.Component {
 
   render() {
     return (
-      <MapContainer height="200" center={[51.505, -0.09]} zoom={10} scrollWheelZoom={true}>
+      <MapContainer height="100" center={[43.36029, -5.84476]} zoom={10} scrollWheelZoom={false}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={[51.505, -0.09]}>
+        <Marker position={[43.36029, -5.84476]}>
           <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
+            Marker
     </Popup>
         </Marker>
       </MapContainer>)
