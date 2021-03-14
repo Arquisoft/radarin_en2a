@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, StyleSheet, Text, View, Platform, PermissionsAndroid, ToastAndroid } from 'react-native';
-import { addLocation, getUsers } from 'restapi-client';
+import { addLocation, getUsers, addUser } from 'restapi-client';
 import geoloc from 'react-native-geolocation-service';
 
 function Welcome(props) {
@@ -22,15 +22,20 @@ async function onButtonPress() {
 
 function getLocation()
 {
-  fetchLocation((lat, long) => {
+  var userPrueba = 'https://uo269911.inrupt.net/profile/card#me';
+  fetchLocation(async (lat, long) => {
     console.log("Latitude is :", lat);
     console.log("Longitude is :", long);
+    await addUser(userPrueba)
+    addLocation(userPrueba, lat, long)
   });
+ 
 }
 
 
 async function fetchLocation(callback) {
 
+ 
   const permission = await hasLocationPermission();
   if (!permission)
   {
@@ -53,6 +58,7 @@ async function fetchLocation(callback) {
     timeout: 20000
   };
   geoloc.getCurrentPosition(success, err, config);
+
 }
 
 
