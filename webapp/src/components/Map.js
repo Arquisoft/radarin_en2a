@@ -1,14 +1,9 @@
 import React from 'react';
-import Leaflet from 'leaflet';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import "../Map.css";
 
 class Map extends React.Component {
-  constructor() {
-    super();
-  }
-
   render() {
     return (
       <MapContainer height="100" center={[43.36029, -5.84476]} zoom={10} scrollWheelZoom={false}>
@@ -19,7 +14,7 @@ class Map extends React.Component {
         <Marker position={[43.36029, -5.84476]}>
           <Popup>
             Marker
-    </Popup>
+          </Popup>
         </Marker>
       </MapContainer>)
   }

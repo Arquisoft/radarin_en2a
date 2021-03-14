@@ -41,7 +41,7 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: 12.14.1
-    - run: npm run preinstall # the preinstall step (to pack restapi-client) is not run before `npm ci` on the CI server, so run it explicitly
+    - run: npm pack ../restapi/client && npm install restapi-client-0.1.0.tgz # need to install it again because the integrity checksum in package-lock.json may be different due to different OS in CI server and local dev machines
     - run: npm ci
     - run: npm test
   e2e-tests:

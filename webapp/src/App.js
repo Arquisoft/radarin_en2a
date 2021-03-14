@@ -2,7 +2,6 @@ import React from 'react';
 import { SessionProvider, SessionContext, LogoutButton } from "@inrupt/solid-ui-react";
 import './App.css';
 import logo from './logo.svg';
-import Welcome from './components/Welcome';
 import LoginForm from "./components/LoginForm";
 import UserList from "./components/UserList";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -64,16 +63,16 @@ class App extends React.Component {
          
             {!this.state.isLoggedIn ?
               <LoginForm  /> :
-          <>
-            <div className="App-menu"><MyMenu /></div>
+              <>
+                <div className="App-menu"><MyMenu /></div>
 
-            <Map />
-            <LogoutButton>
-              <Button>
-                Logout
-                    </Button>
-            </LogoutButton>
-          </>
+                <Map />
+                <LogoutButton>
+                  <Button>
+                    Logout
+                  </Button>
+                </LogoutButton>
+              </>
             }
              <div className="App-content">
             <UserList users={this.state.users} />
