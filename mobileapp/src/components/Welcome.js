@@ -26,7 +26,7 @@ function getLocation()
   fetchLocation(async (lat, long) => {
     console.log("Latitude is :", lat);
     console.log("Longitude is :", long);
-    await addUser(userPrueba)
+    await addUser(userPrueba).catch(()=>{})
     addLocation(userPrueba, lat, long)
   });
  
