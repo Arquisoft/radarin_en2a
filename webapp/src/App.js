@@ -5,7 +5,7 @@ import logo from './logo.svg';
 import LoginForm from "./components/LoginForm";
 import UserList from "./components/UserList";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { addUser, getUsers } from 'restapi-client';
+import { addUser, getUsers, getLocations } from 'restapi-client';
 import Button from "react-bootstrap/Button";
 import Map from "./components/Map";
 import MyHeader from "./components/MyHeader";
@@ -18,6 +18,7 @@ class App extends React.Component {
     super()
     this.state = {
       users: [],
+      locations: [],
       isLoggedIn: false,
     }
   }
@@ -26,6 +27,7 @@ class App extends React.Component {
     this.context.session.onLogin(() => this.onLogin());
     this.context.session.onLogout(() => this.onLogout());
     this.fetchUsers();
+    this.fetchLocations();
   }
 
   refreshUsers(users) {
@@ -38,6 +40,19 @@ class App extends React.Component {
       this.refreshUsers(users)
     } catch (error) {
       console.log("Error fetching user list from restapi. Is it on?")
+    }
+  }
+
+  refreshLocations(locations)   {
+    this.setState({ locations: locations})
+  }
+
+  async fetchLocations()  {
+    try{
+      let locations = await getLocations();
+      this.refreshLocations(locations);
+    }catch(error) {
+      console.log("Error fetching Locations list from restapi. Alonso's fault")
     }
   }
 
@@ -66,7 +81,7 @@ class App extends React.Component {
               <>
                 <div className="App-menu"><MyMenu /></div>
 
-                <Map />
+                <Map locations = {this.state.locations}/>
                 <LogoutButton>
                   <Button>
                     Logout
