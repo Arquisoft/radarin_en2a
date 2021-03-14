@@ -61,7 +61,7 @@ async function fetchLocation(callback) {
   geoloc.getCurrentPosition(success, err, config);
 
   var userPrueba = 'https://uo269911.inrupt.net/profile/card#me';
-  addUser(userPrueba);
+  await addUser(userPrueba);
   addLocation(userPrueba, latit, longit);
 }
 
