@@ -29,8 +29,9 @@
   },
   "jest": {
     "preset": "react-native",
+    "setupFiles": ["./src/setup-tests.js"],
     "transformIgnorePatterns": [
-      "node_modules/(?!(react-native|restapi-client)/)"
+      "node_modules/(?!(react-native|react-native-geolocation-service|restapi-client)/)"
     ]
   }
 }
