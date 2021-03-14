@@ -22,20 +22,20 @@ async function onButtonPress() {
 
 function getLocation()
 {
-  var latit, longit;
+ 
   fetchLocation((lat, long) => {
     console.log("Latitude is :", lat);
     console.log("Longitude is :", long);
     latit = lat;
     longit = long;
   });
-  var userPrueba = 'https://uo269911.inrupt.net/profile/card#me';
-  addUser(userPrueba);
-  addLocation(userPrueba, latit, longit);
+ 
 }
 
 
 async function fetchLocation(callback) {
+
+  var latit, longit;
 
   const permission = await hasLocationPermission();
   if (!permission)
@@ -59,6 +59,10 @@ async function fetchLocation(callback) {
     timeout: 20000
   };
   geoloc.getCurrentPosition(success, err, config);
+
+  var userPrueba = 'https://uo269911.inrupt.net/profile/card#me';
+  addUser(userPrueba);
+  addLocation(userPrueba, latit, longit);
 }
 
 
