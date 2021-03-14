@@ -63,19 +63,25 @@ class Map extends React.Component {
       const latitude = this.state.latitude;
       console.log("RENDERING GEOLOC: ", latitude, longitude);
 
+      const icon = new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})
       return (
         <MapContainer height="100" center={[latitude, longitude]} zoom={10} scrollWheelZoom={false}>
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          {
-            <Marker position={[latitude, longitude]} icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})} >
-              <Popup>
-                Marker
+          <Marker position={[latitude, longitude]} icon={icon}>
+            <Popup>
+              You are here
             </Popup>
-            </Marker>
-          }
+          </Marker>
+          {this.props.locations.map(loc => 
+              <Marker position={[loc.latitude, loc.longitude]} icon={icon}>
+                <Popup>
+                  {loc.time}
+                </Popup>
+              </Marker>
+          )}
         </MapContainer>)
     }
     else {
