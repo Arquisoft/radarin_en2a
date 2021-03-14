@@ -1,15 +1,22 @@
 import React from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import "../Map.css";
+import markerIconPng from "leaflet/dist/images/marker-icon.png"
+import {Icon} from 'leaflet'
+
+
 //import { geolocated } from 'react-geolocated';
 //import UserLocation from '../UserLocation';
 
 const DEFAULT_LATITUDE = 45.437781234170174; //43.36029;
 const DEFAUlT_LONGITUDE = 12.323313772328168;//-5.84476;
 
+
+
 class Map extends React.Component {
-  
+
   state = {
     locationReady: false,
     latitude: DEFAULT_LATITUDE,
@@ -17,7 +24,7 @@ class Map extends React.Component {
   }
 
 
-  componentDidMount() {    
+  componentDidMount() {
     this.fetchLocation();
   }
 
@@ -40,19 +47,18 @@ class Map extends React.Component {
       st.longitude = 12.323313772328168;
       this.setState(st);
     };
-    let config = { 
-      enableHighAccuracy: false, 
+    let config = {
+      enableHighAccuracy: false,
       timeout: 20000
     };
     navigator.geolocation.getCurrentPosition(success.bind(this), err.bind(this), config);
   }
 
-  
+
 
   render() {
-    
-    if (this.state.locationReady)
-    {
+
+    if (this.state.locationReady) {
       const longitude = this.state.longitude;
       const latitude = this.state.latitude;
       console.log("RENDERING GEOLOC: ", latitude, longitude);
@@ -64,11 +70,11 @@ class Map extends React.Component {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           {
-          <Marker position={[latitude, longitude]}> 
-            <Popup>
-              Marker
+            <Marker position={[latitude, longitude]} icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})} >
+              <Popup>
+                Marker
             </Popup>
-          </Marker>
+            </Marker>
           }
         </MapContainer>)
     }
