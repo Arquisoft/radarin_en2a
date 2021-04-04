@@ -47,6 +47,29 @@ export async function addLocation(userWebId, latitude, longitude) {
     return await checkResponse(response)
 }
 
+export async function sessionLogin(doRedirect, redirectUrl, oidcIssuer) {
+    doRedirect(getApiEndPoint() + `/session/login?redirectUrl=${redirectUrl}&oidcIssuer=${oidcIssuer}`);
+}
+
+export async function sessionLogout(sessionId) {
+    let response = await fetch(getApiEndPoint() + `/session/logout?sessionId=${sessionId}`)
+    return await checkResponse(response)
+}
+
+export async function sessionInfo(sessionId) {
+    let response = await fetch(getApiEndPoint() + `/session/info?sessionId=${sessionId}`)
+    return await checkResponse(response)
+}
+
+export async function sessionFetch(sessionId, resource) {
+    let url = getApiEndPoint() + `/session/fetch?resource=${resource}`;
+    if (sessionId !== null) {
+        url += `&sessionId=${sessionId}`;
+    }
+
+    return await fetch(url)
+}
+
 /**
  * If the status code is 200 (OK), it returns the response JSON; otherwise, it throws it as an error
  */
