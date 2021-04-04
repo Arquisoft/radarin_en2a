@@ -41,4 +41,6 @@ router.post("/locations/add", async (req, res) => {
     }
 })
 
+require("./controllers/SessionController")(router)
+
 module.exports = router
