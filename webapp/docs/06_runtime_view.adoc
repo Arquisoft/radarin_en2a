@@ -32,29 +32,39 @@ There are many notations for describing scenarios, e.g.
 
 === Login
 
-For the login, the app asks the user for their Solid Identity Provider of choice.
-Then the user is redirected to the identity provider which handles the authentication.
-Once the user successfully logs in, the identity provider gives the web app the
-session information needed to interact with the user Pod, and redirects back to the app.
+For the login, the app shows the login view which asks the user for their Solid Identity Provider of choice.
+Then the app does a login request to the REST API server, which redirects the user to the identity provider
+which handles the authentication.
+Once the user successfully logs in, the identity provider gives the server the session information needed
+to interact with the user Pod, and the server sends the session ID to the web app, which can be used to
+identify the session in later REST API requests. Lastly, the web app shows the main view.
 
 [plantuml,"Sequence diagram - Login",png]
 ----
 actor User as U
 participant "Web App" as W
+participant "REST API Server" as R
 participant "Solid Identity Provider" as P
-U -> W: Chooses Solid Identity Provider
+
 activate W
-W -> P: Redirects to the provider login form
+W -> W: Show Login View
+U -> W: Chooses Solid Identity Provider
+W -> R: Requests login
 deactivate W
+activate R
+R -> P: Redirects to the provider login form
+deactivate R
 activate P
 P --> U: Asks for credentials
 activate U
 U -> P: Logs in
 deactivate U
-P --> W: Provides session information
-activate W
-P -> W: Redirects to the web app
+P --> R: Provides session information
 deactivate P
+activate R
+R --> W: Provides session ID
+activate W
+W -> W: Show Main View
 ----
 === Nearby friends
 
