@@ -14,6 +14,7 @@ import {
   View,
   Text,
   StatusBar,
+  Linking,
 } from 'react-native';
 
 import {
@@ -25,13 +26,13 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import Welcome from './components/Welcome';
+import LoginForm from './components/LoginForm';
+import SessionProvider from './components/session/SessionProvider';
 
-class App extends React.Component {
-
-  
+class App extends React.Component {  
   render() {
     return (
-      <>
+      <SessionProvider>
         <StatusBar barStyle="dark-content" />
         <SafeAreaView>
           <ScrollView
@@ -45,6 +46,7 @@ class App extends React.Component {
             )}
             <View style={styles.body}>
               <Welcome name="ASW students"/>
+              <LoginForm />
               <View style={styles.sectionContainer}>
                 <Text style={styles.sectionTitle}>Step One</Text>
                 <Text style={styles.sectionDescription}>
@@ -74,7 +76,7 @@ class App extends React.Component {
             </View>
           </ScrollView>
         </SafeAreaView>
-      </>
+      </SessionProvider>
     );
   }
 };

@@ -18,6 +18,7 @@ ENV MONGO_URI=$MONGO_URI
 # Bundle app source
 COPY server.js api.js ./
 COPY models ./models
+COPY controllers ./controllers
 COPY services ./services
 
 CMD [ "node", "server.js" ]
