@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button, Linking } from 'react-native';
-import { sessionLogin } from 'restapi-client';
+import { Button } from 'react-native';
+import { SessionContext } from './session/SessionContext';
 
 class LoginForm extends React.Component {
 
@@ -20,16 +20,18 @@ class LoginForm extends React.Component {
 
     render() {
         return (
-            <Button onPress={this.onLogin.bind(this)} title = "Login"/>
+            <SessionContext.Consumer>
+            { context => 
+                context.loginInProgress ?
+                    <Button disabled title = "Logging in..."/> :
+                context.logoutInProgress ?
+                    <Button disabled title = "Logging out..."/> :
+                context.isLoggedIn ?
+                    <Button onPress={() => context.logout()} title = "Logout"/> :
+                    <Button onPress={() => context.login(this.state.idp)} title = "Login"/>
+            }
+            </SessionContext.Consumer>
         )
-    }
-
-    async onLogin() {
-        sessionLogin(
-            url => Linking.openURL(url),
-            "radarinen2a://login",
-            this.state.idp,
-        );
     }
 }
 

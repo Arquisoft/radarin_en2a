@@ -27,24 +27,12 @@ import {
 
 import Welcome from './components/Welcome';
 import LoginForm from './components/LoginForm';
+import SessionProvider from './components/session/SessionProvider';
 
-class App extends React.Component {
-
-  componentDidMount() {
-    Linking.addEventListener("url", ev => {
-      console.log(ev.url);
-
-      const loginPrefix = "radarinen2a://login?sessionId=";
-      if (ev.url.startsWith(loginPrefix)) {
-        const sessionId = ev.url.replace(loginPrefix, "");
-        console.log(sessionId);
-      }
-    })
-  }
-  
+class App extends React.Component {  
   render() {
     return (
-      <>
+      <SessionProvider>
         <StatusBar barStyle="dark-content" />
         <SafeAreaView>
           <ScrollView
@@ -88,7 +76,7 @@ class App extends React.Component {
             </View>
           </ScrollView>
         </SafeAreaView>
-      </>
+      </SessionProvider>
     );
   }
 };
