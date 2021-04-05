@@ -1,20 +1,5 @@
 
 /**
- * Registers a new user.
- * @param {*} webId The webId of the user. See https://solidproject.org/faqs#what-is-a-webid
- * @returns The User model
- * @throws if a user with the specified webid is already registered.
- */
-export async function addUser(webId) {
-    let response = await fetch(getApiEndPoint() + '/users/add', {
-        method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({'webId': webId})
-    })
-    return await checkResponse(response)
-}
-
-/**
  * @returns A list with User models of all registered users.
  */
 export async function getUsers() {
@@ -47,7 +32,11 @@ export async function addLocation(userWebId, latitude, longitude) {
     return await checkResponse(response)
 }
 
-export async function sessionLogin(doRedirect, redirectUrl, oidcIssuer) {
+export async function sessionLogin(doRedirect, redirectUrl, oidcIssuer, isMobile) {
+    let url = getApiEndPoint() + `/session/login?redirectUrl=${redirectUrl}&oidcIssuer=${oidcIssuer}`;
+    if (isMobile) {
+        url += "&mobile";
+    }
     doRedirect(getApiEndPoint() + `/session/login?redirectUrl=${redirectUrl}&oidcIssuer=${oidcIssuer}`);
 }
 

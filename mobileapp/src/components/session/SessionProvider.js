@@ -58,7 +58,8 @@ export default class SessionProvider extends React.Component {
         sessionLogin(
             url => Linking.openURL(url),
             "radarinen2a://login",
-            oidcIssuer
+            oidcIssuer,
+            true
         );
     }
 

@@ -48,7 +48,8 @@ export default class CustomSessionProvider extends React.Component {
         sessionLogin(
             url => window.location = url,
             options.redirectUrl,
-            options.oidcIssuer
+            options.oidcIssuer,
+            false
         );
     }
 

@@ -9,21 +9,6 @@ router.get("/users/list", async (req, res) => {
 	res.send(await UsersService.getAll())
 })
 
-//register a new user
-router.post("/users/add", async (req, res) => {
-    let webId = req.body.webId;
-    let user = await User.findOne({ webId: webId })
-    if (user)
-        res.status(409).send({error:"Error: This user is already registered"})
-    else{
-        user = new User({
-            webId: webId,
-        })
-        await user.save()
-        res.send(user)
-    }
-})
-
 router.get("/locations/list", async (req, res) => {
     res.send(await LocationsService.getAll())
 })

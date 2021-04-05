@@ -1,12 +1,12 @@
 const {
     getSessionFromStorage,
-    Session,
-    getSessionIdFromStorageAll,
+    Session
 } = require("@inrupt/solid-client-authn-node")
+const UsersService = require("../services/UsersService")
 
-const DEFAULT_OIDC_ISSUER = "https://inrupt.net/";
-// This is the endpoint our NodeJS demo app listens on to receive incoming login
-const REDIRECT_BASE_URL = "http://10.0.2.2:5000/api/session/login/redirect";
+// needed for development because inside an Android emulator the machine's localhost is accessed through 10.0.2.2
+const REDIRECT_WEBAPP_BASE_URL = (process.env.REACT_APP_API_URI || 'http://localhost:5000/api') + "/session/login/redirect";
+const REDIRECT_MOBILEAPP_BASE_URL = (process.env.REACT_APP_API_URI || 'http://10.0.2.2:5000/api') + "/session/login/redirect";
 
 module.exports = function(router) {
     router.get("/session/login", async (req, res) => {
@@ -16,7 +16,7 @@ module.exports = function(router) {
 
         // TODO: register new users
         const session = new Session();
-        const redirectUrl = new URL(REDIRECT_BASE_URL);
+        const redirectUrl = new URL(req.query["mobile"] ? REDIRECT_MOBILEAPP_BASE_URL : REDIRECT_WEBAPP_BASE_URL);
         redirectUrl.searchParams.append("sessionId", session.info.sessionId);
         redirectUrl.searchParams.append("redirectUrl", req.query.redirectUrl);
 
@@ -42,10 +42,15 @@ module.exports = function(router) {
         if (session === undefined) {
             res.status(400).send({error: `No session stored for ID ${req.query.sessionId}`})
         } else {
-            await session.handleIncomingRedirect(getRequestFullUrl(req));
+            const info = await session.handleIncomingRedirect(getRequestFullUrl(req));
+
+            // register the user if it is the first time logging in
+            if (info.isLoggedIn && !(await UsersService.isRegistered(info.webId))) {
+                await UsersService.registerUser(info.webId);
+            }
 
             const redirectUrl = new URL(req.query.redirectUrl);
-            redirectUrl.searchParams.append("sessionId", session.info.sessionId);
+            redirectUrl.searchParams.append("sessionId", info.sessionId);
             res.redirect(redirectUrl.href);
         } 
     });
