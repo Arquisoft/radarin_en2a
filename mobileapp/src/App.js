@@ -14,6 +14,7 @@ import {
   View,
   Text,
   StatusBar,
+  Linking,
 } from 'react-native';
 
 import {
@@ -25,9 +26,21 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import Welcome from './components/Welcome';
+import LoginForm from './components/LoginForm';
 
 class App extends React.Component {
 
+  componentDidMount() {
+    Linking.addEventListener("url", ev => {
+      console.log(ev.url);
+
+      const loginPrefix = "radarinen2a://login?sessionId=";
+      if (ev.url.startsWith(loginPrefix)) {
+        const sessionId = ev.url.replace(loginPrefix, "");
+        console.log(sessionId);
+      }
+    })
+  }
   
   render() {
     return (
@@ -45,6 +58,7 @@ class App extends React.Component {
             )}
             <View style={styles.body}>
               <Welcome name="ASW students"/>
+              <LoginForm />
               <View style={styles.sectionContainer}>
                 <Text style={styles.sectionTitle}>Step One</Text>
                 <Text style={styles.sectionDescription}>

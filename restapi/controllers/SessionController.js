@@ -6,7 +6,7 @@ const {
 
 const DEFAULT_OIDC_ISSUER = "https://inrupt.net/";
 // This is the endpoint our NodeJS demo app listens on to receive incoming login
-const REDIRECT_BASE_URL = "http://localhost:5000/api/session/login/redirect";
+const REDIRECT_BASE_URL = "http://10.0.2.2:5000/api/session/login/redirect";
 
 module.exports = function(router) {
     router.get("/session/login", async (req, res) => {
