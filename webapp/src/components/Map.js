@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import "../Map.css";
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
-import {Icon} from 'leaflet'
+import { Icon } from 'leaflet'
 
 
 //import { geolocated } from 'react-geolocated';
@@ -53,7 +53,10 @@ class Map extends React.Component {
     navigator.geolocation.getCurrentPosition(success.bind(this), err.bind(this), config);
   }
 
-
+   submitForm() {
+    var frm = document.getElementsByClassName('form')[0];
+    frm.reset();  // Reset all form data
+ }
 
   render() {
 
@@ -62,7 +65,7 @@ class Map extends React.Component {
       const latitude = this.state.latitude;
       console.log("RENDERING GEOLOC: ", latitude, longitude);
 
-      const icon = new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})
+      const icon = new Icon({ iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41] })
       return (
         <MapContainer height="100" center={[latitude, longitude]} zoom={10} scrollWheelZoom={false}>
           <TileLayer
@@ -70,16 +73,28 @@ class Map extends React.Component {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           <Marker position={[latitude, longitude]} icon={icon}>
-            <Popup>
-              You are here
+            <Popup> 
+              <form onSubmit={this.handleSubmit}>
+                <label>
+                  Comment:
+          <input type="text" className="form" value={this.state.value} onChange={this.handleChange} />
+                </label>
+                
+                <input type="submit" className="form" value="Submit" onclick="submitForm()"/>
+                <label>
+                  Picture:
+          <input type="file" onChange={this.handleChange} accept=".png, .jpg, .jpeg"/>
+          <input type="submit" value="Upload" />
+                </label>
+              </form>
             </Popup>
           </Marker>
-          {this.props.locations.map(loc => 
-              <Marker position={[loc.latitude, loc.longitude]} icon={icon}>
-                <Popup>
-                  {loc.time}
-                </Popup>
-              </Marker>
+          {this.props.locations.map(loc =>
+            <Marker position={[loc.latitude, loc.longitude]} icon={icon} >
+              <Popup>
+                {loc.time}
+              </Popup>
+            </Marker>
           )}
         </MapContainer>)
     }
