@@ -13,6 +13,7 @@ import {
   ScrollView,
   View,
   Text,
+  Image,
   StatusBar,
   Linking,
 } from 'react-native';
@@ -28,13 +29,50 @@ import {
 import Welcome from './components/Welcome';
 import LoginForm from './components/LoginForm';
 import SessionProvider from './components/session/SessionProvider';
+import { SessionContext } from './components/session/SessionContext';
 
-class App extends React.Component {  
+
+class App extends React.Component { 
+
   render() {
     return (
       <SessionProvider>
         <StatusBar barStyle="dark-content" />
         <SafeAreaView>
+
+          <ScrollView contentInsetAdjustmentBehavior="automatic"
+            style={styles.scrollView}>
+            <Header />
+            {global.HermesInternal == null ? null : (
+              <View style={styles.engine}>
+                <Text style={styles.footer}>Engine: Hermes</Text>
+              </View>
+            )}
+            <View style={styles.body}>
+              {/* v====== HERE STARTS THE BODY OF THE APPLICATION ======v */}
+
+              <LoginForm  />
+              
+              <View>
+              <SessionContext.Consumer>
+              { context => 
+                  context.isLoggedIn
+                      ? <Text>Welcome!</Text>
+                      : <View style={styles.engine}>
+                          <Text>RADARIN</Text>
+                          <Image source={require('./logo.svg')} />
+                        </View>
+                    
+              }
+              </SessionContext.Consumer>
+              </View>
+              
+              {/* ^======= HERE ENDS THE BODY OF THE APPLICATION =======^ */}
+            </View>
+          </ScrollView>
+
+
+          {/*
           <ScrollView
             contentInsetAdjustmentBehavior="automatic"
             style={styles.scrollView}>
@@ -45,36 +83,14 @@ class App extends React.Component {
               </View>
             )}
             <View style={styles.body}>
-              <Welcome name="ASW students"/>
+              <Welcome name="to Radarin"/>
               <LoginForm />
-              <View style={styles.sectionContainer}>
-                <Text style={styles.sectionTitle}>Step One</Text>
-                <Text style={styles.sectionDescription}>
-                  Edit <Text style={styles.highlight}>App.js</Text> to change this
-                  screen and then come back to see your edits.
-                </Text>
-              </View>
-              <View style={styles.sectionContainer}>
-                <Text style={styles.sectionTitle}>See Your Changes</Text>
-                <Text style={styles.sectionDescription}>
-                  <ReloadInstructions />
-                </Text>
-              </View>
-              <View style={styles.sectionContainer}>
-                <Text style={styles.sectionTitle}>Debug</Text>
-                <Text style={styles.sectionDescription}>
-                  <DebugInstructions />
-                </Text>
-              </View>
-              <View style={styles.sectionContainer}>
-                <Text style={styles.sectionTitle}>Learn More</Text>
-                <Text style={styles.sectionDescription}>
-                  Read the docs to discover what to do next:
-                </Text>
-              </View>
+              
+              
               <LearnMoreLinks />
             </View>
           </ScrollView>
+          */}
         </SafeAreaView>
       </SessionProvider>
     );
