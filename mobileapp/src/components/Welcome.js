@@ -3,6 +3,9 @@ import { Button, StyleSheet, Text, View, Platform, PermissionsAndroid, ToastAndr
 import { addLocation, getUsers, addUser } from 'restapi-client';
 import geoloc from 'react-native-geolocation-service';
 
+var userPrueba = 'https://uo269911.inrupt.net/profile/card#me';
+var userPrueba2 = 'https://uo257247.inrupt.net/profile/card#me';
+
 function Welcome(props) {
   return (
     <View>
@@ -22,7 +25,7 @@ async function onButtonPress() {
 
 function getLocation()
 {
-  var userPrueba = 'https://uo269911.inrupt.net/profile/card#me';
+ 
   fetchLocation(async (lat, long) => {
     console.log("Latitude is :", lat);
     console.log("Longitude is :", long);
