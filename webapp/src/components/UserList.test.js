@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { render, fireEvent, getByText } from "@testing-library/react";
 import UserList from "./UserList";
 

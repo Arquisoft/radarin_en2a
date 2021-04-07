@@ -34,10 +34,11 @@ export async function addLocation(userWebId, latitude, longitude) {
 
 export async function sessionLogin(doRedirect, redirectUrl, oidcIssuer, isMobile) {
     let url = getApiEndPoint() + `/session/login?redirectUrl=${redirectUrl}&oidcIssuer=${oidcIssuer}`;
+    
     if (isMobile) {
-        url += "&mobile";
+        url += "&mobile=true";
     }
-    doRedirect(getApiEndPoint() + `/session/login?redirectUrl=${redirectUrl}&oidcIssuer=${oidcIssuer}`);
+    doRedirect(url);
 }
 
 export async function sessionLogout(sessionId) {
