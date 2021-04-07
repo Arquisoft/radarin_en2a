@@ -60,7 +60,7 @@ class App extends React.Component {
           <img src={logo} className="App-logo" alt="logo" />
           <MyHeader />
         </header>
-        
+       
           {!this.context.session.info.isLoggedIn ?
             <LoginForm  /> :
             <>

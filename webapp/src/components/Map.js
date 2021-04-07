@@ -11,15 +11,27 @@ import { Icon } from 'leaflet'
 
 const DEFAULT_LATITUDE = 45.437781234170174; //43.36029;
 const DEFAUlT_LONGITUDE = 12.323313772328168;//-5.84476;
+var pic = null;
+var comment = "EXAMPLE";
 
 
 
 class Map extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      picture: null
+    }
+    this.handleImgChange = this.handleImgChange.bind(this);
+    this.submitComment = this.submitComment.bind(this);
+  }
 
   state = {
     locationReady: false,
     latitude: DEFAULT_LATITUDE,
-    longitude: DEFAUlT_LONGITUDE
+    longitude: DEFAUlT_LONGITUDE,
+    comment: "",
+    picture: null
   }
 
 
@@ -52,11 +64,26 @@ class Map extends React.Component {
     };
     navigator.geolocation.getCurrentPosition(success.bind(this), err.bind(this), config);
   }
-
-   submitForm() {
+  handleChange = (e) => {
+    this.setState({comment: e.target.value});
+  }
+  handleImgChange(event) {
+    this.setState({
+      picture: URL.createObjectURL(event.target.files[0])
+    })
+    pic = URL.createObjectURL(event.target.files[0]);
+  }
+  submitComment(e) {
+    e.preventDefault();
+    var comment = this.comment;
+    console.log(comment);
+  }
+  submitForm() {
     var frm = document.getElementsByClassName('form')[0];
+    var c = document.getElementsByClassName('commentForm')[0];
+    document.getElementById('comment').value=c.value;
     frm.reset();  // Reset all form data
- }
+  }
 
   render() {
 
@@ -73,26 +100,41 @@ class Map extends React.Component {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           <Marker position={[latitude, longitude]} icon={icon}>
-            <Popup> 
+            <Popup>
+              {<img src={pic} width="300px" ></img>}
+              {<p id="comment">{comment}</p>}
               <form onSubmit={this.handleSubmit}>
                 <label>
                   Comment:
-          <input type="text" className="form" value={this.state.value} onChange={this.handleChange} />
+                    <input type="text" className="commentForm" value={this.state.comment}  />
                 </label>
-                
-                <input type="submit" className="form" value="Submit" onclick="submitForm()"/>
+
+                <input type="submit" className="form" value="Submit" onClick="submitForm()" />
                 <label>
                   Picture:
-          <input type="file" onChange={this.handleChange} accept=".png, .jpg, .jpeg"/>
-          <input type="submit" value="Upload" />
+                    <input type="file" onChange={this.handleImgChange} accept=".png, .jpg, .jpeg" />
                 </label>
+                <input type="submit" className="form" value="Upload" onclick="submitForm()" />
               </form>
             </Popup>
           </Marker>
           {this.props.locations.map(loc =>
             <Marker position={[loc.latitude, loc.longitude]} icon={icon} >
               <Popup>
-                {loc.time}
+                {loc.picture}
+                <form onSubmit={this.handleSubmit}>
+                  <label>
+                    Comment:
+                    <input type="text" className="form" value={this.state.value} onChange={this.handleChange} />
+                  </label>
+
+                  <input type="submit" className="form" value="Submit" onclick="submitForm()" />
+                  <label>
+                    Picture:
+                      <input type="file" onChange={this.handleChange} accept=".png, .jpg, .jpeg" />
+                    <input type="submit" value="Upload" />
+                  </label>
+                </form>
               </Popup>
             </Marker>
           )}
