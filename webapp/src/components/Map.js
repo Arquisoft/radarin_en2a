@@ -12,7 +12,7 @@ import { Icon } from 'leaflet'
 const DEFAULT_LATITUDE = 45.437781234170174; //43.36029;
 const DEFAUlT_LONGITUDE = 12.323313772328168;//-5.84476;
 var pic = null;
-var comment = "EXAMPLE";
+var comment = "";
 
 
 
@@ -23,6 +23,7 @@ class Map extends React.Component {
       picture: null
     }
     this.handleImgChange = this.handleImgChange.bind(this);
+    this.handleCommentChange = this.handleCommentChange.bind(this);
     this.submitComment = this.submitComment.bind(this);
   }
 
@@ -73,6 +74,10 @@ class Map extends React.Component {
     })
     pic = URL.createObjectURL(event.target.files[0]);
   }
+  handleCommentChange(event) {
+   
+    comment = event.target.value;
+  }
   submitComment(e) {
     e.preventDefault();
     var comment = this.comment;
@@ -106,10 +111,8 @@ class Map extends React.Component {
               <form onSubmit={this.handleSubmit}>
                 <label>
                   Comment:
-                    <input type="text" className="commentForm" value={this.state.comment}  />
+                    <input type="text" className="commentForm" value={this.state.comment} onChange={this.handleCommentChange}  />
                 </label>
-
-                <input type="submit" className="form" value="Submit" onClick="submitForm()" />
                 <label>
                   Picture:
                     <input type="file" onChange={this.handleImgChange} accept=".png, .jpg, .jpeg" />
@@ -121,20 +124,19 @@ class Map extends React.Component {
           {this.props.locations.map(loc =>
             <Marker position={[loc.latitude, loc.longitude]} icon={icon} >
               <Popup>
-                {loc.picture}
+                {<img src={loc.picture}></img>}
+                <p>{loc.comment}</p>
                 <form onSubmit={this.handleSubmit}>
-                  <label>
-                    Comment:
-                    <input type="text" className="form" value={this.state.value} onChange={this.handleChange} />
-                  </label>
-
-                  <input type="submit" className="form" value="Submit" onclick="submitForm()" />
-                  <label>
-                    Picture:
-                      <input type="file" onChange={this.handleChange} accept=".png, .jpg, .jpeg" />
-                    <input type="submit" value="Upload" />
-                  </label>
-                </form>
+                <label>
+                  Comment:
+                    <input type="text" className="commentForm" value={this.state.comment} onChange={this.handleCommentChange}  />
+                </label>
+                <label>
+                  Picture:
+                    <input type="file" onChange={this.handleImgChange} accept=".png, .jpg, .jpeg" />
+                </label>
+                <input type="submit" className="form" value="Upload" onclick="submitForm()" />
+              </form>
               </Popup>
             </Marker>
           )}
