@@ -32,6 +32,16 @@ export async function addLocation(userWebId, latitude, longitude) {
     return await checkResponse(response)
 }
 
+export async function updateLastLocation(sessionId, latitude, longitude) {
+    let response = await fetch(getApiEndPoint() + '/users/lastLocation', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({'sessionId': sessionId, 'latitude': latitude, 'longitude': longitude})
+    })
+
+    return await checkResponse(response);
+}
+
 export async function sessionLogin(doRedirect, redirectUrl, oidcIssuer, isMobile) {
     let url = getApiEndPoint() + `/session/login?redirectUrl=${redirectUrl}&oidcIssuer=${oidcIssuer}`;
     
