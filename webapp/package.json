@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/react-fontawesome": "^0.1.14",
     "@inrupt/lit-generated-vocab-common": "^0.3.11",
     "@inrupt/solid-ui-react": "^2.1.1",
     "@testing-library/jest-dom": "^5.11.10",
@@ -18,6 +21,7 @@
     "react-geolocated": "^3.1.0",
     "react-leaflet": "^3.1.0",
     "react-minimal-side-navigation": "^1.8.0",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "restapi-client": "file:../restapi/client",
     "web-vitals": "^0.2.4"
