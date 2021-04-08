@@ -14,7 +14,6 @@ module.exports = function(router) {
             return;
         }
 
-        // TODO: register new users
         const session = new Session();
         const redirectUrl = new URL(req.query["mobile"] ? REDIRECT_MOBILEAPP_BASE_URL : REDIRECT_WEBAPP_BASE_URL);
         redirectUrl.searchParams.append("sessionId", session.info.sessionId);
@@ -75,7 +74,7 @@ module.exports = function(router) {
         }
 
         const session = req.query.sessionId ? await getSessionFromStorage(req.query.sessionId) : null;
-        const fetch = (session ?? new Session()).fetch;
+        const fetch = (session ? session : new Session()).fetch;
         const podResponse = await fetch(req.query.resource);
 
         // send back exactly what the pod returned
