@@ -89,13 +89,15 @@ class Map extends React.Component {
               </form>
             </Popup>
           </Marker>
-          {this.props.locations.map(loc =>
-            <Marker position={[loc.latitude, loc.longitude]} icon={icon} >
-              <Popup>
-                {loc.time}
-              </Popup>
-            </Marker>
-          )}
+          {(this.props.locations != undefined)
+            ? this.props.locations.map(loc =>
+                <Marker position={[loc.latitude, loc.longitude]} icon={icon} >
+                  <Popup>
+                    {loc.time}
+                  </Popup>
+                </Marker>)
+            : <></>
+          }
         </MapContainer>)
     }
     else {
