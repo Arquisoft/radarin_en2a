@@ -32,6 +32,11 @@ class MyMenu extends React.Component {
               itemId: '/another',
               elemBefore: () => <Icon name="bell" />,
             },
+            {
+              title: 'Settings',
+              itemId: '/settings',
+              elemBefore: () => <Icon name="settings" />,
+            },
           ]}
         />
     </>
