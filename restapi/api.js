@@ -23,7 +23,7 @@ router.post("/users/lastLocation", async (req, res) => {
     }
 
     await UsersService.updateUserLastLocation(req.session, latitude, longitude);
-    res.send({status: "OK"});
+    res.send({status: "OK"}); // TODO: return nearby friends
 })
 
 router.get("/locations/list", async (req, res) => {
