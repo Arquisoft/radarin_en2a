@@ -15,7 +15,7 @@ async function isRegistered(webId) {
     return user !== null;
 }
 
- function isAdmin(webId){
+function isAdmin(webId){
     for(a in admins){
         if (webId==a){
             return true;
@@ -29,6 +29,10 @@ async function getAll() {
 
 async function findByWebId(webId) {
     return await User.findOne({ webId: webId })
+}
+
+async function deleteByWebId(webId) {
+    return await User.findOneAndRemove({ webId: webId })
 }
 
 async function addLocationToUser(userId, locationId) {
@@ -103,6 +107,7 @@ module.exports = {
     isAdmin,
     getAll,
     findByWebId,
+    deleteByWebId,
     addLocationToUser,
     updateUserLastLocation,
     getUserLastLocation,
