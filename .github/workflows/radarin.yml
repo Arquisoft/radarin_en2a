@@ -31,6 +31,7 @@ jobs:
         node-version: 12.14.1
     - run: npm ci
     - run: npm test
+    - uses: codecov/codecov-action@v1
   build-test-mobileapp:
     runs-on: ubuntu-latest
     defaults:
@@ -44,6 +45,7 @@ jobs:
     - run: npm pack ../restapi/client && npm install restapi-client-0.1.0.tgz # need to install it again because the integrity checksum in package-lock.json may be different due to different OS in CI server and local dev machines
     - run: npm ci
     - run: npm test
+    - uses: codecov/codecov-action@v1
   e2e-tests:
     needs: [build-test-webapp, build-test-restapi]
     runs-on: ubuntu-latest
