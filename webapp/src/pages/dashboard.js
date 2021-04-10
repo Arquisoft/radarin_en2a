@@ -55,7 +55,7 @@ class DashboardPage extends React.Component {
 
             <Map locations = {this.state.locations}/>
                 {
-                    (this.state.users != undefined)
+                    (this.state.users !== undefined)
                     ? <UserList users={this.state.users} />
                     : <></>
                 }

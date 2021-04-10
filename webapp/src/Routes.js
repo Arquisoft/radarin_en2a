@@ -17,6 +17,7 @@ const Routes = () => {
         <Route path="/">
           <DashboardPage />
         </Route>
+        
       </Switch>
     </BrowserRouter>
   );

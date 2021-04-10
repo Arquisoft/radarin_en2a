@@ -111,6 +111,7 @@ export default class CustomSessionProvider extends React.Component {
                     sessionId: sessionId,
                     isLoggedIn: infoResponse.isLoggedIn,
                     webId: infoResponse.webId,
+                    isAdmin: infoResponse.isAdmin,
                 }
             })
             .catch(err => {
@@ -139,6 +140,7 @@ export default class CustomSessionProvider extends React.Component {
                     sessionId: info.sessionId,
                     isLoggedIn: newInfo.isLoggedIn,
                     webId: newInfo.webId,
+                    isAdmin: newInfo.isAdmin
                 });
             })
             .catch(err => {
@@ -152,6 +154,7 @@ export default class CustomSessionProvider extends React.Component {
             sessionId: null,
             isLoggedIn: false,
             webId: null,
+            isAdmin: false,
         };
     }
 
