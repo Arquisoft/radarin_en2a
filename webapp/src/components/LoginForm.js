@@ -24,8 +24,9 @@ class LoginForm extends React.Component {
         return (
             <SessionContext.Consumer>
             { context => 
-                context.sessionRequestInProgress ?
-                    <span>Logging in...</span> :
+                (context.sessionRequestInProgress) 
+                ?<span>Logging in...</span> 
+                :<>
                     <Form name="login">
                         <Form.Group>
                             <Form.Label>Identity Provider</Form.Label>
@@ -37,6 +38,7 @@ class LoginForm extends React.Component {
                             </Button>
                         </LoginButton>
                     </Form>
+                </>
             }
             </SessionContext.Consumer>
         )

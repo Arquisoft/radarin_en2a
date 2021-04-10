@@ -96,6 +96,7 @@ module.exports = function(router) {
         res.send({
             isLoggedIn: session.info.isLoggedIn,
             webId: session.info.webId,
+            isAdmin: UsersService.isAdmin(session.info.webId)
         });
     });
 }

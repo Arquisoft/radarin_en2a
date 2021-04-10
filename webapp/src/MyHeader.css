@@ -2,3 +2,10 @@ h1{
 
   font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
+
+
+.admin-disclaimer {
+  background-color: rgb(82, 82, 82);
+  color: rgb(208, 242, 247);
+  font-weight: bold;
+}
