@@ -61,3 +61,4 @@ function getApiEndPoint() {
     //REACT_APP_API_URI is an enviroment variable defined in the file .env.development or .env.production
     return process.env.REACT_APP_API_URI || 'http://localhost:5000/api';
 }
+
