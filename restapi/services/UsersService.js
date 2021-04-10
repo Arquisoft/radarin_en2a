@@ -15,7 +15,7 @@ async function isRegistered(webId) {
     return user !== null;
 }
 
-async function isAdmin(webId){
+ function isAdmin(webId){
     for(a in admins){
         if (webId==a){
             return true;
