@@ -8,7 +8,6 @@ import { sessionLogin, sessionLogout, sessionInfo, sessionFetch } from "restapi-
  * Based on https://github.com/inrupt/solid-ui-react/blob/main/src/context/sessionContext/index.tsx
  */
 export default class CustomSessionProvider extends React.Component {
-
     constructor(props) {
         super(props);
 
@@ -19,13 +18,22 @@ export default class CustomSessionProvider extends React.Component {
     }
 
     async componentDidMount() {
-        const newInfo = await this.handleIncomingRedirect()
-        this.setState({session: {...this.state.session, info: newInfo}})
+        this.handleIncomingRedirect()
     }
 
     setSessionRequestInProgress(inProgress) {
-        console.log("setSessionRequestInProgress " + inProgress);
+        console.log("setSessionRequestInProgress ", inProgress);
         this.setState({sessionRequestInProgress: inProgress});
+    }
+
+    setSessionInfo(info) {
+        console.log("setSessionInfo ", info);
+        if (info && info.sessionId && info.isLoggedIn) {
+            window.localStorage.setItem(KEY_CURRENT_SESSION, JSON.stringify(info));
+        } else {
+            window.localStorage.removeItem(KEY_CURRENT_SESSION);
+        }
+        this.setState({session: {...this.state.session, info: info}})
     }
 
     render() {
@@ -56,10 +64,7 @@ export default class CustomSessionProvider extends React.Component {
     async logout() {
         if (this.state.session.info.sessionId != null) {
             sessionLogout(this.state.session.info.sessionId).then(res => {
-                this.setState({session: {...this.state.session, info: {
-                    sessionId: null,
-                    isLoggedIn: false
-                }}})
+                this.setSessionInfo(this.getLoggedOutSessionInfo())
             })
         }
     }
@@ -69,49 +74,101 @@ export default class CustomSessionProvider extends React.Component {
     }
 
     async handleIncomingRedirect() {
-        const url = new URL(window.location.href);
-        if (!url.searchParams.has("sessionId")) {
-            return {
-                sessionId: null,
-                isLoggedIn: false,
-            };
-        }
+        let info = await this.restoreSessionFromUrl();
 
-        const sessionId = url.searchParams.get("sessionId");
-        url.searchParams.delete("sessionId"); // clean up the url
-
-        window.history.replaceState(null, "", url.toString());
-
-        if (sessionId !== null && sessionId !== "") {
-            const info = await sessionInfo(sessionId);
-            return {
-                sessionId: sessionId,
-                isLoggedIn: info.isLoggedIn,
-                webId: info.webId,
+        // if the URL didn't have a session ID, try to get it from local storage
+        if (!info) {
+            info = this.restoreSessionFromStorage();
+            if (info && info.sessionId && info.isLoggedIn) {
+                // check that the saved session is still valid
+                this.validateSessionInfo(info);
             }
-        } else {
-            return {
-                sessionId: null,
-                isLoggedIn: false,
-            };
         }
+
+        // if there is no session, we are logged out
+        if (!info) {
+            info = this.getLoggedOutSessionInfo();
+        }
+
+        this.setSessionInfo(info);
     }
 
-    createCustomSession(info) {
+    async restoreSessionFromUrl() {
+        const url = new URL(window.location.href);
+        if (!url.searchParams.has("sessionId")) {
+            return null;
+        }
+
+        // retrieve session ID from URL
+        const sessionId = url.searchParams.get("sessionId");
+        url.searchParams.delete("sessionId"); // clean up the url
+        window.history.replaceState(null, "", url.toString());
+
+        // get session info to verify that the user is logged in
+        return await sessionInfo(sessionId)
+            .then(infoResponse => { 
+                return {
+                    sessionId: sessionId,
+                    isLoggedIn: infoResponse.isLoggedIn,
+                    webId: infoResponse.webId,
+                }
+            })
+            .catch(err => {
+                console.log("sessionInfo request failed:", err);
+                return null;
+            });
+    }
+
+    restoreSessionFromStorage() {
+        let info = null;
+        try {
+            const infoJson = window.localStorage.getItem(KEY_CURRENT_SESSION);
+            info = JSON.parse(infoJson);
+        } catch (e) {
+            console.log("Failed to parse saved session info:", e);
+        }
+
+        return info;
+    }
+
+    validateSessionInfo(info) {
+        // check that the session is still logged in asynchronously
+        sessionInfo(info.sessionId)
+            .then(newInfo => {
+                this.setSessionInfo({
+                    sessionId: info.sessionId,
+                    isLoggedIn: newInfo.isLoggedIn,
+                    webId: newInfo.webId,
+                });
+            })
+            .catch(err => {
+                console.log("sessionInfo request failed:", err);
+                this.setSessionInfo(this.getLoggedOutSessionInfo())
+            });
+    }
+
+    getLoggedOutSessionInfo() {
         return {
-            info: info ?? {
-                sessionId: null,
-                isLoggedIn: false,
-            },
+            sessionId: null,
+            isLoggedIn: false,
+            webId: null,
+        };
+    }
+
+    createCustomSession() {
+        return {
+            info: this.getLoggedOutSessionInfo(),
             clientAuthentication: null,
             tokenRequestInProgress: false,
             login: this.login.bind(this),
             fetch: this.fetch.bind(this),
             logout: this.logout.bind(this),
             handleIncomingRedirect: this.handleIncomingRedirect.bind(this),
-            onLogin: (callback) => { console.log("TODO onLogin") },
-            onLogout: (callback) => { console.log("TODO onLogout") },
-            onSessionRestore: (callback) => { console.log("TODO onSessionRestore") },
+            onLogin: (callback) => { console.error("onLogin is not implemented") },
+            onLogout: (callback) => { console.error("onLogout is not implemented") },
+            onSessionRestore: (callback) => { console.error("onSessionRestore is not implemented") },
         }
     }
 }
+
+const KEY_CURRENT_SESSION = "radarinen2a:currentSession";
