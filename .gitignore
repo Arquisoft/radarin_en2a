@@ -8,6 +8,7 @@ webapp/restapi-client
 
 # testing
 /webapp/coverage
+/restapi/coverage
 
 # production
 webapp/build

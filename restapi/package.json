@@ -7,7 +7,7 @@
     "testEnvironment": "node"
   },
   "scripts": {
-    "test": "jest --runInBand ./tests",
+    "test": "jest --coverage --runInBand ./tests",
     "start": "node server.js"
   },
   "keywords": [],

@@ -1,5 +1,6 @@
 const request = require('supertest');
-const server = require('./server-for-tests')
+const server = require('./server-for-tests');
+const UsersService = require('../services/UsersService');
 
 /**
  * Connect to a new in-memory database before running any tests.
@@ -33,16 +34,6 @@ describe('user ', () => {
         const response = await request(app).get("/api/users/list");
         expect(response.statusCode).toBe(200);
     });
-
-    /**
-     * Tests that a user can be created through the productService without throwing any errors.
-     */
-    it('can be created correctly', async () => {
-        webId = 'https://uo269911.inrupt.net/profile/card#me'
-        const response = await request(app).post('/api/users/add').send({webId: webId}).set('Accept', 'application/json')
-        expect(response.statusCode).toBe(200);
-        expect(response.body.webId).toBe(webId);
-    });
 });
 
 describe('locations', () => {
@@ -58,8 +49,7 @@ describe('locations', () => {
      * Tests that a location can be added without throwing any errors.
      */
     it('can be added', async () => {
-        const user = { webId: "https://uo269911.inrupt.net/profile/card#me" }
-        await request(app).post('/api/users/add').send(user).set('Accept', 'application/json')
+        await UsersService.registerUser("https://uo269911.inrupt.net/profile/card#me");
 
         const oviedo = { userWebId: user.webId, latitude: 43.36196825817341, longitude: -5.849390063878794 }
         const minTime = new Date()
@@ -75,8 +65,7 @@ describe('locations', () => {
     });
 
     it('can be added and listed', async () => {
-        const user = { webId: "https://uo269911.inrupt.net/profile/card#me" }
-        await request(app).post('/api/users/add').send(user).set('Accept', 'application/json')
+        await UsersService.registerUser("https://uo269911.inrupt.net/profile/card#me");
 
         const oviedo = { userWebId: user.webId, latitude: 43.36196825817341, longitude: -5.849390063878794 }
         const gijon = { userWebId: user.webId, latitude: 43.53164223089106, longitude: -5.66129125890542 }
