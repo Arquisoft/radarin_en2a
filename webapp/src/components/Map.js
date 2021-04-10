@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import "../Map.css";
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
+import markerUser from "../marker.png"
 import { Icon } from 'leaflet'
 
 
@@ -66,7 +67,7 @@ class Map extends React.Component {
     navigator.geolocation.getCurrentPosition(success.bind(this), err.bind(this), config);
   }
   handleChange = (e) => {
-    this.setState({comment: e.target.value});
+    this.setState({ comment: e.target.value });
   }
   handleImgChange(event) {
     this.setState({
@@ -75,7 +76,7 @@ class Map extends React.Component {
     pic = URL.createObjectURL(event.target.files[0]);
   }
   handleCommentChange(event) {
-   
+
     comment = event.target.value;
   }
   submitComment(e) {
@@ -86,7 +87,7 @@ class Map extends React.Component {
   submitForm() {
     var frm = document.getElementsByClassName('form')[0];
     var c = document.getElementsByClassName('commentForm')[0];
-    document.getElementById('comment').value=c.value;
+    document.getElementById('comment').value = c.value;
     frm.reset();  // Reset all form data
   }
 
@@ -97,46 +98,35 @@ class Map extends React.Component {
       const latitude = this.state.latitude;
       console.log("RENDERING GEOLOC: ", latitude, longitude);
 
-      const icon = new Icon({ iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41] })
+      const iconFriend = new Icon({ iconUrl: markerIconPng, iconSize: [35, 41], iconAnchor: [18, 41] })
+      const iconUser = new Icon({ iconUrl: markerUser, iconSize: [35, 41], iconAnchor: [18, 41] })
       return (
         <MapContainer height="100" center={[latitude, longitude]} zoom={10} scrollWheelZoom={false}>
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <Marker position={[latitude, longitude]} icon={icon}>
+          <Marker position={[latitude, longitude]} icon={iconUser}>
             <Popup>
-              {<img src={pic} width="300px" ></img>}
-              {<p id="comment">{comment}</p>}
-              <form onSubmit={this.handleSubmit}>
-                <label>
-                  Comment:
-                    <input type="text" className="commentForm" value={this.state.comment} onChange={this.handleCommentChange}  />
-                </label>
-                <label>
-                  Picture:
-                    <input type="file" onChange={this.handleImgChange} accept=".png, .jpg, .jpeg" />
-                </label>
-                <input type="submit" className="form" value="Upload" onclick="submitForm()" />
-              </form>
+              You are here
             </Popup>
           </Marker>
           {this.props.locations.map(loc =>
-            <Marker position={[loc.latitude, loc.longitude]} icon={icon} >
+            <Marker position={[loc.latitude, loc.longitude]} icon={iconFriend} >
               <Popup>
-                {<img src={loc.picture}></img>}
+                {<img src={loc.picture} width="300px"></img>}
                 <p>{loc.comment}</p>
                 <form onSubmit={this.handleSubmit}>
-                <label>
-                  Comment:
-                    <input type="text" className="commentForm" value={this.state.comment} onChange={this.handleCommentChange}  />
-                </label>
-                <label>
-                  Picture:
+                  <label>
+                    Comment:
+                    <input type="text" className="commentForm" value={this.state.comment} onChange={this.handleCommentChange} />
+                  </label>
+                  <label>
+                    Picture:
                     <input type="file" onChange={this.handleImgChange} accept=".png, .jpg, .jpeg" />
-                </label>
-                <input type="submit" className="form" value="Upload" onclick="submitForm()" />
-              </form>
+                  </label>
+                  <input type="submit" className="form" value="Upload" onclick="submitForm()" />
+                </form>
               </Popup>
             </Marker>
           )}
