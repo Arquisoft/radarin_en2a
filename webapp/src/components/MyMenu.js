@@ -53,7 +53,7 @@ class MyMenu extends React.Component {
 
     if (isAdmin) {
       nav.push({
-        title: 'Settings',
+        title: <a href="/settings">Settings</a>,
         itemId: '/settings',
         elemBefore: () => <Icon name="settings" />,
       });
