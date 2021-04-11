@@ -129,8 +129,8 @@ async function getNearFriends(session, latitude, longitude) {
         const coord = await(getUserLastLocation(session, id));
 
 
-        if(isRegistered(id)){
-            isNear(getDistance(latitude, longitude,coord.latitude, coord.longitude))    {
+        if(await isRegistered(id)){
+            if(isNear(getDistance(latitude, longitude,coord.latitude, coord.longitude)))    {
                 nearFriends[i] = await(findByWebId(id));
             }
         }
