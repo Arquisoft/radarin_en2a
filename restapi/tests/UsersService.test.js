@@ -3,6 +3,7 @@ const server = require('./server-for-tests');
 const UsersService = require('../services/UsersService');
 const FC = require("solid-file-client");
 jest.mock("solid-file-client");
+jest.mock('@inrupt/solid-client');
 
 /**
  * Connect to a new in-memory database before running any tests.
