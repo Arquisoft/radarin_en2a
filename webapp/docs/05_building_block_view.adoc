@@ -10,11 +10,11 @@ image::05_deployment_view_2.png[]
 
 === Scope and Context
 
-===== Motivation
+==== Motivation
 The general structure of the system is Radarin, an application to facilitate meetings between friends. User data will be stored in a decentralized way using pods, the
 application will store only the minimal information of the user needed.
 
-===== Contained building blocks
+==== Contained building blocks
 [options="header",cols="1,2"]
 |===
 |Name|Responsibility
@@ -24,11 +24,11 @@ application will store only the minimal information of the user needed.
 
 === Level 1
 
-===== Motivation
+==== Motivation
 The general structure of the system is Radarin, an application to facilitate meetings between friends. User data will be stored in a decentralized way using pods, the
 application will store only the minimal information of the user needed.
 
-===== Contained building blocks
+==== Contained building blocks
 [options="header",cols="1,2"]
 |===
 |Name|Responsibility
