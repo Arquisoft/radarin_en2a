@@ -1,6 +1,8 @@
 [[section-technical-risks]]
 == Risks and Technical Debts
 
+.Risks
+The following risks were identified.
 
 [options="header"]
 |===
@@ -10,6 +12,15 @@
 | 2     | Team organization | Working with other people in a team always leads to some problems, specially when no member of the team has ever worked with the others | Frequent meetings allowing a fluent communication, good organization of the tasks.
 |===
 
+.Difficulties
+During the implementation we faced several difficulties due to these new technologies.
+
+|===
+| Problem | Solution
+| There is barely any libraries for Solid that work with React Native, so even logging in was not easy. | We moved the Solid session handling to the restapi server, which allowed us to implement the login in the mobileapp and manage security from the server (e.g. whether the user has admin permissions). But required us to re-implement some components in the client, like the SessionContext provider/consumer.
+| We were hoping we could share more of the user interface code between the webapp and mobileapp due to using React and React Native, respectively. Not much was reused in the end. | Not much of an issue, the webapp and mobileapp have different features so only small components like the login form needed to be implemented twice.
+| React Native does not work well with local dependencies. | We created a local package to share client functions for the restapi between webapp and mobileapp. The local dependency works well in the webapp. But the mobileapp requires `npm pack`, installing the compressed archived and doing it again manually when we change anything in the package. We added the command `npm run update:restapi` to mobileapp that does this.
+|===
 
 [role="arc42help"]
 ****
