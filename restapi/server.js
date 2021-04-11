@@ -30,6 +30,7 @@ function connect(){
             LocationsService.add("https://juan.inrupt.net/profile/card#me", 43.53573, -5.66152);
             LocationsService.add("https://uo271694.inrupt.net/profile/card#me", 43.1771, -6.54913);
             LocationsService.add("https://jose.inrupt.net/profile/card#me", 43.5445968, -6.6620770);*/
+            
             LocationsService.add("https://uo271694.inrupt.net/profile/card#me", 43.1771, -6.54913);
         })
     })
