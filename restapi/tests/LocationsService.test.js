@@ -72,11 +72,11 @@ describe('LocationsService', () => {
         const oviedo = { userWebId: user.webId, latitude: 43.36196825817341, longitude: -5.849390063878794 };
         const gijon = { userWebId: user.webId, latitude: 43.53164223089106, longitude: -5.66129125890542 }
 
-        await request(app).post('/api/locations/add').send(gijon).set('Accept', 'application/json');
+        const addedGijon = await request(app).post('/api/locations/add').send(gijon).set('Accept', 'application/json');
+        const gijonId = addedGijon.body._id;
 
-
-        const added = await request(app).post('/api/locations/add').send(oviedo).set('Accept', 'application/json');
-        const oviedoId = added.body._id;
+        const addedOviedo = await request(app).post('/api/locations/add').send(oviedo).set('Accept', 'application/json');
+        const oviedoId = addedOviedo.body._id;
 
         listResponse = await request(app).get('/api/locations/list')
 
@@ -86,16 +86,20 @@ describe('LocationsService', () => {
         expect(listResponse.body[1].latitude).toBe(gijon.latitude);
         expect(listResponse.body[1].longitude).toBe(gijon.longitude);
 
-        const edit = { locationId: oviedoId, name: "Catedral de Oviedo", description: "Catedral de estilo gótico que se encuentra en la ciudad de Oviedo" };
-        await request(app).post(`/api/locations/modify/${oviedoId}`).send(edit).set('Accept', 'application/json');
+        //We set the editing parameters and make the request to edit both locations
+        const editOviedo = { locationId: oviedoId, name: "Catedral de Oviedo", description: "Catedral de estilo gótico que se encuentra en la ciudad de Oviedo" };
+        await request(app).post(`/api/locations/modify/${oviedoId}`).send(editOviedo).set('Accept', 'application/json');
+        const editGijon = { locationId: gijonId, name: "Playa de San Lorenzo", description: "La playa de San Lorenzo está situada en pleno centro de Gijón" };
+        await request(app).post(`/api/locations/modify/${gijonId}`).send(editGijon).set('Accept', 'application/json');
 
         //We get the new location list
         listResponse = await request(app).get('/api/locations/list')
 
-        // We check that now the first location in the list is gijon as oviedo has been removed
-        expect(listResponse.body[0].name).toBe(edit.name);
-        expect(listResponse.body[0].description).toBe(edit.description);
-
+        // We check that both locations have been edited correctly
+        expect(listResponse.body[0].name).toBe(editOviedo.name);
+        expect(listResponse.body[0].description).toBe(editOviedo.description);
+        expect(listResponse.body[1].name).toBe(editGijon.name);
+        expect(listResponse.body[1].description).toBe(editGijon.description);
     });
 });
 
