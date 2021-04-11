@@ -1,6 +1,7 @@
 const User = require("../models/users")
 const FC = require("solid-file-client")
 const { Session } = require("@inrupt/solid-client-authn-node")
+const admins = ["https;//uo269911.inrupt.net/profile/card#me","https;//uo257247.inrupt.net/profile/card#me"]
 
 async function registerUser(webId) {
     user = new User({
@@ -14,12 +15,24 @@ async function isRegistered(webId) {
     return user !== null;
 }
 
+function isAdmin(webId){
+    for(a in admins){
+        if (webId==a){
+            return true;
+        }
+    }
+    return false;
+}
 async function getAll() {
     return await User.find({}).sort('-_id') //Inverse order
 }
 
 async function findByWebId(webId) {
     return await User.findOne({ webId: webId })
+}
+
+async function deleteByWebId(webId) {
+    return await User.findOneAndRemove({ webId: webId })
 }
 
 async function addLocationToUser(userId, locationId) {
@@ -98,8 +111,10 @@ async function createRadarinFolder(fc, webId) {
 module.exports = {
     registerUser,
     isRegistered,
+    isAdmin,
     getAll,
     findByWebId,
+    deleteByWebId,
     addLocationToUser,
     updateUserLastLocation,
     getUserLastLocation,

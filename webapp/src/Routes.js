@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import DashboardPage from "./pages/dashboard";
 import FriendsPage from "./pages/friends";
+import SettingsPage from "./pages/settings";
 
 const Routes = () => {
   return (
@@ -14,9 +15,13 @@ const Routes = () => {
         <Route path="/dashboard">
           <DashboardPage />
         </Route>
+        <Route path="/settings">
+          <SettingsPage/>
+        </Route>
         <Route path="/">
           <DashboardPage />
         </Route>
+        
       </Switch>
     </BrowserRouter>
   );

@@ -5,6 +5,19 @@ const UsersService = require("./services/UsersService")
 const SessionValidator = require("./services/SessionValidator")
 const router = express.Router()
 
+
+function checkQueryParamsExist(req, res, params) {
+    return params.every(p => {
+        if (!req.query[p]) {
+            res.status(400).send({error: `Expected '${p}' query param`});
+            return false;
+        }
+        return true;
+    });
+}
+
+
+
 // Get all users
 router.get("/users/list", async (req, res) => {
     res.send(await UsersService.getAll())
@@ -25,6 +38,24 @@ router.post("/users/lastLocation", async (req, res) => {
     await UsersService.updateUserLastLocation(req.session, latitude, longitude);
     res.send({ status: "OK" }); // TODO: return nearby friends
 })
+
+router.delete("/user",  async (req, res) => {
+    if (!checkQueryParamsExist(req, res, ["webId"])) {
+        return;
+    }
+    await UsersService.deleteByWebId(req.query.webId);
+    res.send({status: "OK"});
+})
+
+// DEBUG FUNCTION
+router.post("/users/add", async (req, res) => {
+    const userWebId = req.body.userWebId;
+    await UsersService.registerUser(userWebId);
+    res.send({status: "OK"});
+})
+
+
+
 
 router.get("/locations/list", async (req, res) => {
     res.send(await LocationsService.getAll())

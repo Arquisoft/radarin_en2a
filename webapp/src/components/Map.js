@@ -14,9 +14,6 @@ import { deleteLocation } from 'restapi-client';
 
 const DEFAULT_LATITUDE = 45.437781234170174; //43.36029;
 const DEFAUlT_LONGITUDE = 12.323313772328168;//-5.84476;
-var pic = null;
-var comment = "";
-
 
 
 class Map extends React.Component {
@@ -74,17 +71,16 @@ class Map extends React.Component {
   handleImgChange(event) {
     this.setState({
       picture: URL.createObjectURL(event.target.files[0])
-    })
-    pic = URL.createObjectURL(event.target.files[0]);
+    });
   }
   handleCommentChange(event) {
-
-    comment = event.target.value;
+    this.setState({
+      comment: event.target.value
+    });
   }
   submitComment(e) {
     e.preventDefault();
-    var comment = this.comment;
-    console.log(comment);
+    console.log(this.state.comment);
   }
   submitForm() {
     var frm = document.getElementsByClassName('form')[0];
@@ -121,6 +117,8 @@ class Map extends React.Component {
                 <h3 >{loc.name}</h3>
                 <h4>{loc.description}</h4>
                 <p>{loc.latitude}, {loc.longitude}</p>
+                {<img src={loc.picture} width="300px" alt="Depiction of the user coordinates"></img>}
+                <p>{loc.comment}</p>
                 <form onSubmit={this.handleSubmit}>
                   <label>
                     Name:

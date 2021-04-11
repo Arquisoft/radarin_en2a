@@ -7,6 +7,25 @@ export async function getUsers() {
     return await checkResponse(response)
 }
 
+export async function deleteUserByWebId(webId) {
+    let response = await fetch(getApiEndPoint() + `/user?webId=${webId}`, {
+        method: 'DELETE'
+    });
+    return await checkResponse(response)
+}
+
+// DEBUG FUNCTION
+export async function _registerUser(webId) {
+    let response = await fetch(getApiEndPoint() + '/users/add', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({'userWebId': webId})
+    })
+    return await checkResponse(response)
+}
+
+
+
 /**
  * @returns A list with Location models of all locations.
  */

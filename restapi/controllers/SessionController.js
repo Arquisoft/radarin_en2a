@@ -75,11 +75,17 @@ module.exports = function(router) {
 
         const session = req.query.sessionId ? await getSessionFromStorage(req.query.sessionId) : null;
         const fetch = (session ? session : new Session()).fetch;
-        const podResponse = await fetch(req.query.resource);
-
-        // send back exactly what the pod returned
-        res.set("Content-Type", podResponse.headers.get("Content-Type"))
-        res.send(await podResponse.text());
+        fetch(req.query.resource)
+            .then(async podResponse => {
+                // send back exactly what the pod returned
+                res.set("Content-Type", podResponse.headers.get("Content-Type"))
+                res.send(await podResponse.text());
+            })
+            .catch(err => {
+                // Couldn't load session due to error
+                console.log("Couldn't load session due to error:\n" + err);
+                res.send({});
+            })
     });
 
     router.get("/session/info", async (req, res) => {
@@ -96,6 +102,7 @@ module.exports = function(router) {
         res.send({
             isLoggedIn: session.info.isLoggedIn,
             webId: session.info.webId,
+            isAdmin: UsersService.isAdmin(session.info.webId)
         });
     });
 }
