@@ -2,6 +2,7 @@ import React from 'react';
 import { Linking } from 'react-native';
 import { sessionLogin, sessionLogout, sessionInfo, sessionFetch } from "restapi-client";
 import { SessionContext } from "./SessionContext";
+import  { sendRegisterMessage, sendUnregisterMessage } from "../../Socket"
 
 /* Provides a SessionContext, using our REST API server for login and session handling.
  */
@@ -22,6 +23,9 @@ export default class SessionProvider extends React.Component {
     componentDidMount() {
         Linking.addEventListener("url", ev => {
             this.handleIncomingRedirect(ev.url).then(newState => {
+                if(newState.isLoggedIn) {
+                    sendRegisterMessage(newState.sessionId);
+                }
                 this.setState(newState);
             })
         });
@@ -67,6 +71,7 @@ export default class SessionProvider extends React.Component {
         this.setLogoutInProgress(true);
         if (this.state.sessionId != null) {
             sessionLogout(this.state.sessionId).then(res => {
+               sendUnregisterMessage();
                 this.setState({
                     sessionId: null,
                     isLoggedIn: false,

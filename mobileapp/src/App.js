@@ -30,9 +30,14 @@ import Welcome from './components/Welcome';
 import LoginForm from './components/LoginForm';
 import SessionProvider from './components/session/SessionProvider';
 import { SessionContext } from './components/session/SessionContext';
-
+import { connectSocket } from './Socket'
 
 class App extends React.Component { 
+
+  constructor(props) {
+    super(props);
+    connectSocket();
+  }
 
   render() {
     return (
@@ -57,7 +62,10 @@ class App extends React.Component {
               <SessionContext.Consumer>
               { context => 
                   context.isLoggedIn
-                      ? <Text>Welcome!</Text>
+                      ? <>
+                          <Text>Welcome!</Text>
+                          <Welcome></Welcome>
+                        </>
                       : <View style={styles.engine}>
                           <Text>RADARIN</Text>
                           <Image source={require('./logo.svg')} />

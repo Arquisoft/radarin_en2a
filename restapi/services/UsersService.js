@@ -1,5 +1,6 @@
 const User = require("../models/users")
 const FC = require("solid-file-client")
+const WebSocketServer = require("./WebSocketServer");
 const { Session } = require("@inrupt/solid-client-authn-node")
 const admins = ["https://uo269911.inrupt.net/profile/card#me","https://uo257247.inrupt.net/profile/card#me"]
 const { FOAF } = require('@inrupt/vocab-common-rdf')
@@ -68,7 +69,7 @@ async function updateUserLastLocation(session, latitude, longitude) {
             console.log(err);
         });
 
-    let nearFriends = await getNearFriends(session, latitude, longitude);
+    notifyNearbyFriends(session, latitude, longitude);
 }
 
 async function getUserLastLocation(session, webId) {
@@ -154,6 +155,14 @@ function getDistance(lat1, lon1, lat2, lon2) { // retrurns the distance between 
 
 function isNear(distance)   {
     return (distance <= maxDistance);
+}
+
+async function notifyNearbyFriends(session, latitude, longitude) {
+    const nearFriends = await getNearFriends(session, latitude, longitude);
+    nearFriends.forEach(friend => {
+        WebSocketServer.sendMessageToUser(friend.webId, { type: "nearbyFriend", friendWebId: session.info.webId });
+        WebSocketServer.sendMessageToUser(session.info.webId, { type: "nearbyFriend", friendWebId: friend.webId });
+    });
 }
 
 module.exports = {
