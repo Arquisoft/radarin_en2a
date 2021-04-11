@@ -29,6 +29,13 @@ async function addLocationToUser(userId, locationId) {
     );
 }
 
+async function removeLocationFromUser(userId, locationId){
+    await User.remove(
+        {_id: userId},
+        {$pop : {locations : locationId}} 
+    );
+}
+
 async function updateUserLastLocation(session, latitude, longitude) {
     const webId = session.info.webId;
     if (!(await isRegistered(webId))) {
@@ -96,4 +103,5 @@ module.exports = {
     addLocationToUser,
     updateUserLastLocation,
     getUserLastLocation,
+    removeLocationFromUser,
 }

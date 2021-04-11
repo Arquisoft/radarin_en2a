@@ -7,23 +7,23 @@ const router = express.Router()
 
 // Get all users
 router.get("/users/list", async (req, res) => {
-	res.send(await UsersService.getAll())
+    res.send(await UsersService.getAll())
 })
 
 router.use("/users/lastLocation", SessionValidator.loggedInSessionValidator)
 router.post("/users/lastLocation", async (req, res) => {
     if (req.body.latitude === undefined || req.body.longitude === undefined) {
-        res.status(400).send({error: "Missing required parameters"});
+        res.status(400).send({ error: "Missing required parameters" });
     }
 
     const latitude = parseFloat(req.body.latitude)
     const longitude = parseFloat(req.body.longitude)
     if (isNaN(latitude) || isNaN(longitude)) {
-        res.status(400).send({error: "Invalid coordinates"});
+        res.status(400).send({ error: "Invalid coordinates" });
     }
 
     await UsersService.updateUserLastLocation(req.session, latitude, longitude);
-    res.send({status: "OK"}); // TODO: return nearby friends
+    res.send({ status: "OK" }); // TODO: return nearby friends
 })
 
 router.get("/locations/list", async (req, res) => {
@@ -37,10 +37,16 @@ router.post("/locations/add", async (req, res) => {
 
     const newLocation = await LocationsService.add(userWebId, latitude, longitude)
     if (!newLocation) {
-        res.status(404).send({error: "User does not exist"})
+        res.status(404).send({ error: "User does not exist" })
     } else {
         res.send(newLocation)
     }
+})
+
+router.get("/locations/delete/:id", async (req, res) => {
+    const locationId =  req.params.id;
+    await LocationsService.deleteLocation(locationId);
+    res.send("Location deleted");
 })
 
 require("./controllers/SessionController")(router)

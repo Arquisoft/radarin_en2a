@@ -32,6 +32,11 @@ export async function addLocation(userWebId, latitude, longitude) {
     return await checkResponse(response)
 }
 
+export async function deleteLocation(locationId) {
+    let response = await fetch(getApiEndPoint() + `/locations/delete/${locationId}`)
+    return await checkResponse(response)
+}
+
 export async function updateLastLocation(sessionId, latitude, longitude) {
     let response = await fetch(getApiEndPoint() + '/users/lastLocation', {
         method: 'POST',
