@@ -8,26 +8,6 @@ between them ins a simple and safe way.
 The communication is accomplished throught the users' SOLID pods, which allow the user to have access to its own information and the information other users share with him, 
 which in this case is their location. 
 
-
-[role="arc42help"]
-****
-.Contents
-System scope and context - as the name suggests - delimits your system (i.e. your scope) from all its communication partners
-(neighboring systems and users, i.e. the context of your system). It thereby specifies the external interfaces.
-
-If necessary, differentiate the business context (domain specific inputs and outputs) from the technical context (channels, protocols, hardware).
-
-.Motivation
-The domain interfaces and technical interfaces to communication partners are among your system's most critical aspects. Make sure that you completely understand them.
-
-.Form
-Various options:
-
-* Context diagrams
-* Lists of communication partners and their interfaces.
-****
-
-
 === Business Context
 
 Due to the requirement that states that the decentralized application must implement SOLID technology, each user of the system will have a POD where its data will be stored.
@@ -58,22 +38,7 @@ Due to the requirement that states that the decentralized application must imple
 |===
 
 
-
 === Technical Context
-
-[role="arc42help"]
-****
-.Contents
-Technical interfaces (channels and transmission media) linking your system to its environment. In addition a mapping of domain specific input/output to the channels, i.e. an explanation with I/O uses which channel.
-
-.Motivation
-Many stakeholders make architectural decision based on the technical interfaces between the system and its context. Especially infrastructure or hardware designers decide these technical interfaces.
-
-.Form
-E.g. UML deployment diagram describing channels to neighboring systems,
-together with a mapping table showing the relationships between channels and input/output.
-
-****
 
 The system is initially designed to be a web application but it is expected to work on all kinds of devices. The main idea is to build a decentralized application using the solid data pods to store users information safely.
 Other technologies the system will use are the REACT framework, Docker...
