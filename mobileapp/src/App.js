@@ -26,7 +26,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import Welcome from './components/Welcome';
+import Dashboard from './components/Dashboard';
 import LoginForm from './components/LoginForm';
 import SessionProvider from './components/session/SessionProvider';
 import { SessionContext } from './components/session/SessionContext';
@@ -61,16 +61,12 @@ class App extends React.Component {
               <View>
               <SessionContext.Consumer>
               { context => 
-                  context.isLoggedIn
-                      ? <>
-                          <Text>Welcome!</Text>
-                          <Welcome name="to Radarin"></Welcome>
-                        </>
-                      : <View style={styles.engine}>
-                          <Text>RADARIN</Text>
-                          <Image source={require('./logo.svg')} />
-                        </View>
-                    
+                  (context.isLoggedIn)
+                  ? <Dashboard name="to Radarin" context={context}></Dashboard>
+                  : <View style={styles.engine}>
+                      <Text>RADARIN</Text>
+                      <Image source={require('./logo.svg')} />
+                    </View>
               }
               </SessionContext.Consumer>
               </View>

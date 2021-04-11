@@ -7,46 +7,67 @@ import { SessionContext } from './session/SessionContext';
 var userPrueba = 'https://uo269911.inrupt.net/profile/card#me';
 var userPrueba2 = 'https://uo257247.inrupt.net/profile/card#me';
 
-function Welcome(props) {
+class Dashboard extends React.Component {
+
+  constructor(props) {
+      super(props);
+
+      this.state = {
+        location: undefined
+      }
+  }
+
+  componentDidMount() {
+    this.getLocation();
+  }
+
+  getLocation()
+  {
+    this.setState({location: undefined});
+
+    fetchLocation(async (lat, long) => {
+      this.setState({location: {
+        latitude: lat,
+        longitude: long
+      }});
+    });
+  }
+
+
+  async updateLocation()
+  {
+    fetchLocation(async (lat, long) => {
+      console.log("Updating user last location: " + lat + ", " + long + " [" + this.props.context.sessionId + "]");
+      updateLastLocation(this.props.context.sessionId, lat, long);
+    });
+  }
+
+
+
+  render() {
   return (
-   <SessionContext.Consumer> 
-    { context =>
+    <>
     <View>
-      <Text style={styles.center}>Hi, {props.name}!</Text>
-      {/* <Button onPress={onButtonPress} title="Click Me" /> */}
-      <Button onPress={() => getLocation(context.sessionId)} title = "Location"/>
+      <Text style={styles.center}>Welcome {this.props.name}!</Text>
+      {
+        (this.state.location !== undefined)
+        ? <Text style={styles.center}>Current location: ({this.state.location.latitude}, {this.state.location.longitude})</Text>
+        : <Text style={styles.center}>Fetching location...</Text>
+      }
     </View>
-    }
-    </SessionContext.Consumer>
-  );
+
+    <View>
+      <Button onPress={this.getLocation.bind(this)} title = "Refresh Location"/>
+      <Button onPress={this.updateLocation.bind(this)} title = "Update Last Location"/>
+    </View>
+    </>
+  )}
 }
 
-
-async function onButtonPress() {
-  // const users = await getUsers();
-  // alert(JSON.stringify(users));
-}
-
-
-function getLocation(sessionId)
-{
- 
-  fetchLocation(async (lat, long) => {
-    console.log("Latitude is :", lat);
-    console.log("Longitude is :", long);
-    updateLastLocation(sessionId, lat, long)
-    //await addUser(userPrueba).catch(()=>{})
-
-
-    //addLocation(userPrueba, lat, long)
-  });
- 
-}
 
 
 async function fetchLocation(callback) {
 
- 
   const permission = await hasLocationPermission();
   if (!permission)
   {
@@ -71,8 +92,6 @@ async function fetchLocation(callback) {
   geoloc.getCurrentPosition(success, err, config);
 
 }
-
-
 async function hasLocationPermission() {
   
   if (Platform.OS === 'android' && Platform.Version < 23) {
@@ -120,4 +139,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Welcome;
+export default Dashboard;
