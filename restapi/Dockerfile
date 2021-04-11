@@ -15,6 +15,10 @@ RUN npm install --production
 ARG MONGO_URI="mongodb://mongoserver:27017/api"
 ENV MONGO_URI=$MONGO_URI
 
+# Needed by SessionController
+ARG API_URI="http://localhost:5000/api"
+ENV REST_API_URI=$API_URI
+
 # Bundle app source
 COPY server.js api.js ./
 COPY models ./models

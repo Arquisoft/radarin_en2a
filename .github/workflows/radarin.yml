@@ -93,6 +93,8 @@ jobs:
           appdir: "restapi"
           docker_build_args: |
             MONGO_URI
+            API_URI
         env:
           MONGO_URI: ${{secrets.MONGO_URI}}
+          API_URI: "https://radarinen2arestapi.herokuapp.com/api"
 
