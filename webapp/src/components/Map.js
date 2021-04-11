@@ -109,7 +109,7 @@ class Map extends React.Component {
                   You are here
               </Popup>
               </Marker>
-              {this.props.locations.filter(l => l.userId == context.session.info.webId).map(loc =>
+              {this.props.locations.filter(l => l.userId === context.session.info.webId).map(loc =>
                 <Marker position={[loc.latitude, loc.longitude]} icon={iconUserLast} >
                   <Popup>
                   <CombinedDataProvider thingUrl={loc.userId} datasetUrl={loc.userId}>
@@ -133,7 +133,7 @@ class Map extends React.Component {
                   </Popup>
                 </Marker>
               )}
-              {this.props.locations.filter(l => l.userId != context.session.info.webId).map(loc =>
+              {this.props.locations.filter(l => l.userId !== context.session.info.webId).map(loc =>
                 <Marker position={[loc.latitude, loc.longitude]} icon={iconFriend} >
                   <Popup>
                   <CombinedDataProvider thingUrl={loc.userId} datasetUrl={loc.userId}>
