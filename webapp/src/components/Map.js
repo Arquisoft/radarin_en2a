@@ -5,7 +5,7 @@ import "../Map.css";
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import markerUser from "../marker.png"
 import { Icon } from 'leaflet'
-import { deleteLocation } from 'restapi-client';
+import { deleteLocation, modifyLocation } from 'restapi-client';
 import { SessionContext } from '@inrupt/solid-ui-react';
 
 
@@ -20,11 +20,9 @@ const DEFAUlT_LONGITUDE = 12.323313772328168;//-5.84476;
 class Map extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      picture: null
-    }
     this.handleImgChange = this.handleImgChange.bind(this);
-    this.handleCommentChange = this.handleCommentChange.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.submitComment = this.submitComment.bind(this);
   }
 
@@ -32,8 +30,9 @@ class Map extends React.Component {
     locationReady: false,
     latitude: DEFAULT_LATITUDE,
     longitude: DEFAUlT_LONGITUDE,
-    comment: "",
-    picture: null
+    name: "",
+    description: "",
+    picture: ""
   }
 
 
@@ -74,9 +73,14 @@ class Map extends React.Component {
       picture: URL.createObjectURL(event.target.files[0])
     });
   }
-  handleCommentChange(event) {
+  handleNameChange(event) {
     this.setState({
-      comment: event.target.value
+      name: event.target.value
+    });
+  }
+  handleDescriptionChange(event) {
+    this.setState({
+      description: event.target.value
     });
   }
   submitComment(e) {
@@ -93,6 +97,14 @@ class Map extends React.Component {
     window.location.reload();
   }
 
+  modifyLocation(locationId) {
+    const name = this.state.name;
+    const description = this.state.description;
+    const picture = this.state.picture;
+    modifyLocation(locationId, name, description, picture);
+    window.location.reload();
+  }
+
   render() {
     if (this.state.locationReady) {
       const longitude = this.state.longitude;
@@ -101,6 +113,7 @@ class Map extends React.Component {
 
       const iconFriend = new Icon({ iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41] })
       const iconUser = new Icon({ iconUrl: markerUser, iconSize: [40, 41], iconAnchor: [18, 41] })
+
       return (
         <SessionContext.Consumer>
           {context =>
@@ -125,23 +138,23 @@ class Map extends React.Component {
                     <form onSubmit={this.handleSubmit}>
                       <label>
                         Name:
-                    <input type="text" name="name" />
+                    <input type="text" id="name" className="modify" onChange={this.handleNameChange} />
                       </label>
                       <label>
                         Description:
-                    <input type="text" name="description" />
+                    <input type="text" id="description" className="modify" onChange={this.handleDescriptionChange} />
                       </label>
                       <label>
                         Picture:
-                    <input type="file" onChange={this.handleImgChange} accept=".png, .jpg, .jpeg" />
+                    <input type="file" onChange={this.handleImgChange} accept=".png, .jpg, .jpeg" className="modify" id="picture" />
                       </label>
-                      <input type="submit" className="form" value="Upload" onclick="submitForm()" />
                     </form>
-                    <button onClick={() => this.deleteLocation(loc._id)}>Borrar</button>
+                    <button onClick={() => this.deleteLocation(loc._id)}>Delete</button>
+                    <button onClick={() => this.modifyLocation(loc._id)}>Modify</button>
                   </Popup>
                 </Marker>
               )}
-               {this.props.locations.filter(l => l.userId != context.session.info.webId).map(loc =>
+              {this.props.locations.filter(l => l.userId != context.session.info.webId).map(loc =>
                 <Marker position={[loc.latitude, loc.longitude]} icon={iconFriend} >
                   <Popup>
                     <h3 >{loc.name}</h3>
