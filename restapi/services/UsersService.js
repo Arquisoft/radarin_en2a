@@ -2,6 +2,8 @@ const User = require("../models/users")
 const FC = require("solid-file-client")
 const { Session } = require("@inrupt/solid-client-authn-node")
 const admins = ["https;//uo269911.inrupt.net/profile/card#me","https;//uo257247.inrupt.net/profile/card#me"]
+const { FOAF } = require('@inrupt/vocab-common-rdf')
+const maxDistance = 5.0;
 
 async function registerUser(webId) {
     user = new User({
@@ -61,6 +63,8 @@ async function updateUserLastLocation(session, latitude, longitude) {
             console.log(`Failed to create 'lastLocation.json'`);
             console.log(err);
         });
+
+    let nearFriends = await getNearFriends(session, latitude, longitude);
 }
 
 async function getUserLastLocation(session, webId) {
@@ -106,6 +110,49 @@ async function createRadarinFolder(fc, webId) {
 
     // const { acl: aclUrl } = await fc.getItemLinks(folderUrl, { links: 'include_possible' });
     // await fc.createFile(aclUrl, aclContent, 'text/turtle');
+}
+
+
+async function getNearFriends(session, latitude, longitude) {
+
+    const { webId } = session.info;
+    var nearFriends = [];
+
+    // access our dataset
+    let profileDataset = await getSolidDataset(webId, { fetch: session.fetch });
+    let profile = getThing(profileDataset, webId);
+
+    // get the friends list
+    const knows = getNamedNodeAll(profile, FOAF.knows);
+    for (const i in knows) {
+        const { id } = knows[i]; // get the friend's webId
+        const coord = await(getUserLastLocation(session, id));
+
+
+        if(await isRegistered(id)){
+            if(isNear(getDistance(latitude, longitude,coord.latitude, coord.longitude)))    {
+                nearFriends.push(await(findByWebId(id)));
+            }
+        }
+
+        
+    }
+    return nearFriends;
+}
+
+function getDistance(lat1, lon1, lat2, lon2) { // retrurns the distance between the two points in kilometers
+    rad = function (x) { return x * Math.PI / 180; }
+    var R = 6378.137; //Radio de la tierra en km
+    var dLat = rad(lat2 - lat1);
+    var dLong = rad(lon2 - lon1);
+    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(rad(lat1)) * Math.cos(rad(lat2)) * Math.sin(dLong / 2) * Math.sin(dLong / 2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    var d = R * c;
+    return d.toFixed(3); //Retorna tres decimales
+}
+
+function isNear(distance)   {
+    return (distance <= maxDistance);
 }
 
 module.exports = {
