@@ -5,7 +5,7 @@
 export async function getUsers() {
     let response = await fetch(getApiEndPoint() + '/users/list')
     return await checkResponse(response)
-}
+} 
 
 export async function deleteUserByWebId(webId) {
     let response = await fetch(getApiEndPoint() + `/user?webId=${webId}`, {
@@ -48,6 +48,11 @@ export async function addLocation(userWebId, latitude, longitude) {
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify({'userWebId': userWebId, 'latitude': latitude, 'longitude': longitude})
     })
+    return await checkResponse(response)
+}
+
+export async function deleteLocation(locationId) {
+    let response = await fetch(getApiEndPoint() + `/locations/delete/${locationId}`)
     return await checkResponse(response)
 }
 

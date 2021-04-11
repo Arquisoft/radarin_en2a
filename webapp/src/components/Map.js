@@ -5,6 +5,8 @@ import "../Map.css";
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import markerUser from "../marker.png"
 import { Icon } from 'leaflet'
+import { deleteLocation } from 'restapi-client';
+
 
 
 //import { geolocated } from 'react-geolocated';
@@ -82,20 +84,22 @@ class Map extends React.Component {
   }
   submitForm() {
     var frm = document.getElementsByClassName('form')[0];
-    var c = document.getElementsByClassName('commentForm')[0];
-    document.getElementById('comment').value = c.value;
     frm.reset();  // Reset all form data
   }
 
-  render() {
+  deleteLocation(locationId) {
+    deleteLocation(locationId);
+    window.location.reload();
+  }
 
+  render() {
     if (this.state.locationReady) {
       const longitude = this.state.longitude;
       const latitude = this.state.latitude;
       console.log("RENDERING GEOLOC: ", latitude, longitude);
 
-      const iconFriend = new Icon({ iconUrl: markerIconPng, iconSize: [35, 41], iconAnchor: [18, 41] })
-      const iconUser = new Icon({ iconUrl: markerUser, iconSize: [35, 41], iconAnchor: [18, 41] })
+      const iconFriend = new Icon({ iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41] })
+      const iconUser = new Icon({ iconUrl: markerUser, iconSize: [40, 41], iconAnchor: [18, 41] })
       return (
         <MapContainer height="100" center={[latitude, longitude]} zoom={10} scrollWheelZoom={false}>
           <TileLayer
@@ -110,12 +114,19 @@ class Map extends React.Component {
           {this.props.locations.map(loc =>
             <Marker position={[loc.latitude, loc.longitude]} icon={iconFriend} >
               <Popup>
+                <h3 >{loc.name}</h3>
+                <h4>{loc.description}</h4>
+                <p>{loc.latitude}, {loc.longitude}</p>
                 {<img src={loc.picture} width="300px" alt="Depiction of the user coordinates"></img>}
                 <p>{loc.comment}</p>
                 <form onSubmit={this.handleSubmit}>
                   <label>
-                    Comment:
-                    <input type="text" className="commentForm" value={this.state.comment} onChange={this.handleCommentChange} />
+                    Name:
+                    <input type="text" name="name" />
+                  </label>
+                  <label>
+                    Description:
+                    <input type="text" name="description" />
                   </label>
                   <label>
                     Picture:
@@ -123,6 +134,7 @@ class Map extends React.Component {
                   </label>
                   <input type="submit" className="form" value="Upload" onclick="submitForm()" />
                 </form>
+                <button onClick={() => this.deleteLocation(loc._id)}>Borrar</button>
               </Popup>
             </Marker>
           )}
