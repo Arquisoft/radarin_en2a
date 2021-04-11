@@ -9,7 +9,7 @@ const router = express.Router()
 function checkQueryParamsExist(req, res, params) {
     return params.every(p => {
         if (!req.query[p]) {
-            res.status(400).send({error: `Expected '${p}' query param`});
+            res.status(400).send({ error: `Expected '${p}' query param` });
             return false;
         }
         return true;
@@ -39,22 +39,20 @@ router.post("/users/lastLocation", async (req, res) => {
     res.send({ status: "OK" }); // TODO: return nearby friends
 })
 
-router.delete("/user",  async (req, res) => {
+router.delete("/user", async (req, res) => {
     if (!checkQueryParamsExist(req, res, ["webId"])) {
         return;
     }
     await UsersService.deleteByWebId(req.query.webId);
-    res.send({status: "OK"});
+    res.send({ status: "OK" });
 })
 
 // DEBUG FUNCTION
 router.post("/users/add", async (req, res) => {
     const userWebId = req.body.userWebId;
     await UsersService.registerUser(userWebId);
-    res.send({status: "OK"});
+    res.send({ status: "OK" });
 })
-
-
 
 
 router.get("/locations/list", async (req, res) => {
@@ -75,7 +73,7 @@ router.post("/locations/add", async (req, res) => {
 })
 
 router.get("/locations/delete/:id", async (req, res) => {
-    const locationId =  req.params.id;
+    const locationId = req.params.id;
     await LocationsService.deleteLocation(locationId);
     res.send("Location deleted");
 })

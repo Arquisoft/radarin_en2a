@@ -31,13 +31,13 @@ async function add(userWebId, latitude, longitude) {
 }
 
 async function deleteLocation(locationId) {
-    await Location.deleteOne({_id:locationId});
-} 
+    await Location.deleteOne({ _id: locationId });
+}
 
 
 module.exports = {
     getAll,
     add,
     deleteLocation,
-   
+
 }
