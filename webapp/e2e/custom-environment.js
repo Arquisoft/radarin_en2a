@@ -7,8 +7,9 @@ class CustomEnvironment extends NodeEnvironemnt {
     async setup(){
         await super.setup()
         this.global.browser = await puppeteer.launch({
+            ignoreHTTPSErrors: true, // don't show the warnings for the self-signed certificate of the Solid server
             headless: true,
-            //slowMo: 20
+            // slowMo: 20,
         })
         this.global.page = await this.global.browser.newPage()
     }

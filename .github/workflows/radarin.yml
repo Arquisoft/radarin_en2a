@@ -54,6 +54,11 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: 12.14.1
+    - run: | # add subdomains from the Solid server users
+        sudo echo "127.0.0.1 user1.localhost" | sudo tee -a /etc/hosts
+        sudo echo "127.0.0.1 user2.localhost" | sudo tee -a /etc/hosts
+        sudo echo "127.0.0.1 user3.localhost" | sudo tee -a /etc/hosts
+        sudo echo "127.0.0.1 user4.localhost" | sudo tee -a /etc/hosts
     - run: npm --prefix webapp install
     - run: npm --prefix restapi install
     - run: npm --prefix webapp run test:e2e
