@@ -140,7 +140,7 @@ async function getNearFriends(session, latitude, longitude) {
     return nearFriends;
 }
 
-function getDistance(lat1, lon1, lat2, lon2) {
+function getDistance(lat1, lon1, lat2, lon2) { // retrurns the distance between the two points in kilometers
     rad = function (x) { return x * Math.PI / 180; }
     var R = 6378.137; //Radio de la tierra en km
     var dLat = rad(lat2 - lat1);
