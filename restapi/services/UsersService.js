@@ -135,9 +135,9 @@ async function getNearFriends(session, latitude, longitude) {
             }
         }
 
-        return nearFriends;
+        
     }
-
+    return nearFriends;
 }
 
 function getDistance(lat1, lon1, lat2, lon2) {
