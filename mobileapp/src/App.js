@@ -64,7 +64,7 @@ class App extends React.Component {
                   context.isLoggedIn
                       ? <>
                           <Text>Welcome!</Text>
-                          <Welcome></Welcome>
+                          <Welcome name="to Radarin"></Welcome>
                         </>
                       : <View style={styles.engine}>
                           <Text>RADARIN</Text>
