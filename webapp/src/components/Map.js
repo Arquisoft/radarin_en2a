@@ -113,7 +113,7 @@ class Map extends React.Component {
           </Marker>
           {this.props.locations.map(loc =>
             <Marker position={[loc.latitude, loc.longitude]} icon={iconFriend} >
-              <Popup>
+              <Popup> 
                 <h3 >{loc.name}</h3>
                 <h4>{loc.description}</h4>
                 <p>{loc.latitude}, {loc.longitude}</p>
