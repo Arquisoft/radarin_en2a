@@ -13,7 +13,7 @@ identify the session in later REST API requests. Lastly, the web app shows the m
 [plantuml,"Sequence diagram - Login",png]
 ----
 actor User as U
-participant "Web App" as W
+participant "Web App/ Mobile app" as W
 participant "REST API Server" as R
 participant "Solid Identity Provider" as P
 
