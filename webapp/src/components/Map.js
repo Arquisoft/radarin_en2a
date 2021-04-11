@@ -4,14 +4,12 @@ import 'leaflet/dist/leaflet.css';
 import "../Map.css";
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import markerUser from "../marker.png"
+import markerLast from "../marker-last.png"
 import { Icon } from 'leaflet'
 import { deleteLocation, modifyLocation } from 'restapi-client';
 import { SessionContext } from '@inrupt/solid-ui-react';
-
-
-
-//import { geolocated } from 'react-geolocated';
-//import UserLocation from '../UserLocation';
+import { FOAF } from '@inrupt/lit-generated-vocab-common';
+import { CombinedDataProvider, Text } from '@inrupt/solid-ui-react';
 
 const DEFAULT_LATITUDE = 45.437781234170174; //43.36029;
 const DEFAUlT_LONGITUDE = 12.323313772328168;//-5.84476;
@@ -20,10 +18,8 @@ const DEFAUlT_LONGITUDE = 12.323313772328168;//-5.84476;
 class Map extends React.Component {
   constructor(props) {
     super(props)
-    this.handleImgChange = this.handleImgChange.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
-    this.submitComment = this.submitComment.bind(this);
   }
 
   state = {
@@ -31,8 +27,7 @@ class Map extends React.Component {
     latitude: DEFAULT_LATITUDE,
     longitude: DEFAUlT_LONGITUDE,
     name: "",
-    description: "",
-    picture: ""
+    description: ""
   }
 
 
@@ -65,14 +60,8 @@ class Map extends React.Component {
     };
     navigator.geolocation.getCurrentPosition(success.bind(this), err.bind(this), config);
   }
-  handleChange = (e) => {
-    this.setState({ comment: e.target.value });
-  }
-  handleImgChange(event) {
-    this.setState({
-      picture: URL.createObjectURL(event.target.files[0])
-    });
-  }
+  
+ 
   handleNameChange(event) {
     this.setState({
       name: event.target.value
@@ -83,15 +72,7 @@ class Map extends React.Component {
       description: event.target.value
     });
   }
-  submitComment(e) {
-    e.preventDefault();
-    console.log(this.state.comment);
-  }
-  submitForm() {
-    var frm = document.getElementsByClassName('form')[0];
-    frm.reset();  // Reset all form data
-  }
-
+  
   deleteLocation(locationId) {
     deleteLocation(locationId);
     window.location.reload();
@@ -113,6 +94,7 @@ class Map extends React.Component {
 
       const iconFriend = new Icon({ iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41] })
       const iconUser = new Icon({ iconUrl: markerUser, iconSize: [40, 41], iconAnchor: [18, 41] })
+      const iconUserLast = new Icon({ iconUrl: markerLast, iconSize: [40, 41], iconAnchor: [18, 41] })
 
       return (
         <SessionContext.Consumer>
@@ -128,14 +110,15 @@ class Map extends React.Component {
               </Popup>
               </Marker>
               {this.props.locations.filter(l => l.userId == context.session.info.webId).map(loc =>
-                <Marker position={[loc.latitude, loc.longitude]} icon={iconFriend} >
+                <Marker position={[loc.latitude, loc.longitude]} icon={iconUserLast} >
                   <Popup>
-                    <h3 >{loc.name}</h3>
-                    <h4>{loc.description}</h4>
+                  <CombinedDataProvider thingUrl={loc.userId} datasetUrl={loc.userId}>
+                                    <a href={loc.userId}><Text property={FOAF.name.iri.value} /></a>
+                                </CombinedDataProvider>
+                    <h4 >{loc.name}</h4>
+                    <p>{loc.description}</p>
                     <p>{loc.latitude}, {loc.longitude}</p>
-                    {<img src={loc.picture} width="300px" alt="Depiction of the user coordinates"></img>}
-                    <p>{loc.comment}</p>
-                    <form onSubmit={this.handleSubmit}>
+                    <form>
                       <label>
                         Name:
                     <input type="text" id="name" className="modify" onChange={this.handleNameChange} />
@@ -143,10 +126,6 @@ class Map extends React.Component {
                       <label>
                         Description:
                     <input type="text" id="description" className="modify" onChange={this.handleDescriptionChange} />
-                      </label>
-                      <label>
-                        Picture:
-                    <input type="file" onChange={this.handleImgChange} accept=".png, .jpg, .jpeg" className="modify" id="picture" />
                       </label>
                     </form>
                     <button onClick={() => this.deleteLocation(loc._id)}>Delete</button>
@@ -157,11 +136,12 @@ class Map extends React.Component {
               {this.props.locations.filter(l => l.userId != context.session.info.webId).map(loc =>
                 <Marker position={[loc.latitude, loc.longitude]} icon={iconFriend} >
                   <Popup>
-                    <h3 >{loc.name}</h3>
-                    <h4>{loc.description}</h4>
+                  <CombinedDataProvider thingUrl={loc.userId} datasetUrl={loc.userId}>
+                                    <a href={loc.userId}><Text property={FOAF.name.iri.value} /></a>
+                                </CombinedDataProvider>
+                    <h2 >{loc.name}</h2>
+                    <p>{loc.description}</p>
                     <p>{loc.latitude}, {loc.longitude}</p>
-                    {<img src={loc.picture} width="300px" alt="Depiction of the user coordinates"></img>}
-                    <p>{loc.comment}</p>
                   </Popup>
                 </Marker>
               )}
