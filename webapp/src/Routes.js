@@ -1,11 +1,12 @@
 import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
 import DashboardPage from "./pages/dashboard";
 import FriendsPage from "./pages/friends";
 import SettingsPage from "./pages/settings";
 
-const Routes = () => {
+const Routes = (props) => {
+  console.log("ROUTER REDIRECTING WITH SESSION INFO: "+ JSON.stringify(props.session));
   return (
     <BrowserRouter>
       <Switch>
@@ -16,7 +17,11 @@ const Routes = () => {
           <DashboardPage />
         </Route>
         <Route path="/settings">
-          <SettingsPage/>
+          {
+            (props.session.info.isAdmin )
+            ? <SettingsPage session={props.session}/>
+            : <Redirect to="/dashboard" />
+          }
         </Route>
         <Route path="/">
           <DashboardPage />

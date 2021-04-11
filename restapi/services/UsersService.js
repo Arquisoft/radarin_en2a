@@ -1,7 +1,7 @@
 const User = require("../models/users")
 const FC = require("solid-file-client")
 const { Session } = require("@inrupt/solid-client-authn-node")
-const admins = ["https;//uo269911.inrupt.net/profile/card#me","https;//uo257247.inrupt.net/profile/card#me"]
+const admins = ["https://uo269911.inrupt.net/profile/card#me","https://uo257247.inrupt.net/profile/card#me"]
 const { FOAF } = require('@inrupt/vocab-common-rdf')
 const { getSolidDataset, getThing, getNamedNodeAll,  } = require('@inrupt/solid-client');
 const maxDistance = 5.0;
@@ -19,8 +19,11 @@ async function isRegistered(webId) {
 }
 
 function isAdmin(webId){
-    for(a in admins){
-        if (webId==a){
+    console.log("Checking if webId is admin: "+ webId);
+    for (let i = 0; i < admins.length; i++) {
+        let admin = admins[i];
+        if (webId===admin){
+            console.log("The user is admin!!");
             return true;
         }
     }

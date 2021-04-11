@@ -10,8 +10,8 @@ import Button from "react-bootstrap/Button";
 
 class SettingsPage extends React.Component {
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.userIndex = 0;
     this.state = {
       users: []
@@ -35,8 +35,9 @@ class SettingsPage extends React.Component {
     }
   }
 
-  async deleteUser(webId){
-    await deleteUserByWebId(webId);
+  async deleteUser(webId) {
+    let requestUserWebId = this.props.session.info.webId; // Who is deleting?
+    await deleteUserByWebId(requestUserWebId, webId);
     this.fetchUsers();
   }
 
@@ -65,7 +66,6 @@ class SettingsPage extends React.Component {
     return (
       <div>
           <h2>Admin Settings Page</h2>
-          
           {
           (this.state.users !== undefined)
           ?

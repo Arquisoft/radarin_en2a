@@ -43,6 +43,14 @@ router.delete("/user", async (req, res) => {
     if (!checkQueryParamsExist(req, res, ["webId"])) {
         return;
     }
+    
+    let requestUserWebId = req.body.requestUserWebId; // Who is deleting?
+    if(!UsersService.isAdmin(requestUserWebId))
+    {
+        res.status(400).send({ error: "Missing permission" });
+        return;
+    }
+
     await UsersService.deleteByWebId(req.query.webId);
     res.send({ status: "OK" });
 })

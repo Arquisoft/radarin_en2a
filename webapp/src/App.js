@@ -31,7 +31,7 @@ class App extends React.Component {
             <div className="App-menu"><MyMenu /></div>
 
             {/* Show a page depending on the current route */}
-            <Routes />
+            <Routes session={this.context.session} />
 
             <LogoutButton>
               <Button>
