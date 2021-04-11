@@ -1,36 +1,44 @@
 import React from 'react';
 import { Button, StyleSheet, Text, View, Platform, PermissionsAndroid, ToastAndroid } from 'react-native';
-import { addLocation, getUsers, addUser } from 'restapi-client';
+import { updateLastLocation } from 'restapi-client';
 import geoloc from 'react-native-geolocation-service';
+import { SessionContext } from './session/SessionContext';
 
 var userPrueba = 'https://uo269911.inrupt.net/profile/card#me';
 var userPrueba2 = 'https://uo257247.inrupt.net/profile/card#me';
 
 function Welcome(props) {
   return (
+   <SessionContext.Consumer> 
+    { context =>
     <View>
       <Text style={styles.center}>Hi, {props.name}!</Text>
-      <Button onPress={onButtonPress} title="Click Me" />
-      <Button onPress={getLocation} title = "Location"/>
+      {/* <Button onPress={onButtonPress} title="Click Me" /> */}
+      <Button onPress={() => getLocation(context.sessionId)} title = "Location"/>
     </View>
+    }
+    </SessionContext.Consumer>
   );
 }
 
 
 async function onButtonPress() {
-  const users = await getUsers();
-  alert(JSON.stringify(users));
+  // const users = await getUsers();
+  // alert(JSON.stringify(users));
 }
 
 
-function getLocation()
+function getLocation(sessionId)
 {
  
   fetchLocation(async (lat, long) => {
     console.log("Latitude is :", lat);
     console.log("Longitude is :", long);
-    await addUser(userPrueba).catch(()=>{})
-    addLocation(userPrueba, lat, long)
+    updateLastLocation(sessionId, lat, long)
+    //await addUser(userPrueba).catch(()=>{})
+
+
+    //addLocation(userPrueba, lat, long)
   });
  
 }

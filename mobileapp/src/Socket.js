@@ -12,20 +12,27 @@ const app = express();
  */
 
 
-let socket = new WebSocket(process.env.REACT_APP_API_URI.replace("http","ws").replace("api",""));
+let socket = null;
 
-socket.onmessage = function (event) {
-    try {
-        alert(JSON.parse(event.data));
-    } catch (error) {
-        console.log("Error on receiving mesage from restapi")
-    }
+export function connectSocket() {
+    socket = new WebSocket(process.env.REACT_APP_API_URI.replace("http","ws").replace("api",""));
+
+    socket.onmessage = function (event) {
+        try {
+            const message = JSON.parse(event.data);
+            if (message.type == "nearbyFriend") {
+                alert(`Friend is nearby\n${message.friendWebId}`);
+            }
+        } catch (error) {
+            console.log("Error on receiving mesage from restapi")
+        }
+        
+    };
     
-};
-
-socket.onerror = function (error) {
-    alert(`[error] ${error.message}`);
-};
+    socket.onerror = function (error) {
+        alert(`[error] ${error.message}`);
+    };
+}
 
 export function sendRegisterMessage(sessionId)   {
     socket.send(JSON.stringify({ type: "register", sessionId: sessionId }));
