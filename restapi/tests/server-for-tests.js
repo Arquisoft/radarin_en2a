@@ -8,7 +8,7 @@ const express = require("express")
 const cors = require('cors');
 const mongoose = require("mongoose")
 const api = require("../api") 
-
+const UsersService = require("../services/UsersService");
 
 
 module.exports.startdb = async () => {
@@ -18,7 +18,7 @@ module.exports.startdb = async () => {
     
 }
 
-module.exports.startserver = async () => {
+module.exports.startserver = async (usersToRegister) => {
     console.log("conecceting to database")
     await mongoose.connect("mongodb://127.0.0.1:27017/testdb?", { useNewUrlParser: true,useUnifiedTopology: true })
     console.log("connected")
@@ -31,6 +31,11 @@ module.exports.startserver = async () => {
 
     server = await app.listen(5000)
     console.log("Server has started!")
+    if (usersToRegister) {
+        usersToRegister.forEach(webId => {
+            UsersService.registerUser(webId);
+        });
+    }
     return app
 }
 
