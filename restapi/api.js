@@ -47,6 +47,13 @@ router.delete("/user",  async (req, res) => {
     res.send({status: "OK"});
 })
 
+// DEBUG FUNCTION
+router.post("/users/add", async (req, res) => {
+    const userWebId = req.body.userWebId;
+    await UsersService.registerUser(userWebId);
+    res.send({status: "OK"});
+})
+
 
 
 
