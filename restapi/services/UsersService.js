@@ -131,7 +131,7 @@ async function getNearFriends(session, latitude, longitude) {
 
         if(await isRegistered(id)){
             if(isNear(getDistance(latitude, longitude,coord.latitude, coord.longitude)))    {
-                nearFriends[i] = await(findByWebId(id));
+                nearFriends.push(await(findByWebId(id)));
             }
         }
 
