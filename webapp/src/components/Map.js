@@ -92,7 +92,8 @@ class Map extends React.Component {
   }
 
   deleteLocation(locationId) {
-    deleteLocation(locationId);
+    deleteLocation(locationId); 
+    window.location.reload();
   }
 
   render() {
@@ -117,7 +118,7 @@ class Map extends React.Component {
           {this.props.locations.map(loc =>
             <Marker position={[loc.latitude, loc.longitude]} icon={iconFriend} >
               <Popup>
-                <h3 name="id">{loc._id}</h3>
+                <h3 >{loc.name}</h3>
                 <h4>{loc.description}</h4>
                 <p>{loc.latitude}, {loc.longitude}</p>
                 <form onSubmit={this.handleSubmit}>
@@ -133,9 +134,9 @@ class Map extends React.Component {
                     Picture:
                     <input type="file" onChange={this.handleImgChange} accept=".png, .jpg, .jpeg" />
                   </label>
-                  <input type="submit" className="form" value="Upload" onclick="submitForm()" />
-                  <button onclick={this.deleteLocation(loc._id)}>Borrar</button>
+                  <input type="submit" className="form" value="Upload" onclick="submitForm()" />               
                 </form>
+                <button onClick={() => this.deleteLocation(loc._id)}>Borrar</button>
               </Popup>
             </Marker>
           )}
