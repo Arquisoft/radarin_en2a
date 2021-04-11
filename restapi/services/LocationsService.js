@@ -36,7 +36,7 @@ async function deleteLocation(locationId) {
 }
 
 async function modifyLocation(locationId, name, description, picture) {
-    await Location.findOneAndUpdate({ _id: locationId }, { $set: { name: name, description: description, picture: picture } });
+    await Location.findOneAndUpdate({ _id: locationId }, { $set: { name: name, description: description, picture: picture} });
 }
 
 
