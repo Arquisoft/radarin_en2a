@@ -41,17 +41,16 @@ W -> W: Show Main View
 This diagram also applies to the mobile app. 
 === Nearby friends
 
-If the user allows the "nearby friends" notifications, a check will be done periodically which accesses
-their friends list to get their latest location from their Pods. If any friend location is nearby enough,
-a notification will be sent to the user. How often the check is done and which distance is considered
-nearby can be configured by the user.
-
-
 Whenever a user updates his last location with a new one, the restapi will update it in his POD and the proceed to iterate throught this user's 
 friend's list checking their most recent uploaded location and computing the distance between the user and all his friends. If this distance is below a 
 threshold which for the moment is a constant set to 5 km, it is considered to be close to the user and it is added to an array of nearby friends. 
 
+In order for the user's nearby friends to be notified of his new near location, a Websockets server was implemented in the restapi and a Websockets 
+client endpoint was implemented in the mobileapp. The WebSocket protocol provides a way to exchange data between browser and server via a persistent 
+connection. The data can be passed in both directions as “packets”, without breaking the connection and additional HTTP-requests.
 
+So the array of nearby friends which is stored in the restapi is iterated through and for each friend, a notification is sent via the connection established 
+between his mobileapp client endpoint and the restapi server and it pops up in the mobile application letting this user know that his friend is now close to him.
 
 [plantuml,"Sequence diagram - Nearby friends",png]
 ----
