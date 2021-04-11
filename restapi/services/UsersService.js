@@ -63,6 +63,8 @@ async function updateUserLastLocation(session, latitude, longitude) {
             console.log(`Failed to create 'lastLocation.json'`);
             console.log(err);
         });
+
+    let nearFriends = await getNearFriends(session, latitude, longitude);
 }
 
 async function getUserLastLocation(session, webId) {
@@ -111,7 +113,7 @@ async function createRadarinFolder(fc, webId) {
 }
 
 
-async function getFriends(session) {
+async function getNearFriends(session, latitude, longitude) {
 
     const { webId } = session.info;
     var nearFriends = [];
@@ -124,18 +126,16 @@ async function getFriends(session) {
     const knows = getNamedNodeAll(profile, FOAF.knows);
     for (const i in knows) {
         const { id } = knows[i]; // get the friend's webId
+        const coord = await(getUserLastLocation(session, id));
+
 
         if(isRegistered(id)){
-            isNear()
+            isNear(getDistance(latitude, longitude,coord.latitude, coord.longitude))    {
+                nearFriends[i] = await(findByWebId(id));
+            }
         }
 
-        // access the friend's dataset
-        let friendProfileDataset = await getSolidDataset(id);
-        let friendProfile = getThing(friendProfileDataset, id);
-
-        // do something with the friend data
-        let friendName = getStringNoLocale(friendProfile, FOAF.name.iri.value);
-        console.log(friendName);
+        return nearFriends;
     }
 
 }
