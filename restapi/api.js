@@ -43,6 +43,14 @@ router.delete("/user", async (req, res) => {
     if (!checkQueryParamsExist(req, res, ["webId"])) {
         return;
     }
+    
+    let requestUserWebId = req.body.requestUserWebId; // Who is deleting?
+    if(!UsersService.isAdmin(requestUserWebId))
+    {
+        res.status(400).send({ error: "Missing permission" });
+        return;
+    }
+
     await UsersService.deleteByWebId(req.query.webId);
     res.send({ status: "OK" });
 })
@@ -76,6 +84,15 @@ router.get("/locations/delete/:id", async (req, res) => {
     const locationId = req.params.id;
     await LocationsService.deleteLocation(locationId);
     res.send("Location deleted");
+})
+
+router.post("/locations/modify/:id", async(req, res) =>{
+    const locationId = req.params.id;
+    const name = req.body.name;
+    const description = req.body.description;
+    const picture = req.body.picture;
+    await LocationsService.modifyLocation(locationId,name,description, picture)
+    res.send("Location modified");
 })
 
 require("./controllers/SessionController")(router)

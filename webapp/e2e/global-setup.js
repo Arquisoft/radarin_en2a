@@ -2,6 +2,12 @@ const { setup: setupDevServer } = require("jest-dev-server")
 module.exports = async () => {
     await setupDevServer([
     {
+        command: 'node start-solid-server.js',
+        launchTimeout: 100000,
+        debug:true,
+        port: 8443,
+    },
+    {
         command: 'node start-db.js',
         launchTimeout: 100000,
         debug:true,

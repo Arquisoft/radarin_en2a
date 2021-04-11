@@ -30,7 +30,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --coverage",
-    "test:e2e": "cd e2e && jest",
+    "test:e2e": "cd e2e && jest --forceExit --runInBand",
     "docs": "shx rm -rf build/docs && asciidoctor -D build/docs -a imagesdir=./images -r asciidoctor-diagram docs/index.adoc && shx cp -R docs/images build/docs",
     "eject": "react-scripts eject"
   },
@@ -58,7 +58,9 @@
     "jest-dev-server": "^4.4.0",
     "jest-environment-node": "^26.6.2",
     "jest-puppeteer": "^4.4.0",
-    "puppeteer": "^5.5.0",
-    "shx": "^0.3.3"
+    "puppeteer": "^8.0.0",
+    "shx": "^0.3.3",
+    "solid-server": "^5.6.6",
+    "supertest": "^6.1.3"
   }
 }

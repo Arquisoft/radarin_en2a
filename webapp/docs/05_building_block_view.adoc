@@ -3,41 +3,10 @@
 
 == Building Block View
 
-[role="arc42help"]
-****
-.Content
-The building block view shows the static decomposition of the system into building blocks (modules, components, subsystems, classes,
-interfaces, packages, libraries, frameworks, layers, partitions, tiers, functions, macros, operations,
-datas structures, ...) as well as their dependencies (relationships, associations, ...)
-
-This view is mandatory for every architecture documentation.
-In analogy to a house this is the _floor plan_.
-
-.Motivation
-Maintain an overview of your source code by making its structure understandable through
-abstraction.
-
-This allows you to communicate with your stakeholder on an abstract level without disclosing implementation details.
-
-.Form
-The building block view is a hierarchical collection of black boxes and white boxes
-(see figure below) and their descriptions.
-
-image:05_building_blocks-EN.png["Hierarchy of building blocks"]
-
-*Level 1* is the white box description of the overall system together with black
-box descriptions of all contained building blocks.
-
-*Level 2* zooms into some building blocks of level 1.
-Thus it contains the white box description of selected building blocks of level 1, together with black box descriptions of their internal building blocks.
-
-*Level 3* zooms into selected building blocks of level 2, and so on.
-****
-
 === Whitebox Overall System
 This is the overview diagram of the system:
 
-image::buildingblockview.png[]
+image::05_deployment_view_2.png[]
 
 === Scope and Context
 
@@ -72,14 +41,17 @@ application will store only the minimal information of the user needed.
 ==== Application
 
 ===== Motivation
-This is the structure that the code will have in our application.
+This is the structure that the code of our application. 
 
 ===== Contained building blocks
 [options="header",cols="1,2"]
+
+Even though the application is separated into mobileapp and web app, at this level it will treat them as a whole. We will specify those to levels in point <<Deployment View,7.1>>.
 |===
 |Name|Responsibility
 | Domain classes | Here we have some entities that will be used in the code.
 | Components | This is the presentation layer of our application, including also some logic.
+| restapi | It is the server we connect to to run our applications. 
 |===
 
 ==== Tests
@@ -94,6 +66,7 @@ Unit tests, acceptance tests and load tests will be implemented and will be run 
 | Load tests |  Tests to make the application work properly.
 | Acceptance tests |  Tests to make the application work properly.
 |===
+
 
 === Level 3
 

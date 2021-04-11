@@ -5,8 +5,8 @@ const {
 const UsersService = require("../services/UsersService")
 
 // needed for development because inside an Android emulator the machine's localhost is accessed through 10.0.2.2
-const REDIRECT_WEBAPP_BASE_URL = (process.env.REACT_APP_API_URI || 'http://localhost:5000/api') + "/session/login/redirect";
-const REDIRECT_MOBILEAPP_BASE_URL = (process.env.REACT_APP_API_URI || 'http://10.0.2.2:5000/api') + "/session/login/redirect";
+const REDIRECT_WEBAPP_BASE_URL = (process.env.REST_API_URI || 'http://localhost:5000/api') + "/session/login/redirect";
+const REDIRECT_MOBILEAPP_BASE_URL = (process.env.REST_API_URI || 'http://10.0.2.2:5000/api') + "/session/login/redirect";
 
 module.exports = function(router) {
     router.get("/session/login", async (req, res) => {

@@ -7,9 +7,11 @@ export async function getUsers() {
     return await checkResponse(response)
 } 
 
-export async function deleteUserByWebId(webId) {
+export async function deleteUserByWebId(requestUserWebId, webId) {
     let response = await fetch(getApiEndPoint() + `/user?webId=${webId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({'requestUserWebId': requestUserWebId}) // Who is deleting?
     });
     return await checkResponse(response)
 }
@@ -53,6 +55,15 @@ export async function addLocation(userWebId, latitude, longitude) {
 
 export async function deleteLocation(locationId) {
     let response = await fetch(getApiEndPoint() + `/locations/delete/${locationId}`)
+    return await checkResponse(response)
+
+}
+export async function modifyLocation(locationId, name, description, picture) {
+    let response = await fetch(getApiEndPoint() + `/locations/modify/${locationId}`, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({'locationId': locationId, 'name': name, 'description': description, 'picture': picture})
+    })
     return await checkResponse(response)
 }
 

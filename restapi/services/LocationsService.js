@@ -20,6 +20,7 @@ async function add(userWebId, latitude, longitude) {
         const newLocation = new Location({
             latitude: latitude,
             longitude: longitude,
+            userId: userWebId,
         })
         await newLocation.save().then(loc => {
             UsersService.addLocationToUser(user._id, loc._id)
@@ -34,10 +35,15 @@ async function deleteLocation(locationId) {
     await Location.deleteOne({ _id: locationId });
 }
 
+async function modifyLocation(locationId, name, description, picture) {
+    await Location.findOneAndUpdate({ _id: locationId }, { $set: { name: name, description: description, picture: picture} });
+}
+
 
 module.exports = {
     getAll,
     add,
     deleteLocation,
+    modifyLocation,
 
 }

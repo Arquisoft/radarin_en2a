@@ -1,28 +1,6 @@
 [[section-solution-strategy]]
 == Solution Strategy
 
-
-[role="arc42help"]
-****
-.Contents
-A short summary and explanation of the fundamental decisions and solution strategies, that shape the system's architecture. These include
-
-* technology decisions
-* decisions about the top-level decomposition of the system, e.g. usage of an architectural pattern or design pattern
-* decisions on how to achieve key quality goals
-* relevant organizational decisions, e.g. selecting a development process or delegating certain tasks to third parties.
-
-.Motivation
-These decisions form the cornerstones for your architecture. They are the basis for many other detailed decisions or implementation rules.
-
-.Form
-Keep the explanation of these key decisions short.
-
-Motivate what you have decided and why you decided that way,
-based upon your problem statement, the quality goals and key constraints.
-Refer to details in the following sections.
-****
-
 === Solutions
 
 The following table describes the solutions chosen to achieve the quality goals specified in section <<Quality Goals,1.2>>.
@@ -36,15 +14,17 @@ The following table describes the solutions chosen to achieve the quality goals 
 * https://react-bootstrap.github.io[React-Bootstrap] with its ready-made styles to give the web app a familiar look for the users.
 * https://github.com/inrupt/solid-ui-react[solid-ui-react] to provide React components to interact with Solid Pods.
 * https://www.openstreetmap.org[OpenStreetMap] for displaying interactive maps, through the https://leafletjs.com[Leaflet] library.
+* https://www.npmjs.com/package/@inrupt/solid-client[inrupt-solid client] for accessing data and managing permissions on data stored in Solid Pods.
+* https://docs.inrupt.com/developer-tools/javascript/client-libraries/reference/vocab-rdf/[@inrupt/vocab-common-rdf] to provide convenience objects (as JavaScript classes) that contain static constants for common identifiers used across Solid. 
+* https://github.com/no23reason/react-geolocated[react-geolocated] ,   a high order component for using the geolocation API.
 |Performance a|
 * https://nodejs.org[Node.js] for the server using an asynchronous coding style.
 * https://reactjs.org[React] framework which minimizes UI update operations and provides profiling tools.
+* https://www.mongodb.com[MongoDB] database used to store locations, avoiding permission problems. 
 |Clean code a|
 * https://reactnative.dev[React Native] to be able to share code between the web and mobile apps.
-* Model View Controller (MVC) design pattern because the members of the team are experienced with it.
 * React components using classes instead of hooks due to the familiarity of the team with Object Oriented Programming (OOP).
 |Testability a|
-* MVC design with its separation of concerns that facilitates unit testing.
 * https://jestjs.io/[Jest] test runner which integrates well with React through https://testing-library.com/docs/react-testing-library/intro/[React Testing Library].
 |===
  

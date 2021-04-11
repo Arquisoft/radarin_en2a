@@ -10,6 +10,9 @@ webapp/restapi-client
 /webapp/coverage
 /restapi/coverage
 /mobileapp/coverage
+/webapp/e2e/solid-server/*
+!/webapp/e2e/solid-server/cert.pem
+!/webapp/e2e/solid-server/key.pem
 
 # production
 webapp/build

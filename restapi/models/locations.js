@@ -7,6 +7,8 @@ const schema = mongoose.Schema({
     longitude: Number,   // in degrees
     name: String,
     description: String,
+    userId: String,
+    picture: String,
     // picture: Image
 })
 
