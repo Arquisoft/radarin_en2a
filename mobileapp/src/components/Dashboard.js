@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, StyleSheet, Text, View, Platform, PermissionsAndroid, ToastAndroid } from 'react-native';
-import { updateLastLocation } from 'restapi-client';
+import { addLocation, updateLastLocation } from 'restapi-client';
 import geoloc from 'react-native-geolocation-service';
 import { SessionContext } from './session/SessionContext';
 
@@ -34,6 +34,16 @@ class Dashboard extends React.Component {
   }
 
 
+  async addLocation()
+  {
+    fetchLocation(async (lat, long) => {
+      console.log("Saving user location: " + lat + ", " + long + " [" + this.props.context.sessionId + "]");
+      // TODO: use session for adding locations
+      addLocation(this.props.context.webId, lat, long);
+    });
+  }
+
+
   async updateLocation()
   {
     fetchLocation(async (lat, long) => {
@@ -58,6 +68,7 @@ class Dashboard extends React.Component {
 
     <View>
       <Button onPress={this.getLocation.bind(this)} title = "Refresh Location"/>
+      <Button onPress={this.addLocation.bind(this)} title = "Save Location"/>
       <Button onPress={this.updateLocation.bind(this)} title = "Update Last Location"/>
     </View>
     </>
