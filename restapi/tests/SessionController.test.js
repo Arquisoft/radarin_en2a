@@ -66,7 +66,6 @@ describe('SessionController', () => {
         const redirectUrl = new URL(response.header.location);
         expect(redirectUrl.pathname).toBe("/api/session/login/redirect");
         expect(redirectUrl.searchParams.get("sessionId")).toBe("test");
-        expect(redirectUrl.searchParams.get("redirectUrl")).toBe(finalRedirectUrl);
 
         // and a session was created
         expect(Auth.Session.mock.instances.length).toBe(1);
@@ -75,12 +74,15 @@ describe('SessionController', () => {
     });
 
     it('can do final redirect', async () => {
+        Auth.Session.mockImplementation(fakeNewSession)
         Auth.getSessionFromStorage.mockImplementation(fakeGetSessionFromStorage);
 
-        const sessionId = "test";
+        const oidcIssuer = "https://inrupt.net";
         const finalRedirectUrl = "https://localhost:3000";
+        const sessionId = "test";
+        await request(app).get(`/api/session/login?oidcIssuer=${oidcIssuer}&redirectUrl=${finalRedirectUrl}`);
 
-        const response = await request(app).get(`/api/session/login/redirect?sessionId=${sessionId}&redirectUrl=${finalRedirectUrl}`);
+        const response = await request(app).get(`/api/session/login/redirect?sessionId=${sessionId}`);
         // check that the final redirect response is correct
         expect(response.statusCode).toBe(302);
         expect(response.redirect).toBe(true);
@@ -99,9 +101,8 @@ describe('SessionController', () => {
         Auth.getSessionFromStorage.mockImplementation(fakeGetSessionFromStorage);
 
         const sessionId = "invalid";
-        const finalRedirectUrl = "https://localhost:3000";
 
-        const response = await request(app).get(`/api/session/login/redirect?sessionId=${sessionId}&redirectUrl=${finalRedirectUrl}`);
+        const response = await request(app).get(`/api/session/login/redirect?sessionId=${sessionId}`);
         // check that the request failed
         expect(response.statusCode).toBe(400);
 
