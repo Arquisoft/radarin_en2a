@@ -15,7 +15,7 @@ const app = express();
 let socket = null;
 
 export function connectSocket() {
-    socket = new WebSocket(process.env.REACT_APP_API_URI.replace("http","ws").replace("api",""));
+    socket = new WebSocket(process.env.REACT_APP_API_URI.replace("http","ws").replace("/api","/"));
 
     socket.onmessage = function (event) {
         try {

@@ -8,6 +8,8 @@ const UsersService = require("../services/UsersService")
 const REDIRECT_WEBAPP_BASE_URL = (process.env.REST_API_URI || 'http://localhost:5000/api') + "/session/login/redirect";
 const REDIRECT_MOBILEAPP_BASE_URL = (process.env.REST_API_URI || 'http://10.0.2.2:5000/api') + "/session/login/redirect";
 
+const finalRedirectsBySessionId = {}
+
 module.exports = function(router) {
     router.get("/session/login", async (req, res) => {
         if (!checkQueryParamsExist(req, res, ["redirectUrl", "oidcIssuer"])) {
@@ -15,9 +17,9 @@ module.exports = function(router) {
         }
 
         const session = new Session();
+        finalRedirectsBySessionId[session.info.sessionId] = req.query.redirectUrl;
         const redirectUrl = new URL(req.query["mobile"] ? REDIRECT_MOBILEAPP_BASE_URL : REDIRECT_WEBAPP_BASE_URL);
         redirectUrl.searchParams.append("sessionId", session.info.sessionId);
-        redirectUrl.searchParams.append("redirectUrl", req.query.redirectUrl);
 
         await session.login({
             redirectUrl: redirectUrl.href,
@@ -33,7 +35,7 @@ module.exports = function(router) {
     });
 
     router.get("/session/login/redirect", async (req, res) => {
-        if (!checkQueryParamsExist(req, res, ["sessionId", "redirectUrl"])) {
+        if (!checkQueryParamsExist(req, res, ["sessionId"])) {
             return;
         }
 
@@ -48,8 +50,9 @@ module.exports = function(router) {
                 await UsersService.registerUser(info.webId);
             }
 
-            const redirectUrl = new URL(req.query.redirectUrl);
+            const redirectUrl = new URL(finalRedirectsBySessionId[session.info.sessionId]);
             redirectUrl.searchParams.append("sessionId", info.sessionId);
+            delete finalRedirectsBySessionId[session.info.sessionId];
             res.redirect(redirectUrl.href);
         } 
     });
