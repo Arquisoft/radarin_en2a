@@ -1,11 +1,7 @@
 import React from 'react';
-import { Button, StyleSheet, Text, View, Platform, PermissionsAndroid, ToastAndroid } from 'react-native';
+import { Button, StyleSheet, Text, View, Platform, PermissionsAndroid, ToastAndroid, Switch } from 'react-native';
 import { addLocation, updateLastLocation } from 'restapi-client';
-import geoloc from 'react-native-geolocation-service';
-import { SessionContext } from './session/SessionContext';
-
-var userPrueba = 'https://uo269911.inrupt.net/profile/card#me';
-var userPrueba2 = 'https://uo257247.inrupt.net/profile/card#me';
+import { fetchLocation, isBackgroundLocationSharingRunning, startBackgroundLocationSharing, stopBackgroundLocationSharing } from '../GeolocationService';
 
 class Dashboard extends React.Component {
 
@@ -13,13 +9,25 @@ class Dashboard extends React.Component {
       super(props);
 
       this.state = {
-        location: undefined
+        location: undefined,
+        isSharingLocation: isBackgroundLocationSharingRunning(),
       }
   }
 
   componentDidMount() {
     this.getLocation();
   }
+
+  async setIsSharingLocation(value) {
+    if (value) {
+      await startBackgroundLocationSharing(this.props.context.sessionId);
+    } else {
+      await stopBackgroundLocationSharing();
+    }
+
+    this.setState({ isSharingLocation: isBackgroundLocationSharingRunning() });
+  }
+
 
   getLocation()
   {
@@ -33,26 +41,16 @@ class Dashboard extends React.Component {
     });
   }
 
-
   async addLocation()
   {
     fetchLocation(async (lat, long) => {
       console.log("Saving user location: " + lat + ", " + long + " [" + this.props.context.sessionId + "]");
       // TODO: use session for adding locations
-      addLocation(this.props.context.webId, lat, long);
+      if (lat !== null && long !== null) {
+        addLocation(this.props.context.webId, lat, long);
+      }
     });
   }
-
-
-  async updateLocation()
-  {
-    fetchLocation(async (lat, long) => {
-      console.log("Updating user last location: " + lat + ", " + long + " [" + this.props.context.sessionId + "]");
-      updateLastLocation(this.props.context.sessionId, lat, long);
-    });
-  }
-
-
 
   render() {
   return (
@@ -69,80 +67,11 @@ class Dashboard extends React.Component {
     <View>
       <Button onPress={this.getLocation.bind(this)} title = "Refresh Location"/>
       <Button onPress={this.addLocation.bind(this)} title = "Save Location"/>
-      <Button onPress={this.updateLocation.bind(this)} title = "Update Last Location"/>
+      <Switch onValueChange={this.setIsSharingLocation.bind(this)} value={this.state.isSharingLocation}/>
     </View>
     </>
   )}
 }
-
-
-
-async function fetchLocation(callback) {
-
-  const permission = await hasLocationPermission();
-  if (!permission)
-  {
-    console.log("We have no permission!");
-    return;
-  }
-
-  let success = (position) => {
-    console.log("GEOLOCATION OBTAINED: ", position);
-    callback(position.coords.latitude, position.coords.longitude);
-  };
-  let err = (msg) => {
-    console.log("COULD NOT FIND LOCATION: ", msg);
-    console.log("Defaulting to Gelateria Il Doge: (45.437781234170174, 12.323313772328168)");
-    callback(45.437781234170174, 12.323313772328168);
-
-  };
-  let config = { 
-    enableHighAccuracy: false, 
-    timeout: 20000
-  };
-  geoloc.getCurrentPosition(success, err, config);
-
-}
-async function hasLocationPermission() {
-  
-  if (Platform.OS === 'android' && Platform.Version < 23) {
-    return true;
-  }
-
-  const hasPermission = await PermissionsAndroid.check(
-    PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-  );
-
-  if (hasPermission) {
-    return true;
-  }
-
-  const status = await PermissionsAndroid.request(
-    PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-  );
-
-  if (status === PermissionsAndroid.RESULTS.GRANTED) {
-    return true;
-  }
-
-  if (status === PermissionsAndroid.RESULTS.DENIED) {
-    ToastAndroid.show(
-      'Location permission denied by user.',
-      ToastAndroid.LONG,
-    );
-  } else if (status === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
-    ToastAndroid.show(
-      'Location permission revoked by user.',
-      ToastAndroid.LONG,
-    );
-  }
-
-  return false;
-};
-
-
-
-
 
 const styles = StyleSheet.create({
   center: {

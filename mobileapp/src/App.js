@@ -14,16 +14,12 @@ import {
   View,
   Text,
   Image,
-  StatusBar,
-  Linking,
+  StatusBar
 } from 'react-native';
 
 import {
   Header,
-  LearnMoreLinks,
   Colors,
-  DebugInstructions,
-  ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
 import Dashboard from './components/Dashboard';
