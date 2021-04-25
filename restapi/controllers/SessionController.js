@@ -45,6 +45,13 @@ module.exports = function(router) {
             res.status(400).send({error: `No session stored for ID ${req.query.sessionId}`});
         } else {
             const requestFullUrl = getRequestFullUrl(req);
+            if (process.env.REST_API_URI && process.env.REST_API_URI.startsWith("https://") && requestFullUrl.startsWith("http://")) {
+                // When deployed in Heroku, it uses HTTPS but even though we specify https:// in the redirectUrl parameter in session.login, the identity provider redirects using HTTP
+                // so then session.handleIncomingRedirect sees that the URL is different since it has http:// instead of https:// and fails with `OPError: invalid_grant (Mismatching redirect uri)`.
+                // Workaround by replacing it back to https://.
+                requestFullUrl = requestFullUrl.replace("http://", "https://");
+            }
+
             console.log("req.protocol:", req.protocol);
             console.log("req.secure:", req.secure);
             console.log("req.connection.encrypted:", req.connection.encrypted);
