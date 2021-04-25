@@ -45,6 +45,9 @@ module.exports = function(router) {
             res.status(400).send({error: `No session stored for ID ${req.query.sessionId}`});
         } else {
             const requestFullUrl = getRequestFullUrl(req);
+            console.log("req.protocol:", req.protocol);
+            console.log("req.secure:", req.secure);
+            console.log("req.connection.encrypted:", req.connection.encrypted);
             console.log("Reconstructed redirect URL:", requestFullUrl);
             let info;
             try {
