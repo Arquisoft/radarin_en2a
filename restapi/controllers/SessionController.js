@@ -21,6 +21,7 @@ module.exports = function(router) {
         const redirectUrl = new URL(req.query["mobile"] ? REDIRECT_MOBILEAPP_BASE_URL : REDIRECT_WEBAPP_BASE_URL);
         redirectUrl.searchParams.append("sessionId", session.info.sessionId);
 
+        console.log("Initial redirect URL:", redirectUrl.href);
         await session.login({
             redirectUrl: redirectUrl.href,
             oidcIssuer: req.query.oidcIssuer,
@@ -41,9 +42,20 @@ module.exports = function(router) {
 
         const session = await getSessionFromStorage(req.query.sessionId);
         if (session === undefined) {
-            res.status(400).send({error: `No session stored for ID ${req.query.sessionId}`})
+            res.status(400).send({error: `No session stored for ID ${req.query.sessionId}`});
         } else {
-            const info = await session.handleIncomingRedirect(getRequestFullUrl(req));
+            const requestFullUrl = getRequestFullUrl(req);
+            console.log("Reconstructed redirect URL:", requestFullUrl);
+            const info = await session.handleIncomingRedirect(requestFullUrl)
+                                      .catch(err => {
+                                          console.log("session.handleIncomingRedirect failed:", err);
+                                          res.status(400).send({error: `session.handleIncomingRedirect failed for ID ${req.query.sessionId}`});
+                                          return null;
+                                      });
+
+            if (info === null) {
+                return;
+            }
 
             // register the user if it is the first time logging in
             if (info.isLoggedIn && !(await UsersService.isRegistered(info.webId))) {
