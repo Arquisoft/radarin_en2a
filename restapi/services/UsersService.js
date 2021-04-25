@@ -39,7 +39,8 @@ async function findByWebId(webId) {
 }
 
 async function deleteByWebId(webId) {
-    return await User.findOneAndRemove({ webId: webId })
+    const user = await findByWebId(webId);
+    await user.remove();
 }
 
 async function addLocationToUser(userId, locationId) {
