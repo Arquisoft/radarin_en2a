@@ -21,7 +21,6 @@ module.exports = function(router) {
         const redirectUrl = new URL(req.query["mobile"] ? REDIRECT_MOBILEAPP_BASE_URL : REDIRECT_WEBAPP_BASE_URL);
         redirectUrl.searchParams.append("sessionId", session.info.sessionId);
 
-        console.log("Initial redirect URL:", redirectUrl.href);
         await session.login({
             redirectUrl: redirectUrl.href,
             oidcIssuer: req.query.oidcIssuer,
@@ -52,10 +51,6 @@ module.exports = function(router) {
                 requestFullUrl = requestFullUrl.replace("http://", "https://");
             }
 
-            console.log("req.protocol:", req.protocol);
-            console.log("req.secure:", req.secure);
-            console.log("req.connection.encrypted:", req.connection.encrypted);
-            console.log("Reconstructed redirect URL:", requestFullUrl);
             let info;
             try {
                 info = await session.handleIncomingRedirect(requestFullUrl);
