@@ -46,14 +46,12 @@ module.exports = function(router) {
         } else {
             const requestFullUrl = getRequestFullUrl(req);
             console.log("Reconstructed redirect URL:", requestFullUrl);
-            const info = await session.handleIncomingRedirect(requestFullUrl)
-                                      .catch(err => {
-                                          console.log("session.handleIncomingRedirect failed:", err);
-                                          res.status(400).send({error: `session.handleIncomingRedirect failed for ID ${req.query.sessionId}`});
-                                          return null;
-                                      });
-
-            if (info === null) {
+            let info;
+            try {
+                info = await session.handleIncomingRedirect(requestFullUrl);
+            } catch (err) {
+                console.log("session.handleIncomingRedirect failed:", err);
+                res.status(400).send({error: `session.handleIncomingRedirect failed for ID ${req.query.sessionId}`});
                 return;
             }
 
