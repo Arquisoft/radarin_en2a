@@ -8,10 +8,14 @@ export async function getUsers() {
 } 
 
 export async function deleteUserByWebId(requestUserWebId, webId) {
-    let response = await fetch(getApiEndPoint() + `/user?webId=${webId}`, {
+    console.log("[api::deleteUserByWebId] DELETING USER WITH WEBID: '" + webId + "'");
+    let response = await fetch(getApiEndPoint() + "/user", {
         method: 'DELETE',
         headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({'requestUserWebId': requestUserWebId}) // Who is deleting?
+        body: JSON.stringify({
+            'webId': webId, // Who is being deleted?
+            'requestUserWebId': requestUserWebId // Who is deleting?
+        })
     });
     return await checkResponse(response)
 }

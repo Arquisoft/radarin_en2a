@@ -36,17 +36,18 @@ class SettingsPage extends React.Component {
   }
 
   async deleteUser(webId) {
+
+    let users = await getUsers();
+    console.log("    USERS: " + users.map((user, i) => user.webId));
+
+
+    console.log("REMOVING USER: " + webId)
     let requestUserWebId = this.props.session.info.webId; // Who is deleting?
     await deleteUserByWebId(requestUserWebId, webId);
     this.fetchUsers();
-  }
-
-  async createUser() {
-    let webId = "myUser_" + this.userIndex;
-    console.log("CREATING DUMMY USER: " + webId)
-    await _registerUser(webId);
-    this.userIndex = this.userIndex+1;
-    this.fetchUsers();
+    
+    let usersAfter = await getUsers();
+    console.log("    USERS AFTER: " + usersAfter.map((user, i) => user.webId));
   }
 
 
@@ -56,8 +57,12 @@ class SettingsPage extends React.Component {
     let deleteFunc = this.deleteUser.bind(this);// Because JavaScript, we have to use this callback with bind(this)
     return (
         <ListGroup.Item id={i} key={i}>
-            <a href={user.webId}>{user.webId}</a> | 
-            <Button onClick={() => deleteFunc(user.webId)}>Delete user</Button>
+            <a href={user.webId}>{user.webId}</a> 
+            
+            {(user.webId === this.props.session.info.webId) /* Dont delete ourselves!*/
+              ? <></>
+              : <Button onClick={() => deleteFunc(user.webId)}>Delete user</Button>
+            }
         </ListGroup.Item>
     );
   }
@@ -74,7 +79,6 @@ class SettingsPage extends React.Component {
               {/*Because JavaScript, we have to use this callback with bind(this)*/}
               {this.state.users.map(this.mapUsers.bind(this))}
             </ListGroup>
-            <Button onClick={() => this.createUser()}>Create dummy user</Button>
           </>
           :
           <></>
