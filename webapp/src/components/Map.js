@@ -20,6 +20,7 @@ class Map extends React.Component {
     super(props)
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+    this.handlePictureChange = this.handlePictureChange.bind(this);
   }
 
   state = {
@@ -27,7 +28,8 @@ class Map extends React.Component {
     latitude: DEFAULT_LATITUDE,
     longitude: DEFAUlT_LONGITUDE,
     name: "",
-    description: ""
+    description: "",
+    picture: ""
   }
 
 
@@ -60,8 +62,8 @@ class Map extends React.Component {
     };
     navigator.geolocation.getCurrentPosition(success.bind(this), err.bind(this), config);
   }
-  
- 
+
+
   handleNameChange(event) {
     this.setState({
       name: event.target.value
@@ -72,7 +74,12 @@ class Map extends React.Component {
       description: event.target.value
     });
   }
-  
+  handlePictureChange(event) {
+    this.setState({
+      picture: event.target.value
+    });
+  }
+
   deleteLocation(locationId) {
     deleteLocation(locationId);
     window.location.reload();
@@ -112,9 +119,10 @@ class Map extends React.Component {
               {this.props.locations.filter(l => l.userId === context.session.info.webId).map(loc =>
                 <Marker position={[loc.latitude, loc.longitude]} icon={iconUserLast} >
                   <Popup>
-                  <CombinedDataProvider thingUrl={loc.userId} datasetUrl={loc.userId}>
-                                    <a href={loc.userId}><Text property={FOAF.name.iri.value} /></a>
-                                </CombinedDataProvider>
+                    <CombinedDataProvider thingUrl={loc.userId} datasetUrl={loc.userId}>
+                      <a href={loc.userId}><Text property={FOAF.name.iri.value} /></a>
+                    </CombinedDataProvider>
+                    <img src={loc.picture} width="300"></img>
                     <h4 >{loc.name}</h4>
                     <p>{loc.description}</p>
                     <p>{loc.latitude}, {loc.longitude}</p>
@@ -127,6 +135,10 @@ class Map extends React.Component {
                         Description:
                     <input type="text" id="description" className="modify" onChange={this.handleDescriptionChange} />
                       </label>
+                      <label>
+                        Photo URL:
+                    <input type="text" id="picture" className="modify" onChange={this.handlePictureChange} />
+                      </label>
                     </form>
                     <button onClick={() => this.deleteLocation(loc._id)}>Delete</button>
                     <button onClick={() => this.modifyLocation(loc._id)}>Modify</button>
@@ -136,9 +148,9 @@ class Map extends React.Component {
               {this.props.locations.filter(l => l.userId !== context.session.info.webId).map(loc =>
                 <Marker position={[loc.latitude, loc.longitude]} icon={iconFriend} >
                   <Popup>
-                  <CombinedDataProvider thingUrl={loc.userId} datasetUrl={loc.userId}>
-                                    <a href={loc.userId}><Text property={FOAF.name.iri.value} /></a>
-                                </CombinedDataProvider>
+                    <CombinedDataProvider thingUrl={loc.userId} datasetUrl={loc.userId}>
+                      <a href={loc.userId}><Text property={FOAF.name.iri.value} /></a>
+                    </CombinedDataProvider>
                     <h2 >{loc.name}</h2>
                     <p>{loc.description}</p>
                     <p>{loc.latitude}, {loc.longitude}</p>
