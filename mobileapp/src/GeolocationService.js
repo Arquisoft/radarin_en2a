@@ -2,6 +2,7 @@ import { Platform, PermissionsAndroid, Rationale, ToastAndroid } from 'react-nat
 import geoloc from 'react-native-geolocation-service';
 import { updateLastLocation } from 'restapi-client';
 import BackgroundService from "react-native-background-actions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export async function fetchLocation(callback) {
 
@@ -26,6 +27,22 @@ export async function fetchLocation(callback) {
         timeout: 20000
     };
     geoloc.getCurrentPosition(success, err, config);
+}
+
+const backgroundLocationSharingKey = "background-location-sharing";
+
+export async function autoStartBackgroundLocationSharing(sessionId) {
+    let start = false;
+    try {
+        const value = await AsyncStorage.getItem(backgroundLocationSharingKey);
+        start = value === "true";
+    } catch(err) {
+        console.log(`failed to read '${backgroundLocationSharingKey}':`, err);
+    }
+
+    if (start) {
+        await startBackgroundLocationSharing(sessionId);
+    }
 }
 
 export async function startBackgroundLocationSharing(sessionId) {
@@ -55,10 +72,23 @@ export async function startBackgroundLocationSharing(sessionId) {
             sessionId: sessionId,
         }
     };
-    await BackgroundService.start(backgroundLocationSharingTask, taskOptions)
+
+    try {
+        await AsyncStorage.setItem(backgroundLocationSharingKey, "true");
+    } catch (err) {
+        console.log(`failed to save '${backgroundLocationSharingKey}':`, err);
+    }
+
+    await BackgroundService.start(backgroundLocationSharingTask, taskOptions);
 }
 
 export async function stopBackgroundLocationSharing() {
+    try {
+        await AsyncStorage.setItem(backgroundLocationSharingKey, "false");
+    } catch (err) {
+        console.log(`failed to save '${backgroundLocationSharingKey}':`, err);
+    }
+
     await BackgroundService.stop();
 }
 
