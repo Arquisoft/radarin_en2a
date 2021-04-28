@@ -29,3 +29,7 @@ jest.mock('@react-native-async-storage/async-storage', () => {
         removeItem: jest.fn(),
     };
 });
+
+jest.mock('@react-native-async-storage/async-storage');
+
+jest.mock('./components/session/SessionProvider');
