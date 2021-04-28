@@ -9,14 +9,11 @@ class Dashboard extends React.Component {
       super(props);
 
       this.state = {
-        location: undefined,
         isSharingLocation: false,
       }
   }
 
   async componentDidMount() {
-    this.getLocation();
-
     await autoStartBackgroundLocationSharing(this.props.context.sessionId);
     this.setState({ isSharingLocation: isBackgroundLocationSharingRunning() });
   }
@@ -29,19 +26,6 @@ class Dashboard extends React.Component {
     }
 
     this.setState({ isSharingLocation: isBackgroundLocationSharingRunning() });
-  }
-
-
-  getLocation()
-  {
-    this.setState({location: undefined});
-
-    fetchLocation(async (lat, long) => {
-      this.setState({location: {
-        latitude: lat,
-        longitude: long
-      }});
-    });
   }
 
   async addLocation()
@@ -60,17 +44,9 @@ class Dashboard extends React.Component {
     <>
     <View>
       <Text style={styles.center}>Welcome {this.props.name}!</Text>
-      {
-        (this.state.location !== undefined)
-        ? <Text style={styles.center}>Current location: ({this.state.location.latitude}, {this.state.location.longitude})</Text>
-        : <Text style={styles.center}>Fetching location...</Text>
-      }
     </View>
 
     <View style={styles.container}>
-      <View style={styles.singleComponentRow}>
-        <Button onPress={this.getLocation.bind(this)} title = "Refresh Location"/>
-      </View>
       <View style={styles.singleComponentRow}>
         <Button onPress={this.addLocation.bind(this)} title = "Save Location"/>
       </View>
