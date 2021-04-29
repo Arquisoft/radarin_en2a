@@ -1,7 +1,6 @@
 import React from 'react';
 
 import '../App.css';
-import UserList from "../components/UserList";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { getUsers, getLocations } from 'restapi-client';
 import Map from "../components/Map";
@@ -52,19 +51,9 @@ class DashboardPage extends React.Component {
     <div>
         <h2>Home Page</h2>
         <div className="App-content">
-
             <Map locations = {this.state.locations}/>
-                {
-                    (this.state.users !== undefined)
-                    ? <UserList users={this.state.users} />
-                    : <></>
-                }
-                
-                <a className="App-link"
-                href="https://github.com/Arquisoft/radarin_en2a"
-                target="_blank"
-                rel="noopener noreferrer">Source code</a>
         </div>
+        
     </div>
   );
 }

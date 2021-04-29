@@ -38,17 +38,6 @@ class MyMenu extends React.Component {
         // you can use your own custom Icon component as well
         // icon is optional
         elemBefore: () => <Icon name="users" />,
-      },
-      {
-        title: 'Comments',
-        itemId: '/management',
-        elemBefore: () => <Icon name="message-circle" />,
-        
-      },
-      {
-        title: 'Alerts',
-        itemId: '/another',
-        elemBefore: () => <Icon name="bell" />,
       }];
 
     if (isAdmin) {
