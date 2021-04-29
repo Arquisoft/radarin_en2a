@@ -1,26 +1,38 @@
 import React from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import "../Map.css";
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import markerUser from "../marker.png"
 import markerLast from "../marker-last.png"
 import { Icon } from 'leaflet'
-import { deleteLocation, modifyLocation } from 'restapi-client';
+import { addLocation, deleteLocation, modifyLocation } from 'restapi-client';
 import { SessionContext } from '@inrupt/solid-ui-react';
 import { FOAF } from '@inrupt/lit-generated-vocab-common';
 import { CombinedDataProvider, Text } from '@inrupt/solid-ui-react';
-
 const DEFAULT_LATITUDE = 45.437781234170174; //43.36029;
 const DEFAUlT_LONGITUDE = 12.323313772328168;//-5.84476;
 
 
+function MyComponent({ webId }) {
+  
+  const map = useMapEvents({
+    click: (e) => {
+      const { lat, lng } = e.latlng; 
+      {addLocation(webId, lat, lng)}
+      window.location.reload();
+    }
+  });
+  return null;
+
+}
 class Map extends React.Component {
   constructor(props) {
     super(props)
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.handlePictureChange = this.handlePictureChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   state = {
@@ -29,7 +41,8 @@ class Map extends React.Component {
     longitude: DEFAUlT_LONGITUDE,
     name: "",
     description: "",
-    picture: ""
+    picture: "",
+
   }
 
 
@@ -80,6 +93,10 @@ class Map extends React.Component {
     });
   }
 
+  handleClick(e) {
+    this.setState({ lastClicked: e.latlng });
+  }
+
   deleteLocation(locationId) {
     deleteLocation(locationId);
     window.location.reload();
@@ -94,6 +111,7 @@ class Map extends React.Component {
   }
 
   render() {
+
     if (this.state.locationReady) {
       const longitude = this.state.longitude;
       const latitude = this.state.latitude;
@@ -106,16 +124,22 @@ class Map extends React.Component {
       return (
         <SessionContext.Consumer>
           {context =>
-            <MapContainer height="100" center={[latitude, longitude]} zoom={10} scrollWheelZoom={false}>
+            <MapContainer height="100" center={[latitude, longitude]} zoom={10} scrollWheelZoom={false} onClick={this.handleClick}>
               <TileLayer
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
               <Marker position={[latitude, longitude]} icon={iconUser}>
                 <Popup>
-                  You are here
+                  You hare here
               </Popup>
               </Marker>
+
+              {this.state.lastClicked && <Marker position={this.state.lastClicked} draggable={true}>
+                <Popup position={this.state.lastClicked}>
+                  Current location: <pre>{JSON.stringify(this.state.lastClicked, null, 2)}</pre>
+                </Popup>
+              </Marker>}
               {this.props.locations.filter(l => l.userId === context.session.info.webId).map(loc =>
                 <Marker position={[loc.latitude, loc.longitude]} icon={iconUserLast} >
                   <Popup>
@@ -157,6 +181,7 @@ class Map extends React.Component {
                   </Popup>
                 </Marker>
               )}
+              <MyComponent webId={context.session.info.webId} />
             </MapContainer>
           }
         </SessionContext.Consumer>)
