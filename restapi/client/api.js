@@ -86,6 +86,16 @@ export async function sessionLogin(doRedirect, redirectUrl, oidcIssuer, isMobile
     doRedirect(url);
 }
 
+export async function getFriends(sessionId){
+    /*let response = await fetch(getApiEndPoint() + '/friends', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({'sessionId': sessionId})
+    })*/
+    let response = await fetch(getApiEndPoint() + `/friends?sessionId=${sessionId}`)
+    return await checkResponse(response);
+}
+
 export async function sessionLogout(sessionId) {
     let response = await fetch(getApiEndPoint() + `/session/logout?sessionId=${sessionId}`)
     return await checkResponse(response)

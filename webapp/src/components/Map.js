@@ -6,7 +6,7 @@ import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import markerUser from "../marker.png"
 import markerLast from "../marker-last.png"
 import { Icon } from 'leaflet'
-import { deleteLocation, modifyLocation } from 'restapi-client';
+import { deleteLocation, modifyLocation, getFriends } from 'restapi-client';
 import { SessionContext } from '@inrupt/solid-ui-react';
 import { FOAF } from '@inrupt/lit-generated-vocab-common';
 import { CombinedDataProvider, Text } from '@inrupt/solid-ui-react';
@@ -93,6 +93,15 @@ class Map extends React.Component {
     window.location.reload();
   }
 
+  isFriend(session, userId) {
+    var friends = getFriends(session);
+    for (const i in friends) {
+      if (friends[i] == userId)
+        return true;
+    }
+    return false;
+  }
+
   render() {
     if (this.state.locationReady) {
       const longitude = this.state.longitude;
@@ -145,13 +154,13 @@ class Map extends React.Component {
                   </Popup>
                 </Marker>
               )}
-              {this.props.locations.filter(l => l.userId !== context.session.info.webId).map(loc =>
+              {this.props.locations.filter(l => (l.userId !== context.session.info.webId && this.isFriend(context.session, l.userId))).map(loc =>
                 <Marker position={[loc.latitude, loc.longitude]} icon={iconFriend} >
                   <Popup>
                     <CombinedDataProvider thingUrl={loc.userId} datasetUrl={loc.userId}>
                       <a href={loc.userId}><Text property={FOAF.name.iri.value} /></a>
                     </CombinedDataProvider>
-                    <h2 >{loc.name}</h2>
+                    <h2>{loc.name}</h2>
                     <p>{loc.description}</p>
                     <p>{loc.latitude}, {loc.longitude}</p>
                   </Popup>
