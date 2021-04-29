@@ -23,6 +23,13 @@ router.get("/users/list", async (req, res) => {
     res.send(await UsersService.getAll())
 })
 
+// Get all friends
+router.use("/users/friends", SessionValidator.loggedInSessionValidator)
+router.get("/users/friends", async (req, res) => {
+    let session = req.body.session
+    res.send(await UsersService.getFriends(session))
+})
+
 router.use("/users/lastLocation", SessionValidator.loggedInSessionValidator)
 router.post("/users/lastLocation", async (req, res) => {
     if (req.body.latitude === undefined || req.body.longitude === undefined) {
