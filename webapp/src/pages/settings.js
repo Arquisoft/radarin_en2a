@@ -1,7 +1,7 @@
 import React from 'react';
 
 import '../App.css';
-import { getUsers, deleteUserByWebId, _registerUser } from 'restapi-client';
+import { getUsers, deleteUserByWebId } from 'restapi-client';
 
 import ListGroup from "react-bootstrap/ListGroup";
 
