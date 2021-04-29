@@ -32,7 +32,7 @@ class Map extends React.Component {
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.handlePictureChange = this.handlePictureChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    
   }
 
   state = {
@@ -41,7 +41,7 @@ class Map extends React.Component {
     longitude: DEFAUlT_LONGITUDE,
     name: "",
     description: "",
-    picture: "",
+    picture: ""
 
   }
 
@@ -93,9 +93,7 @@ class Map extends React.Component {
     });
   }
 
-  handleClick(e) {
-    this.setState({ lastClicked: e.latlng });
-  }
+  
 
   deleteLocation(locationId) {
     deleteLocation(locationId);
@@ -124,7 +122,7 @@ class Map extends React.Component {
       return (
         <SessionContext.Consumer>
           {context =>
-            <MapContainer height="100" center={[latitude, longitude]} zoom={10} scrollWheelZoom={false} onClick={this.handleClick}>
+            <MapContainer height="100" center={[latitude, longitude]} zoom={10} scrollWheelZoom={false}>
               <TileLayer
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
