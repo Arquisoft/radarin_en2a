@@ -19,7 +19,7 @@ export async function getFriends(session) {
 export async function deleteUserByWebId(requestUserWebId, webId) {
     console.log("[api::deleteUserByWebId] DELETING USER WITH WEBID: '" + webId + "'");
     let response = await fetch(getApiEndPoint() + "/user", {
-        method: 'POST',
+        method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             'webId': webId, // Who is being deleted?
