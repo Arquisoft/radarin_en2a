@@ -14,7 +14,7 @@ const app = express();
 
 let socket = null;
 
-export function connectSocket() {
+export function connectSocket(onOpenCallback) {
     socket = new WebSocket(process.env.REACT_APP_API_URI.replace("http","ws").replace("/api","/"));
 
     socket.onmessage = function (event) {
@@ -30,38 +30,40 @@ export function connectSocket() {
     };
     
     socket.onerror = function (error) {
-        alert(`[error] ${error.message}`);
+        console.log("Notifications websocket error:", error.message);
     };
+
+    socket.onopen = function () {
+        console.log("Notifications websocket connected");
+        if (onOpenCallback) {
+            onOpenCallback();
+        }
+    };
+
+    socket.onclose = function () {
+        console.log("Notifications websocket disconnected");
+    }
+}
+
+export function disconnectSocket() {
+    if (socket !== null) {
+        socket.close();
+        socket = null;
+    }
 }
 
 export function sendRegisterMessage(sessionId)   {
-    socket.send(JSON.stringify({ type: "register", sessionId: sessionId }));
+    try {
+        socket.send(JSON.stringify({ type: "register", sessionId: sessionId }));
+    } catch (err) {
+        console.log("Failed to send websocket register message:", err);
+    }
 }
 
 export function sendUnregisterMessage()  {
-    socket.send(JSON.stringify({ type: "unregister"}));
+    try {
+        socket.send(JSON.stringify({ type: "unregister"}));
+    } catch (err) {
+        console.log("Failed to send websocket unregister message:", err);
+    }
 }
-
-
-/*
-// Set up a headless websocket server that prints any
-// events that come in.
-const wsServer = new ws.Server({ server =  process.env.REACT_APP_API_URI});
-wsServer.on('connection', socket => {
-    socket.on('message', message => alert("[message] Data received from server: " + message));
-});
-
-
-
-
-// `server` is a vanilla Node.js HTTP server, so use
-// the same ws upgrade process described here:
-// https://www.npmjs.com/package/ws#multiple-servers-sharing-a-single-https-server
-const server = app.listen(3000);
-server.on('upgrade', (request, socket, head) => {
-    wsServer.handleUpgrade(request, socket, head, socket => {
-        wsServer.emit('connection', socket, request);
-    });
-});
-*/
-

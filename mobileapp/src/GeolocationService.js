@@ -1,8 +1,9 @@
-import { Platform, PermissionsAndroid, Rationale, ToastAndroid } from 'react-native';
+import { Platform, PermissionsAndroid, ToastAndroid } from 'react-native';
 import geoloc from 'react-native-geolocation-service';
 import { updateLastLocation } from 'restapi-client';
 import BackgroundService from "react-native-background-actions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { connectSocket, disconnectSocket, sendRegisterMessage, sendUnregisterMessage } from './Socket';
 
 const backgroundLocationSharingKey = "background-location-sharing";
 
@@ -71,6 +72,7 @@ class GeolocationService {
             linkingURI: 'radarinen2a://',
             parameters: {
                 sessionId: sessionId,
+                service: this,
             }
         };
 
@@ -80,7 +82,8 @@ class GeolocationService {
             console.log(`failed to save '${backgroundLocationSharingKey}':`, err);
         }
 
-        await BackgroundService.start(this.backgroundLocationSharingTask, taskOptions);
+        connectSocket(() => sendRegisterMessage(sessionId));
+        await BackgroundService.start(this.backgroundLocationSharingTask.bind(this), taskOptions);
     }
 
     async stopBackgroundLocationSharing() {
@@ -91,6 +94,8 @@ class GeolocationService {
         }
 
         await BackgroundService.stop();
+        sendUnregisterMessage();
+        disconnectSocket();
     }
 
     isBackgroundLocationSharingRunning() {
@@ -101,11 +106,11 @@ class GeolocationService {
         const delay = 30000; // share every 30 seconds
         const sleep = time => new Promise(resolve => setTimeout(() => resolve(), time));
         
-        const { sessionId } = params;
+        const { sessionId, service } = params;
         await new Promise(async _ => {
             let lastSharedLatitude = null, lastSharedLongitude = null;
             while (this.isBackgroundLocationSharingRunning()) { // infinite task
-                await fetchLocation((lat, long) => {
+                await this.fetchLocation((lat, long) => {
                     if (lat !== null && long !== null) { // have we received a valid location?
                         if (lastSharedLatitude === null || lastSharedLongitude === null || lastSharedLatitude !== lat || lastSharedLongitude !== long) { // is it different from last time?
                             updateLastLocation(sessionId, lat, long)

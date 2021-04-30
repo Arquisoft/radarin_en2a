@@ -2,7 +2,6 @@ import React from 'react';
 import { Linking } from 'react-native';
 import { sessionLogin, sessionLogout, sessionInfo, sessionFetch } from "restapi-client";
 import { SessionContext } from "./SessionContext";
-import  { sendRegisterMessage, sendUnregisterMessage } from "../../Socket";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 /* Provides a SessionContext, using our REST API server for login and session handling.
@@ -35,9 +34,6 @@ export default class SessionProvider extends React.Component {
     urlHandler(ev) {
         this.handleIncomingRedirect(ev.url).then(newState => {
             this.saveSessionToStorage(newState.sessionId, newState.isLoggedIn, newState.webId);
-            if(newState.isLoggedIn) {
-                sendRegisterMessage(newState.sessionId);
-            }
             this.setState(newState);
         })
     }
@@ -82,7 +78,6 @@ export default class SessionProvider extends React.Component {
         this.setLogoutInProgress(true);
         if (this.state.sessionId != null) {
             sessionLogout(this.state.sessionId).then(res => {
-               sendUnregisterMessage();
                 this.setState({
                     sessionId: null,
                     isLoggedIn: false,

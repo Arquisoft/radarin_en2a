@@ -7,6 +7,8 @@ import GeolocationService from './GeolocationService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import BackgroundService from 'react-native-background-actions';
 
+jest.mock('./Socket');
+
 beforeEach(async () => {
     BackgroundService.start.mockReset();
     BackgroundService.stop.mockReset();

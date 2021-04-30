@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, StyleSheet, Text, View, Switch } from 'react-native';
 import { addLocation } from 'restapi-client';
-import { fetchLocation, isBackgroundLocationSharingRunning, startBackgroundLocationSharing, stopBackgroundLocationSharing, autoStartBackgroundLocationSharing } from '../GeolocationService';
+import GeolocationService from '../GeolocationService';
 
 class Dashboard extends React.Component {
 
@@ -14,18 +14,18 @@ class Dashboard extends React.Component {
   }
 
   async componentDidMount() {
-    await autoStartBackgroundLocationSharing(this.props.context.sessionId);
-    this.setState({ isSharingLocation: isBackgroundLocationSharingRunning() });
+    await GeolocationService.autoStartBackgroundLocationSharing(this.props.context.sessionId);
+    this.setState({ isSharingLocation: GeolocationService.isBackgroundLocationSharingRunning() });
   }
 
   async setIsSharingLocation(value) {
     if (value) {
-      await startBackgroundLocationSharing(this.props.context.sessionId);
+      await GeolocationService.startBackgroundLocationSharing(this.props.context.sessionId);
     } else {
-      await stopBackgroundLocationSharing();
+      await GeolocationService.stopBackgroundLocationSharing();
     }
 
-    this.setState({ isSharingLocation: isBackgroundLocationSharingRunning() });
+    this.setState({ isSharingLocation: GeolocationService.isBackgroundLocationSharingRunning() });
   }
 
   async addLocation()

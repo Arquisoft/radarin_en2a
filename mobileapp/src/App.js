@@ -26,13 +26,11 @@ import Dashboard from './components/Dashboard';
 import LoginForm from './components/LoginForm';
 import SessionProvider from './components/session/SessionProvider';
 import { SessionContext } from './components/session/SessionContext';
-import { connectSocket } from './Socket'
 
 class App extends React.Component { 
 
   constructor(props) {
     super(props);
-    connectSocket();
   }
 
   render() {
