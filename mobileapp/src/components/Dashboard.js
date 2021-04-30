@@ -30,7 +30,7 @@ class Dashboard extends React.Component {
 
   async addLocation()
   {
-    fetchLocation(async (lat, long) => {
+    GeolocationService.fetchLocation(async (lat, long) => {
       console.log("Saving user location: " + lat + ", " + long + " [" + this.props.context.sessionId + "]");
       // TODO: use session for adding locations
       if (lat !== null && long !== null) {
@@ -42,13 +42,9 @@ class Dashboard extends React.Component {
   render() {
   return (
     <>
-    <View>
-      <Text style={styles.center}>Welcome {this.props.name}!</Text>
-    </View>
-
     <View style={styles.container}>
       <View style={styles.singleComponentRow}>
-        <Button onPress={this.addLocation.bind(this)} title = "Save Location"/>
+        <Button testID="addLocationButton" onPress={this.addLocation.bind(this)} title = "Save Location"/>
       </View>
       <View style={styles.singleComponentRow}>
         <Text style={styles.helpText}>Save your current location. You can view and edit your saved locations through the Radaring web application.</Text>
@@ -56,7 +52,7 @@ class Dashboard extends React.Component {
       <View style={styles.separator} />
       <View style={styles.multiComponentRow}>
         <Text style={styles.label}>Share Location</Text>
-        <Switch onValueChange={this.setIsSharingLocation.bind(this)} value={this.state.isSharingLocation} thumbColor="#2296F3" trackColor={{false: "#B2B2B2", true: "#79bbf2"}}/>
+        <Switch testID="shareLocationSwitch" onValueChange={this.setIsSharingLocation.bind(this)} value={this.state.isSharingLocation} thumbColor="#2296F3" trackColor={{false: "#B2B2B2", true: "#79bbf2"}}/>
       </View>
       <View style={styles.singleComponentRow}>
         <Text style={styles.helpText}>Enabling this option will share your location with your Solid Pod friends. You will receive notifications from nearby friends.</Text>
