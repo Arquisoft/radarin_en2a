@@ -6,7 +6,7 @@ import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import markerUser from "../marker.png"
 import markerLast from "../marker-last.png"
 import { Icon } from 'leaflet'
-import { addLocation, deleteLocation, modifyLocation } from 'restapi-client';
+import { addLocation, deleteLocation, modifyLocation, getFriends } from 'restapi-client';
 import { SessionContext } from '@inrupt/solid-ui-react';
 import { FOAF } from '@inrupt/lit-generated-vocab-common';
 import { CombinedDataProvider, Text } from '@inrupt/solid-ui-react';
@@ -15,11 +15,11 @@ const DEFAUlT_LONGITUDE = 12.323313772328168;//-5.84476;
 
 
 function MyComponent({ webId }) {
-  
+
   const map = useMapEvents({
     click: (e) => {
-      const { lat, lng } = e.latlng; 
-      {addLocation(webId, lat, lng)}
+      const { lat, lng } = e.latlng;
+      { addLocation(webId, lat, lng) }
       window.location.reload();
     }
   });
@@ -27,12 +27,14 @@ function MyComponent({ webId }) {
 
 }
 class Map extends React.Component {
+  static contextType = SessionContext;
+
   constructor(props) {
     super(props)
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.handlePictureChange = this.handlePictureChange.bind(this);
-    
+
   }
 
   state = {
@@ -41,13 +43,14 @@ class Map extends React.Component {
     longitude: DEFAUlT_LONGITUDE,
     name: "",
     description: "",
-    picture: ""
-
+    picture: "",
+    friends: [],
   }
 
 
-  componentDidMount() {
+  async componentDidMount() {
     this.fetchLocation();
+    this.setState({friends: await getFriends(this.context.session.info.sessionId)});
   }
 
   fetchLocation() {
@@ -93,7 +96,14 @@ class Map extends React.Component {
     });
   }
 
-  
+  isFriend(webId) {
+    var friends = this.state.friends;
+    for (const i in friends) {
+      if (friends[i].webId === webId)
+        return true;
+    }
+    return false;
+  }
 
   deleteLocation(locationId) {
     deleteLocation(locationId);
@@ -167,7 +177,7 @@ class Map extends React.Component {
                   </Popup>
                 </Marker>
               )}
-              {this.props.locations.filter(l => l.userId !== context.session.info.webId).map(loc =>
+              {this.props.locations.filter(l => l.userId !== context.session.info.webId && this.isFriend(l.userId)).map(loc =>
                 <Marker position={[loc.latitude, loc.longitude]} icon={iconFriend} >
                   <Popup>
                     <CombinedDataProvider thingUrl={loc.userId} datasetUrl={loc.userId}>

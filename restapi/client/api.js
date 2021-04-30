@@ -5,13 +5,18 @@
 export async function getUsers() {
     let response = await fetch(getApiEndPoint() + '/users/list')
     return await checkResponse(response)
-} 
+}
+
+export async function getFriends(sessionId) {
+    let response = await fetch(getApiEndPoint() + `/users/friends?sessionId=${sessionId}`);
+    return await checkResponse(response)
+}
 
 export async function deleteUserByWebId(requestUserWebId, webId) {
     console.log("[api::deleteUserByWebId] DELETING USER WITH WEBID: '" + webId + "'");
     let response = await fetch(getApiEndPoint() + "/user", {
         method: 'DELETE',
-        headers: {'Content-Type':'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             'webId': webId, // Who is being deleted?
             'requestUserWebId': requestUserWebId // Who is deleting?
@@ -24,8 +29,8 @@ export async function deleteUserByWebId(requestUserWebId, webId) {
 export async function _registerUser(webId) {
     let response = await fetch(getApiEndPoint() + '/users/add', {
         method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({'userWebId': webId})
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 'userWebId': webId })
     })
     return await checkResponse(response)
 }
@@ -51,8 +56,8 @@ export async function getLocations() {
 export async function addLocation(userWebId, latitude, longitude) {
     let response = await fetch(getApiEndPoint() + '/locations/add', {
         method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({'userWebId': userWebId, 'latitude': latitude, 'longitude': longitude})
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 'userWebId': userWebId, 'latitude': latitude, 'longitude': longitude })
     })
     return await checkResponse(response)
 }
@@ -65,8 +70,8 @@ export async function deleteLocation(locationId) {
 export async function modifyLocation(locationId, name, description, picture) {
     let response = await fetch(getApiEndPoint() + `/locations/modify/${locationId}`, {
         method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({'locationId': locationId, 'name': name, 'description': description, 'picture': picture})
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 'locationId': locationId, 'name': name, 'description': description, 'picture': picture })
     })
     return await checkResponse(response)
 }
@@ -74,8 +79,8 @@ export async function modifyLocation(locationId, name, description, picture) {
 export async function updateLastLocation(sessionId, latitude, longitude) {
     let response = await fetch(getApiEndPoint() + '/users/lastLocation', {
         method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({'sessionId': sessionId, 'latitude': latitude, 'longitude': longitude})
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 'sessionId': sessionId, 'latitude': latitude, 'longitude': longitude })
     })
 
     return await checkResponse(response);
@@ -83,7 +88,7 @@ export async function updateLastLocation(sessionId, latitude, longitude) {
 
 export async function sessionLogin(doRedirect, redirectUrl, oidcIssuer, isMobile) {
     let url = getApiEndPoint() + `/session/login?redirectUrl=${redirectUrl}&oidcIssuer=${oidcIssuer}`;
-    
+
     if (isMobile) {
         url += "&mobile=true";
     }

@@ -2,14 +2,14 @@ const User = require("../models/users")
 const FC = require("solid-file-client")
 const WebSocketServer = require("./WebSocketServer");
 const { Session } = require("@inrupt/solid-client-authn-node")
-const admins = ["https://uo269911.inrupt.net/profile/card#me","https://uo257247.inrupt.net/profile/card#me"]
+const admins = ["https://uo269911.inrupt.net/profile/card#me", "https://uo257247.inrupt.net/profile/card#me"]
 const { FOAF } = require('@inrupt/vocab-common-rdf')
-const { getSolidDataset, getThing, getNamedNodeAll,  } = require('@inrupt/solid-client');
+const { getSolidDataset, getThing, getNamedNodeAll, } = require('@inrupt/solid-client');
 const maxDistance = 5.0;
 
 async function registerUser(webId) {
     user = new User({
-        webId: webId,
+        webId: webId
     })
     await user.save()
 }
@@ -19,11 +19,11 @@ async function isRegistered(webId) {
     return user !== null;
 }
 
-function isAdmin(webId){
-    console.log("Checking if webId is admin: "+ webId);
+function isAdmin(webId) {
+    console.log("Checking if webId is admin: " + webId);
     for (let i = 0; i < admins.length; i++) {
         let admin = admins[i];
-        if (webId===admin){
+        if (webId === admin) {
             console.log("The user is admin!!");
             return true;
         }
@@ -50,10 +50,10 @@ async function addLocationToUser(userId, locationId) {
     );
 }
 
-async function removeLocationFromUser(userId, locationId){
+async function removeLocationFromUser(userId, locationId) {
     await User.remove(
-        {_id: userId},
-        {$pop : {locations : locationId}} 
+        { _id: userId },
+        { $pop: { locations: locationId } }
     );
 }
 
@@ -134,14 +134,39 @@ async function getNearFriends(session, latitude, longitude) {
         const { id } = knows[i]; // get the friend's webId
         const coord = await getUserLastLocation(session, id);
 
-        if(await isRegistered(id)) {
-            if(isNear(getDistance(latitude, longitude,coord.latitude, coord.longitude))) {
-                nearFriends.push(await findByWebId(id));
+        if (await isRegistered(id)) {
+            if (isNear(getDistance(latitude, longitude, coord.latitude, coord.longitude))) {
+                const friend = await findByWebId(id);
+                if (friend !== null) { // if friend is registered in radarin
+                    nearFriends.push(friend);
+                }
             }
         }
     }
     return nearFriends;
 }
+
+async function getFriends(session) {
+
+    const { webId } = session.info;
+    var nearFriends = [];
+
+    // access our dataset
+    let profileDataset = await getSolidDataset(webId, { fetch: session.fetch });
+    let profile = getThing(profileDataset, webId);
+
+    // get the friends list
+    const knows = getNamedNodeAll(profile, FOAF.knows);
+    for (const i in knows) {
+        const { id } = knows[i]; // get the friend's webId
+        const friend = await findByWebId(id);
+        if (friend !== null) { // if friend is registered in radarin
+            nearFriends.push(friend);
+        }
+    }
+    return nearFriends;
+}
+
 
 function getDistance(lat1, lon1, lat2, lon2) { // retrurns the distance between the two points in kilometers
     rad = function (x) { return x * Math.PI / 180; }
@@ -154,7 +179,7 @@ function getDistance(lat1, lon1, lat2, lon2) { // retrurns the distance between 
     return d.toFixed(3); //Retorna tres decimales
 }
 
-function isNear(distance)   {
+function isNear(distance) {
     return (distance <= maxDistance);
 }
 
@@ -177,4 +202,5 @@ module.exports = {
     updateUserLastLocation,
     getUserLastLocation,
     removeLocationFromUser,
+    getFriends
 }
