@@ -136,7 +136,10 @@ async function getNearFriends(session, latitude, longitude) {
 
         if (await isRegistered(id)) {
             if (isNear(getDistance(latitude, longitude, coord.latitude, coord.longitude))) {
-                nearFriends.push(await findByWebId(id));
+                const friend = await findByWebId(id);
+                if (friend !== null) { // if friend is registered in radarin
+                    nearFriends.push(friend);
+                }
             }
         }
     }
@@ -156,7 +159,10 @@ async function getFriends(session) {
     const knows = getNamedNodeAll(profile, FOAF.knows);
     for (const i in knows) {
         const { id } = knows[i]; // get the friend's webId
-        nearFriends.push(await findByWebId(id));
+        const friend = await findByWebId(id);
+        if (friend !== null) { // if friend is registered in radarin
+            nearFriends.push(friend);
+        }
     }
     return nearFriends;
 }

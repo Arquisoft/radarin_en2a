@@ -26,7 +26,7 @@ router.get("/users/list", async (req, res) => {
 // Get all friends
 router.use("/users/friends", SessionValidator.loggedInSessionValidator)
 router.get("/users/friends", async (req, res) => {
-    let session = req.body.session
+    let session = req.session
     res.send(await UsersService.getFriends(session))
 })
 

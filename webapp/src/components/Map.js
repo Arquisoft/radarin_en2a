@@ -27,6 +27,8 @@ function MyComponent({ webId }) {
 
 }
 class Map extends React.Component {
+  static contextType = SessionContext;
+
   constructor(props) {
     super(props)
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -41,13 +43,14 @@ class Map extends React.Component {
     longitude: DEFAUlT_LONGITUDE,
     name: "",
     description: "",
-    picture: ""
-
+    picture: "",
+    friends: [],
   }
 
 
-  componentDidMount() {
+  async componentDidMount() {
     this.fetchLocation();
+    this.setState({friends: await getFriends(this.context.session.info.sessionId)});
   }
 
   fetchLocation() {
@@ -93,10 +96,10 @@ class Map extends React.Component {
     });
   }
 
-  isFriend(id, session) {
-    var friends = getFriends(session);
+  isFriend(webId) {
+    var friends = this.state.friends;
     for (const i in friends) {
-      if (friends[i]._id == id)
+      if (friends[i].webId === webId)
         return true;
     }
     return false;
@@ -174,7 +177,7 @@ class Map extends React.Component {
                   </Popup>
                 </Marker>
               )}
-              {this.props.locations.filter(l => l.userId !== context.session.info.webId && this.isFriend(l.userId, context.session)).map(loc =>
+              {this.props.locations.filter(l => l.userId !== context.session.info.webId && this.isFriend(l.userId)).map(loc =>
                 <Marker position={[loc.latitude, loc.longitude]} icon={iconFriend} >
                   <Popup>
                     <CombinedDataProvider thingUrl={loc.userId} datasetUrl={loc.userId}>

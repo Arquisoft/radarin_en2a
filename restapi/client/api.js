@@ -7,12 +7,8 @@ export async function getUsers() {
     return await checkResponse(response)
 }
 
-export async function getFriends(session) {
-    let response = await fetch(getApiEndPoint() + '/users/friends', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 'session': session})
-    })
+export async function getFriends(sessionId) {
+    let response = await fetch(getApiEndPoint() + `/users/friends?sessionId=${sessionId}`);
     return await checkResponse(response)
 }
 
