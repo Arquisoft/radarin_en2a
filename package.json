@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "react-native": "^0.64.0",
+    "react-native-push-notification": "^7.2.3"
+  }
+}
