@@ -12,8 +12,10 @@
     "update:restapi": "npm pack ../restapi/client && npm install restapi-client-0.1.0.tgz && react-native start --reset-cache"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.15.4",
     "react": "16.13.1",
     "react-native": "0.63.4",
+    "react-native-background-actions": "^2.6.0",
     "react-native-geolocation-service": "^5.2.0",
     "restapi-client": "file:restapi-client-0.1.0.tgz"
   },
@@ -33,7 +35,7 @@
       "./src/setup-tests.js"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!(react-native|react-native-geolocation-service|restapi-client)/)"
+      "node_modules/(?!(react-native|react-native-geolocation-service|react-native-background-actions|restapi-client)/)"
     ]
   }
 }

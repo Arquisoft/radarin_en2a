@@ -14,29 +14,23 @@ import {
   View,
   Text,
   Image,
-  StatusBar,
-  Linking,
+  StatusBar
 } from 'react-native';
 
 import {
   Header,
-  LearnMoreLinks,
   Colors,
-  DebugInstructions,
-  ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
 import Dashboard from './components/Dashboard';
 import LoginForm from './components/LoginForm';
 import SessionProvider from './components/session/SessionProvider';
 import { SessionContext } from './components/session/SessionContext';
-import { connectSocket } from './Socket'
 
 class App extends React.Component { 
 
   constructor(props) {
     super(props);
-    connectSocket();
   }
 
   render() {
