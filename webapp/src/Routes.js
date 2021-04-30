@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import { HashRouter, Switch, Route, Redirect } from "react-router-dom";
 
 import DashboardPage from "./pages/dashboard";
 import FriendsPage from "./pages/friends";
@@ -8,7 +8,7 @@ import SettingsPage from "./pages/settings";
 const Routes = (props) => {
   console.log("ROUTER REDIRECTING WITH SESSION INFO: "+ JSON.stringify(props.session));
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Switch>
         <Route path="/friends">
           <FriendsPage />
@@ -28,7 +28,7 @@ const Routes = (props) => {
         </Route>
         
       </Switch>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 

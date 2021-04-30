@@ -26,14 +26,14 @@ class MyMenu extends React.Component {
   {
     let nav = [ this.navItem,  
       {
-        title: <a href="/dashboard">Home</a>,
+        title: <a href="#/dashboard">Home</a>,
         itemId: '/dashboard',
         // you can use your own custom Icon component as well
         // icon is optional
         elemBefore: () => <Icon name="map-pin" />
       },
       {
-        title: <a href="/friends">Friends</a>,
+        title: <a href="#/friends">Friends</a>,
         itemId: '/friends', // TODO go to friends page
         // you can use your own custom Icon component as well
         // icon is optional
@@ -42,7 +42,7 @@ class MyMenu extends React.Component {
 
     if (isAdmin) {
       nav.push({
-        title: <a href="/settings">Settings</a>,
+        title: <a href="#/settings">Settings</a>,
         itemId: '/settings',
         elemBefore: () => <Icon name="settings" />,
       });
