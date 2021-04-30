@@ -27,10 +27,10 @@ class LoginForm extends React.Component {
                 <></>
                 :
                     (context.loginInProgress) 
-                    ?<Text style={styles.loggingInText}>Logging in...</Text> 
+                    ?<Text testID="loginInProgressText" style={styles.loggingInText}>Logging in...</Text> 
                     :<View style={styles.container}>
                         <View style={styles.singleComponentRow}>
-                            <TextInput onChangeText={this.changeIdentityProvider.bind(this)} value={this.state.idp} style={styles.input}/>
+                            <TextInput testID="idpInput" onChangeText={this.changeIdentityProvider.bind(this)} value={this.state.idp} style={styles.input}/>
                         </View>
                         <View style={styles.multiComponentRow}>
                             <TouchableOpacity style={styles.smallButton} onPress={() => this.changeIdentityProvider("https://inrupt.net")}>
