@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import "../Map.css";
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
@@ -16,16 +16,19 @@ const DEFAUlT_LONGITUDE = 12.323313772328168;//-5.84476;
 
 function MyComponent({ webId }) {
 
-  const map = useMapEvents({
+  useMapEvents({
     click: (e) => {
       const { lat, lng } = e.latlng;
-      { addLocation(webId, lat, lng) }
+      addLocation(webId, lat, lng);
       window.location.reload();
     }
   });
   return null;
 
 }
+
+
+
 class Map extends React.Component {
   static contextType = SessionContext;
 
@@ -115,16 +118,16 @@ class Map extends React.Component {
 
   modifyLocation(locationId) {
 
-    var loc = this.props.locations.filter(l => l._id == locationId)[0];
+    var loc = this.props.locations.filter(l => l._id === locationId)[0];
     var name = this.state.name;
     var description = this.state.description;
     var picture = this.state.picture;
-    
-    if (name == "")
+
+    if (name === "")
       name = loc.name;
-    if (description == "")
+    if (description === "")
       description = loc.description;
-    if (picture == "")
+    if (picture === "")
       picture = loc.picture;
     modifyLocation(locationId, name, description, picture);
     window.location.reload();
@@ -140,7 +143,6 @@ class Map extends React.Component {
       const iconFriend = new Icon({ iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41] })
       const iconUser = new Icon({ iconUrl: markerUser, iconSize: [40, 41], iconAnchor: [18, 41] })
       const iconUserLast = new Icon({ iconUrl: markerLast, iconSize: [40, 41], iconAnchor: [18, 41] })
-
       return (
         <SessionContext.Consumer>
           {context =>
@@ -166,7 +168,7 @@ class Map extends React.Component {
                     <CombinedDataProvider thingUrl={loc.userId} datasetUrl={loc.userId}>
                       <a href={loc.userId}><Text property={FOAF.name.iri.value} /></a>
                     </CombinedDataProvider>
-                    <img src={loc.picture} width="300"></img>
+                    <img src={loc.picture} width="300" alt="Location"></img>
                     <h4 >{loc.name}</h4>
                     <p>{loc.description}</p>
                     <p>{loc.latitude}, {loc.longitude}</p>
@@ -213,4 +215,5 @@ class Map extends React.Component {
 
 
 }
+
 export default Map;
