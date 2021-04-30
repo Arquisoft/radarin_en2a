@@ -42,10 +42,6 @@ class Dashboard extends React.Component {
   render() {
   return (
     <>
-    <View>
-      <Text style={styles.center}>Welcome {this.props.name}!</Text>
-    </View>
-
     <View style={styles.container}>
       <View style={styles.singleComponentRow}>
         <Button onPress={this.addLocation.bind(this)} title = "Save Location"/>
