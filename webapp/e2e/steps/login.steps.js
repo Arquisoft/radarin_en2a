@@ -3,9 +3,13 @@ const feature = loadFeature('./features/login.feature');
 
 defineFeature(feature, test => {
   beforeEach(async () => {
-    await resetBrowser();
     await page.goto('http://localhost:3000', { waitUntil: 'networkidle0'});
   })
+
+  afterEach(async () => {
+    // reset to clear any previous logged in session
+    await resetBrowserContext();
+  });
 
   test('The user is logging in for the first time in the site', ({given,when,then}) => {
     let idp;
@@ -49,7 +53,7 @@ defineFeature(feature, test => {
 
     then('The main view with the map is shown in the screen', async () => {
       await page.waitForNavigation({'waitUntil': 'networkidle0'});
-      await expect(page).toMatchElement('.leaflet-container'); // the map is shown
+      await expect(page).toMatchElement('.leaflet-container', { timeout: 60000 }); // the map is shown
     });
   });
 
@@ -62,8 +66,6 @@ defineFeature(feature, test => {
       idp = "https://localhost:8443"
       username = "user3"
       password = "123456";
-
-      await page.evaluate(() => localStorage.clear());
     });
 
     when('I fill the Identity Provider in the form and press submit', async () => {
@@ -88,7 +90,7 @@ defineFeature(feature, test => {
 
     then('The main view with the map is shown in the screen', async () => {
       await page.waitForNavigation({'waitUntil': 'networkidle0'});
-      await expect(page).toMatchElement('.leaflet-container'); // the map is shown
+      await expect(page).toMatchElement('.leaflet-container', { timeout: 60000 }); // the map is shown
     });
   });
 });

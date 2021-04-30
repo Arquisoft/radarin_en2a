@@ -7,25 +7,27 @@ class CustomEnvironment extends NodeEnvironemnt {
     async setup(){
         await super.setup()
 
-        this.global.resetBrowser = async () => {
+        this.global.browser = await puppeteer.launch({
+            ignoreHTTPSErrors: true, // don't show the warnings for the self-signed certificate of the Solid server
+            headless: true,
+            // slowMo: 20,
+        });
+        this.global.context = await this.global.browser.createIncognitoBrowserContext();
+        this.global.page = await this.global.context.newPage();
+
+        this.global.resetBrowserContext = async () => {
             if (this.global.page) {
                 await this.global.page.close();
             }
             this.global.page = null;
 
-            if (this.global.browser) {
-                await this.global.browser.close();
+            if (this.global.context) {
+                await this.global.context.close();
             }
 
-            this.global.browser = await puppeteer.launch({
-                ignoreHTTPSErrors: true, // don't show the warnings for the self-signed certificate of the Solid server
-                headless: true,
-                // slowMo: 20,
-            });
-            this.global.page = await this.global.browser.newPage()
-        }
-
-        this.global.resetBrowser();
+            this.global.context = await this.global.browser.createIncognitoBrowserContext();
+            this.global.page = await this.global.context.newPage();
+        };
     }
     async teardown(){
         await this.global.browser.close()
