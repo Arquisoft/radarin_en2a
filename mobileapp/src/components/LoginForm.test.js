@@ -18,7 +18,7 @@ test('renders correctly while logging in', async () => {
         </SessionContext.Provider>
     );
 
-    // login button does not exist exist
+    // login button does not exist
     expect(queryByText("Login")).toBeNull();
     expect(getByTestId("loginInProgressText")).not.toBeNull();
 });
