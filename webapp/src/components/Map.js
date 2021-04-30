@@ -50,7 +50,7 @@ class Map extends React.Component {
 
   async componentDidMount() {
     this.fetchLocation();
-    this.setState({friends: await getFriends(this.context.session.info.sessionId)});
+    this.setState({ friends: await getFriends(this.context.session.info.sessionId) });
   }
 
   fetchLocation() {
@@ -84,16 +84,19 @@ class Map extends React.Component {
     this.setState({
       name: event.target.value
     });
+
   }
   handleDescriptionChange(event) {
     this.setState({
       description: event.target.value
     });
+
   }
   handlePictureChange(event) {
     this.setState({
       picture: event.target.value
     });
+
   }
 
   isFriend(webId) {
@@ -111,9 +114,18 @@ class Map extends React.Component {
   }
 
   modifyLocation(locationId) {
-    const name = this.state.name;
-    const description = this.state.description;
-    const picture = this.state.picture;
+
+    var loc = this.props.locations.filter(l => l._id == locationId)[0];
+    var name = this.state.name;
+    var description = this.state.description;
+    var picture = this.state.picture;
+    
+    if (name == "")
+      name = loc.name;
+    if (description == "")
+      description = loc.description;
+    if (picture == "")
+      picture = loc.picture;
     modifyLocation(locationId, name, description, picture);
     window.location.reload();
   }
