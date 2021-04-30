@@ -6,9 +6,7 @@ import { CombinedDataProvider, Text } from '@inrupt/solid-ui-react';
 
 class FriendsPage extends React.Component {
   static contextType = SessionContext;
-  constructor(props) {
-    super(props)
-  }
+  
   state = {
     friends: [],
     loading: true
