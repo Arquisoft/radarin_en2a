@@ -3,7 +3,7 @@ import React from 'react';
 import { SessionContext, LogoutButton } from "@inrupt/solid-ui-react";
 
 import './App.css';
-import logo from './logo.svg';
+import logo from './logo.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MyHeader from "./components/MyHeader";
 import MyMenu from "./components/MyMenu";
