@@ -18,6 +18,8 @@ class DashboardPage extends React.Component {
   componentDidMount() {
     this.fetchUsers();
     this.fetchLocations();
+    
+    document.title = "Radarin"
   }
 
   refreshUsers(users) {
