@@ -153,7 +153,7 @@ class Map extends React.Component {
               />
               <Marker position={[latitude, longitude]} icon={iconUser}>
                 <Popup>
-                  You hare here
+                  You are here
               </Popup>
               </Marker>
 
