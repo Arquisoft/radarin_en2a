@@ -12,7 +12,9 @@ class LoginForm extends React.Component {
     }
 
     componentDidMount(){
-        this.setState({currentUrl: window.location.href})
+        let url = window.location.href.split("#")[0];
+        console.log("PARSING URL FROM '" + window.location.href + "' TO '" + url + "'");
+        this.setState({currentUrl: url})
     }
 
     changeIdentityProvider(e) {
