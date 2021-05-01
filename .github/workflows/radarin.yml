@@ -75,9 +75,8 @@ jobs:
         node-version: 12.14.1
     - run: npm pack ../restapi/client && npm install restapi-client-0.1.0.tgz # need to install it again because the integrity checksum in package-lock.json may be different due to different OS in CI server and local dev machines
     - run: npm ci
-    - run: cd android
-    - run: ./gradlew assembleRelease
-    - run: mv app\build\outputs\apk\release\app-release.apk radarinen2a-mobileapp.apk
+    - run: cd android && ./gradlew assembleRelease
+    - run: mv android/app/build/outputs/apk/release/app-release.apk radarinen2a-mobileapp.apk
     - name: Upload mobileapp APK
       uses: actions/upload-artifact@v2
       with:
