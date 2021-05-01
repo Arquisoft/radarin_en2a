@@ -22,6 +22,10 @@ class LoginForm extends React.Component {
       this.setState({idp: idp});
     }
 
+    setIdentityProvider(idp) {
+        this.setState({idp: idp});
+    }
+
     render() {
         return (
             <SessionContext.Consumer>
@@ -33,7 +37,12 @@ class LoginForm extends React.Component {
                         <Form.Group>
                             <Form.Label>Identity Provider</Form.Label>
                             <Form.Control name="idp" type="url" placeholder="Enter identity provider" onChange={this.changeIdentityProvider.bind(this)} value={this.state.idp} />
+                        
                         </Form.Group>
+                        <>
+                        <Button onClick={() => this.setIdentityProvider('https://inrupt.net')}>Inrupt</Button>
+                        <Button onClick={() => this.setIdentityProvider('https://solidcommunity.net')}>Solid Community</Button>
+                        </>
                         <LoginButton oidcIssuer={this.state.idp} redirectUrl={this.state.currentUrl}>
                             <Button>
                             Login
