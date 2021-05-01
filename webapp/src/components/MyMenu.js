@@ -48,6 +48,12 @@ class MyMenu extends React.Component {
       });
     }
 
+    nav.push({
+      title: <a href="/radarinen2a-mobileapp.apk">Download the mobile app</a>,
+      itemId: 'mobileapp-download',
+      elemBefore: () => <Icon name="smartphone" />,
+    });
+
     return nav;
   }
 
