@@ -149,7 +149,7 @@ class Map extends React.Component {
       return (
         <SessionContext.Consumer>
           {context =>
-            <MapContainer height="100" center={[latitude, longitude]} zoom={10} scrollWheelZoom={false}>
+            <MapContainer height="100" center={[latitude, longitude]} zoom={10} scrollWheelZoom={true}>
               <TileLayer
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -167,7 +167,7 @@ class Map extends React.Component {
               </Marker>}
               {this.props.locations.filter(l => l.userId === context.session.info.webId).map(loc =>
                 <Marker position={[loc.latitude, loc.longitude]} icon={iconUserLast} >
-                  <Popup closeOnClick={true}>
+                  <Popup >
                     <CombinedDataProvider thingUrl={loc.userId} datasetUrl={loc.userId}>
                       <a href={loc.userId}><Text property={FOAF.name.iri.value} /></a>
                     </CombinedDataProvider>

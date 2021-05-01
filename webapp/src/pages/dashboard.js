@@ -4,6 +4,7 @@ import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { getUsers, getLocations } from 'restapi-client';
 import Map from "../components/Map";
+import Legend from '../components/Legend';
 
 class DashboardPage extends React.Component {
 
