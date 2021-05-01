@@ -1,15 +1,16 @@
-
 .container {
     flex: 1;
     flex-direction: 'column';
-  }
-  .singleComponentRow {
+}
+
+.singleComponentRow {
     justify-content: 'space-between';
     padding: 3;
     margin-left: 20;
     margin-right: 20;
-  }
-  .multiComponentRow {
+}
+
+.multiComponentRow {
     flex-grow: 1;
     flex-direction: 'row';
     justify-content: 'space-around';
@@ -19,8 +20,9 @@
     margin-right: 20;
     padding-top: 4;
     padding-bottom: 8;
-  }
-  .smallButton {
+}
+
+.smallButton {
     align-self: 'stretch';
     border-radius: 2;
     background-color: rgb(124, 176, 255);
@@ -30,15 +32,17 @@
     padding-top: 4;
     padding-bottom: 4;
     margin-bottom: 10;
-  }
-  .smallButtonLabel {
+}
+
+.smallButtonLabel {
     font-size: 13;
     font-weight: "500";
     color: "#FFFFFF";
     text-align: "center";
     text-transform: 'uppercase';
-  }
-  .button {
+}
+
+.button {
     align-self: 'stretch';
     border-radius: 2;
     background-color: '#2296F3';
@@ -47,21 +51,23 @@
     padding-top: 6;
     padding-bottom: 6;
     margin-bottom: 10;
-  }
-  .buttonLabel {
+}
+
+.buttonLabel {
     font-size: 18;
     font-weight: "800";
     color: "#FFFFFF";
     text-align: "center";
     text-transform: 'uppercase';
-  }
-  .input {
+}
+
+.input {
     border-width: 1;
     border-radius: 4;
     font-size: 16;
-  }
-  .loggingInText {
+}
+
+.loggingInText {
     text-align: 'center';
     font-size: 20;
-  }
-  
+}

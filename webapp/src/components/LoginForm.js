@@ -27,9 +27,7 @@ class LoginForm extends React.Component {
 
     handleKeypress(e) {
         if (e.key === "Enter")
-        {
             this.btn.click();
-        }
     }
 
     render() {
