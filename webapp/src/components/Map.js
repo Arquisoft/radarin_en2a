@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents} from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import "../Map.css";
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
@@ -14,13 +14,14 @@ const DEFAULT_LATITUDE = 45.437781234170174; //43.36029;
 const DEFAUlT_LONGITUDE = 12.323313772328168;//-5.84476;
 
 
-function MyComponent({ webId }) {
+function MyComponent({ webId, props }) {
 
   useMapEvents({
     click: (e) => {
       const { lat, lng } = e.latlng;
       addLocation(webId, lat, lng);
-      window.location.reload();
+      props.fetchLocations();
+      props.fetchLocations();
     }
   });
   return null;
@@ -113,7 +114,8 @@ class Map extends React.Component {
 
   deleteLocation(locationId) {
     deleteLocation(locationId);
-    window.location.reload();
+    this.props.fetchLocations();
+    this.props.fetchLocations();
   }
 
   modifyLocation(locationId) {
@@ -130,7 +132,8 @@ class Map extends React.Component {
     if (picture === "")
       picture = loc.picture;
     modifyLocation(locationId, name, description, picture);
-    window.location.reload();
+    this.props.fetchLocations();
+    this.props.fetchLocations();
   }
 
   render() {
@@ -164,7 +167,7 @@ class Map extends React.Component {
               </Marker>}
               {this.props.locations.filter(l => l.userId === context.session.info.webId).map(loc =>
                 <Marker position={[loc.latitude, loc.longitude]} icon={iconUserLast} >
-                  <Popup>
+                  <Popup closeOnClick={true}>
                     <CombinedDataProvider thingUrl={loc.userId} datasetUrl={loc.userId}>
                       <a href={loc.userId}><Text property={FOAF.name.iri.value} /></a>
                     </CombinedDataProvider>
@@ -203,7 +206,7 @@ class Map extends React.Component {
                   </Popup>
                 </Marker>
               )}
-              <MyComponent webId={context.session.info.webId} />
+              <MyComponent webId={context.session.info.webId} props = {this.props} />
             </MapContainer>
           }
         </SessionContext.Consumer>)

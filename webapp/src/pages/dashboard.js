@@ -51,7 +51,7 @@ class DashboardPage extends React.Component {
     <div>
         <h2>Home Page</h2>
         <div className="App-content">
-            <Map locations = {this.state.locations}/>
+            <Map locations = {this.state.locations} fetchLocations={this.fetchLocations.bind(this)}/>
         </div>
         
     </div>
