@@ -1,16 +1,19 @@
-const http = require('http');
 const ws = require('ws');
 const { getSessionFromStorage } = require("@inrupt/solid-client-authn-node")
 
 const socketsByWebId = {};
 
 async function sendMessageToUser(webId, message) {
-    if (webId in socketsByWebId) {
-        console.log(`ws>> Sending message to ${webId}: `, message);
-        const socket = socketsByWebId[webId];
-        socket.send(JSON.stringify(message));
-    } else {
-        console.log(`ws>> User ${webId} is not connected, cannot send message`);
+    try {
+        if (webId in socketsByWebId) {
+            console.log(`ws>> Sending message to ${webId}: `, message);
+            const socket = socketsByWebId[webId];
+            socket.send(JSON.stringify(message));
+        } else {
+            console.log(`ws>> User ${webId} is not connected, cannot send message`);
+        }
+    } catch (err) {
+        console.log(`ws>> Failed to send '${message}' message to socket for ${webId}`);
     }
 }
 
@@ -80,7 +83,26 @@ async function start(server) {
         });
     });
 
+    startHeartbeats();
+
     console.log("WebSocket server started");
+}
+
+/**
+ * Sends 'heartbeat' messages to connected and registered clients periodically to prevent Heroku from dropping the connection due to idling.
+ */
+function startHeartbeats() {
+    setInterval(() => {
+        const heartbeatMessage = JSON.stringify({ type: "heartbeat" });
+        for (var userWebId in socketsByWebId) {
+            try {
+                const socket = socketsByWebId[userWebId];
+                socket.send(heartbeatMessage);
+            } catch (err) {
+                console.log(`ws>> Failed to send '${heartbeatMessage}' message to socket for ${userWebId}:`, err);
+            }
+        }
+    }, 30000);
 }
 
 module.exports = {

@@ -7,6 +7,7 @@ Link to the deployed sample application: [radarin](https://radarinen2awebapp.her
 ## Quick start guide
 If you want to execute the project you will need [git](https://git-scm.com/downloads), [Node.js and npm](https://www.npmjs.com/get-npm) and [Docker](https://docs.docker.com/get-docker/). Make sure the three of them are installed in your system. Download the project with `git clone https://github.com/Arquisoft/radarin_en2a.git`. The fastest way to launch everything is with docker:
 ```
+cp -r ./restapi/client/ ./webapp/restapi-client/
 docker-compose up --build
 ```
 This will create two docker images as they don't exist in your system (the webapp and the restapi) and launch a mongo container database. It will also launch Prometheus and Grafana containers to monitor the webservice. You should be able to access everything from here:
