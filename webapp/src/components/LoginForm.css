@@ -1,0 +1,67 @@
+
+.container {
+    flex: 1;
+    flex-direction: 'column';
+  }
+  .singleComponentRow {
+    justify-content: 'space-between';
+    padding: 3;
+    margin-left: 20;
+    margin-right: 20;
+  }
+  .multiComponentRow {
+    flex-grow: 1;
+    flex-direction: 'row';
+    justify-content: 'space-around';
+    align-items: 'center';
+    padding: 3;
+    margin-left: 20;
+    margin-right: 20;
+    padding-top: 4;
+    padding-bottom: 8;
+  }
+  .smallButton {
+    align-self: 'stretch';
+    border-radius: 2;
+    background-color: rgb(124, 176, 255);
+    border-color: rgb(102, 102, 126);
+    color: black;
+    width: '45%';
+    padding-top: 4;
+    padding-bottom: 4;
+    margin-bottom: 10;
+  }
+  .smallButtonLabel {
+    font-size: 13;
+    font-weight: "500";
+    color: "#FFFFFF";
+    text-align: "center";
+    text-transform: 'uppercase';
+  }
+  .button {
+    align-self: 'stretch';
+    border-radius: 2;
+    background-color: '#2296F3';
+    padding-left: 8;
+    padding-right: 8;
+    padding-top: 6;
+    padding-bottom: 6;
+    margin-bottom: 10;
+  }
+  .buttonLabel {
+    font-size: 18;
+    font-weight: "800";
+    color: "#FFFFFF";
+    text-align: "center";
+    text-transform: 'uppercase';
+  }
+  .input {
+    border-width: 1;
+    border-radius: 4;
+    font-size: 16;
+  }
+  .loggingInText {
+    text-align: 'center';
+    font-size: 20;
+  }
+  
