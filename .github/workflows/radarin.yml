@@ -81,7 +81,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: radarinen2a-mobileapp
-        path: android/app/build/outputs/apk/release/radarinen2a-mobileapp.apk
+        path: mobileapp/android/app/build/outputs/apk/release/radarinen2a-mobileapp.apk # note: upload-artifact doesn't take into account the working-directory
   deploy-webapp:
     needs: [deploy-mobileapp, e2e-tests]
     runs-on: ubuntu-latest
