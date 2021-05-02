@@ -25,13 +25,14 @@ function connect(){
 
         const server = app.listen(process.env.PORT || 5000, () => {
             console.log("Server has started! Using db in "+mongo_uri)
-          
+            UsersService.registerUser("https://jorgearias.inrupt.net/profile/card#me");
+            LocationsService.add("https://jorgearias.inrupt.net/profile/card#me", 43.5635700, -6.0346200);
            /* UsersService.registerUser("https://juan.inrupt.net/profile/card#me");
             UsersService.registerUser("https://jose.inrupt.net/profile/card#me");
             LocationsService.add("https://juan.inrupt.net/profile/card#me", 43.53573, -5.66152);
             LocationsService.add("https://uo271694.inrupt.net/profile/card#me", 43.1771, -6.54913);
             LocationsService.add("https://jose.inrupt.net/profile/card#me", 43.5445968, -6.6620770);
-            UsersService.registerUser("https://jorgearias.inrupt.net/profile/card#me");
+           
             LocationsService.add("https://jorgearias.inrupt.net/profile/card#me", 43.5635700, -6.0346200);
             LocationsService.add("https://uo271694.inrupt.net/profile/card#me", 43.3899700, -5.1865200);
             LocationsService.add("https://uo271694.inrupt.net/profile/card#me", 43.2916000,  -5.6993800);*/
