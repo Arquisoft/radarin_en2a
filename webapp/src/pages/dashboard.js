@@ -7,11 +7,6 @@ import Map from "../components/Map";
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import markerUser from "../marker.png"
 import markerLast from "../marker-last.png"
-<<<<<<< HEAD
-
-=======
-//import Legend from '../components/Legend';
->>>>>>> 4eabbbdd2d7151b7bcc26dc013afa1342a951b82
 
 class DashboardPage extends React.Component {
 
