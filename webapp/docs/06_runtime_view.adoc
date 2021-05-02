@@ -39,6 +39,7 @@ W -> W: Show Main View
 ----
 
 This diagram also applies to the mobile app. 
+
 === Nearby friends
 
 Whenever a user updates his last location with a new one, the restapi will update it in his POD and the proceed to iterate throught this user's 
