@@ -4,7 +4,9 @@ import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { getUsers, getLocations } from 'restapi-client';
 import Map from "../components/Map";
-import Legend from '../components/Legend';
+import markerIconPng from "leaflet/dist/images/marker-icon.png"
+import markerUser from "../marker.png"
+import markerLast from "../marker-last.png"
 
 class DashboardPage extends React.Component {
 
@@ -19,7 +21,7 @@ class DashboardPage extends React.Component {
   componentDidMount() {
     this.fetchUsers();
     this.fetchLocations();
-    
+
     document.title = "Radarin"
   }
 
@@ -36,30 +38,46 @@ class DashboardPage extends React.Component {
     }
   }
 
-  refreshLocations(locations)   {
-    this.setState({ locations: locations})
+  refreshLocations(locations) {
+    this.setState({ locations: locations })
   }
 
-  async fetchLocations()  {
-    try{
+  async fetchLocations() {
+    try {
       let locations = await getLocations();
       this.refreshLocations(locations);
-    }catch(error) {
+    } catch (error) {
       console.log("Error fetching Locations list from restapi. Alonso's fault")
     }
   }
 
   render() {
-  return (
-    <div>
+    return (
+      <div>
         <h2>Home Page</h2>
+          <table class="blueTable">
+            <tr>
+              <th>Legend</th>
+            </tr>
+            <tr>
+              <td>Current location <img src={markerUser} width="20"></img></td>
+            </tr>
+            <tr>
+              <td>Saved location <img src={markerLast} width="20"></img></td>
+            </tr>
+            <tr>
+              <td>Friend location <img src={markerIconPng} width="12"></img></td>
+            </tr>
+          </table>
+          <h4 class="alert">Click on the map to save a new location</h4>
+     
         <div className="App-content">
-            <Map locations = {this.state.locations} fetchLocations={this.fetchLocations.bind(this)}/>
+          <Map locations={this.state.locations} fetchLocations={this.fetchLocations.bind(this)} />
         </div>
-        
-    </div>
-  );
-}
+
+      </div >
+    );
+  }
 }
 
 export default DashboardPage;
