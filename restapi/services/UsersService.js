@@ -188,8 +188,10 @@ function isNear(distance) {
 async function notifyNearbyFriends(session, latitude, longitude) {
     const nearFriends = await getNearFriends(session, latitude, longitude);
     nearFriends.forEach(friend => {
-        WebSocketServer.sendMessageToUser(friend.webId, { type: "nearbyFriend", friendWebId: session.info.webId });
-        WebSocketServer.sendMessageToUser(session.info.webId, { type: "nearbyFriend", friendWebId: friend.webId });
+        if (WebSocketServer.isUserRegistered(friend.webId)) {
+            WebSocketServer.sendMessageToUser(friend.webId, { type: "nearbyFriend", friendWebId: session.info.webId });
+            WebSocketServer.sendMessageToUser(session.info.webId, { type: "nearbyFriend", friendWebId: friend.webId });
+        }
     });
 }
 

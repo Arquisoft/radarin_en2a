@@ -1,4 +1,5 @@
 import 'react-native';
+import PushNotification from 'react-native-push-notification';
 import NotificationsWebSocket from './NotificationsWebSocket';
 
 const realWebSocket = global.WebSocket;
@@ -128,9 +129,7 @@ test('can receive nearbyFriend message', () => {
     expect(NotificationsWebSocket.socket.onopen).not.toBeNull();
     NotificationsWebSocket.socket.onopen(); // simulate a successful connection
 
-    const realOnNearbyFriendMessage = NotificationsWebSocket.onNearbyFriendMessage;
-    const onNearbyFriendMessageMock = jest.fn();
-    NotificationsWebSocket.onNearbyFriendMessage = onNearbyFriendMessageMock;
+    const onNearbyFriendMessageMock = jest.spyOn(NotificationsWebSocket, "onNearbyFriendMessage");
 
     // send the message
     expect(NotificationsWebSocket.socket.onmessage).not.toBeNull();
@@ -139,8 +138,10 @@ test('can receive nearbyFriend message', () => {
 
     expect(onNearbyFriendMessageMock).toHaveBeenCalledTimes(1);
     expect(onNearbyFriendMessageMock).toHaveBeenCalledWith(nearbyFriendMessage);
+    expect(PushNotification.localNotification).toHaveBeenCalledTimes(1); // the push-notification was sent
 
-    NotificationsWebSocket.onNearbyFriendMessage = realOnNearbyFriendMessage;
+    onNearbyFriendMessageMock.mockRestore();
+    PushNotification.localNotification.mockClear();
 });
 
 test('can receive unknown messages', () => {
@@ -151,9 +152,7 @@ test('can receive unknown messages', () => {
     expect(NotificationsWebSocket.socket.onopen).not.toBeNull();
     NotificationsWebSocket.socket.onopen(); // simulate a successful connection
 
-    const realOnNearbyFriendMessage = NotificationsWebSocket.onNearbyFriendMessage;
-    const onNearbyFriendMessageMock = jest.fn();
-    NotificationsWebSocket.onNearbyFriendMessage = onNearbyFriendMessageMock;
+    const onNearbyFriendMessageMock = jest.spyOn(NotificationsWebSocket, "onNearbyFriendMessage");
 
     // send the unknown message
     expect(NotificationsWebSocket.socket.onmessage).not.toBeNull();
@@ -161,5 +160,5 @@ test('can receive unknown messages', () => {
 
     expect(onNearbyFriendMessageMock).toHaveBeenCalledTimes(0); // it shouldn't call the nearbyFriend handler
 
-    NotificationsWebSocket.onNearbyFriendMessage = realOnNearbyFriendMessage;
+    onNearbyFriendMessageMock.mockRestore();
 });

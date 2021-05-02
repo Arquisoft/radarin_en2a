@@ -1,3 +1,5 @@
+import PushNotification from "react-native-push-notification";
+
 /**
  * This class handles the websocket connection to the restapi server for receiving 'nearbyFriends' messages.
  */
@@ -88,7 +90,22 @@ class NotificationsWebSocket {
      * @param {*} message Message data with `type` and `friendWebId` properties.
      */
     onNearbyFriendMessage(message) {
-        alert(`Friend is nearby\n${message.friendWebId}`);
+        console.log("Received nearby friend message from " + message.friendWebId);
+        PushNotification.localNotification({
+            channelId: "nearby-friends-channel",
+            message: "Your friend '" + message.friendWebId + "' is nearby.",
+        });
+    }
+
+    configurePushNotifications() {
+        PushNotification.configure({
+            requestPermissions: false, // permissions only needed if using remote notifications
+        });
+
+        PushNotification.createChannel({
+            channelId: "nearby-friends-channel",
+            channelName: "Nearby Friends Notifications",
+        });
     }
 }
 
