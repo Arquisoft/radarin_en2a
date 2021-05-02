@@ -36,7 +36,7 @@ The quality tree is a high-level overview of the quality goals and requirements:
 In any case the tree should include links to the scenarios of the following section.
 ****
 
-=== Quality Scenarios
+image:10_quality_scenarios["Quality scenarios"]
 
 .Usability
 The idea is to make a usable application design. This is based in the idea of achieving the goals of effectiveness , efficiency and satisfaction in a specified context of use. This is, 
@@ -49,6 +49,10 @@ Applications that are authenticated by Solid are allowed to request data if the 
 
 .Compatibility
 Another of the objectives is to create an app that can be viewed and used on different devices by following the adaptative web design.
+
+
+=== Quality Scenarios
+
 
 [role="arc42help"]
 ****
