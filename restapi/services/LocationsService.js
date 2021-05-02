@@ -21,6 +21,7 @@ async function add(userWebId, latitude, longitude) {
             latitude: latitude,
             longitude: longitude,
             userId: userWebId,
+            picture: "https://www.emsevilla.es/wp-content/uploads/2020/10/no-image-1.png"
         })
         await newLocation.save().then(loc => {
             UsersService.addLocationToUser(user._id, loc._id)
