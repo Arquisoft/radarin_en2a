@@ -59,9 +59,9 @@ image:08-Model-diagram.png[" Model Diagram"]
 
 In this domain model we have represented seven different entities. 
 
-* Users can be friends to other users, they can send and recieve messages and they can access to multimedia resources. Users can also share their location and write comments.
+* Users can be friends to other users, they can recieve notifications from friends when they are nearby sharing their location. Users can save their location with the mobile app, by clicking in the correspondent button or with the webapp, by clicking in a point of the map. With the mobbile app, they can add comments to the location. 
 * Locations have Time, Coordinates and Comments. 
-* Multimedia resources can be linked to multimedia resources. 
+
 
 
 === User Experience concepts (UX)
