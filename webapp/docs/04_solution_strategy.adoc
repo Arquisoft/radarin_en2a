@@ -21,6 +21,7 @@ The following table describes the solutions chosen to achieve the quality goals 
 * https://nodejs.org[Node.js] for the server using an asynchronous coding style.
 * https://reactjs.org[React] framework which minimizes UI update operations and provides profiling tools.
 * https://www.mongodb.com[MongoDB] database used to store locations, avoiding permission problems. 
+* WebSockets to send "nearby friend" notifications from the restapi server to the mobile application, without requiring constant polling.
 |Clean code a|
 * https://reactnative.dev[React Native] to be able to share code between the web and mobile apps.
 * React components using classes instead of hooks due to the familiarity of the team with Object Oriented Programming (OOP).
