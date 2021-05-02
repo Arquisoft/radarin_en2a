@@ -197,6 +197,7 @@ class Map extends React.Component {
                     <CombinedDataProvider thingUrl={loc.userId} datasetUrl={loc.userId}>
                       <a href={loc.userId}><Text property={FOAF.name.iri.value} /></a>
                     </CombinedDataProvider>
+                    <img src={loc.picture} width="300" alt="Location"></img>
                     <h2 >{loc.name}</h2>
                     <p>{loc.description}</p>
                     <p>{loc.latitude}, {loc.longitude}</p>
