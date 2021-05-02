@@ -19,9 +19,8 @@ function MyComponent({ webId, props }) {
   useMapEvents({
     click: (e) => {
       const { lat, lng } = e.latlng;
-      addLocation(webId, lat, lng);
-      props.fetchLocations();
-      props.fetchLocations();
+      addLocation(webId, lat, lng)
+        .then(() => props.fetchLocations());
     }
   });
   return null;
@@ -113,9 +112,8 @@ class Map extends React.Component {
   }
 
   deleteLocation(locationId) {
-    deleteLocation(locationId);
-    this.props.fetchLocations();
-    this.props.fetchLocations();
+    deleteLocation(locationId)
+      .then(() => this.props.fetchLocations());
   }
 
   modifyLocation(locationId) {
@@ -131,9 +129,8 @@ class Map extends React.Component {
       description = loc.description;
     if (picture === "")
       picture = loc.picture;
-    modifyLocation(locationId, name, description, picture);
-    this.props.fetchLocations();
-    this.props.fetchLocations();
+    modifyLocation(locationId, name, description, picture)
+      .then(() => this.props.fetchLocations());
   }
 
   render() {

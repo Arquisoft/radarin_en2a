@@ -4,9 +4,13 @@ import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { getUsers, getLocations } from 'restapi-client';
 import Map from "../components/Map";
+<<<<<<< HEAD
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import markerUser from "../marker.png"
 import markerLast from "../marker-last.png"
+=======
+//import Legend from '../components/Legend';
+>>>>>>> 3ad655289b15a381afbf225738ceac2da96e7dc7
 
 class DashboardPage extends React.Component {
 
