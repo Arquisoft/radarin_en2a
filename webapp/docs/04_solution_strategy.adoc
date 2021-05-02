@@ -16,7 +16,7 @@ The following table describes the solutions chosen to achieve the quality goals 
 * https://www.openstreetmap.org[OpenStreetMap] for displaying interactive maps, through the https://leafletjs.com[Leaflet] library.
 * https://www.npmjs.com/package/@inrupt/solid-client[inrupt-solid client] for accessing data and managing permissions on data stored in Solid Pods.
 * https://docs.inrupt.com/developer-tools/javascript/client-libraries/reference/vocab-rdf/[@inrupt/vocab-common-rdf] to provide convenience objects (as JavaScript classes) that contain static constants for common identifiers used across Solid. 
-* https://github.com/no23reason/react-geolocated[react-geolocated] ,   a high order component for using the geolocation API.
+* https://github.com/no23reason/react-geolocated[react-geolocated] , a high order component for using the geolocation API.
 |Performance a|
 * https://nodejs.org[Node.js] for the server using an asynchronous coding style.
 * https://reactjs.org[React] framework which minimizes UI update operations and provides profiling tools.
@@ -26,5 +26,7 @@ The following table describes the solutions chosen to achieve the quality goals 
 * React components using classes instead of hooks due to the familiarity of the team with Object Oriented Programming (OOP).
 |Testability a|
 * https://jestjs.io/[Jest] test runner which integrates well with React through https://testing-library.com/docs/react-testing-library/intro/[React Testing Library].
+* Pupeteer to maand 
+* Cucumber to describe characteristics of the system. 
 |===
  
