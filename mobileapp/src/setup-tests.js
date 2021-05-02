@@ -32,4 +32,10 @@ jest.mock('@react-native-async-storage/async-storage', () => {
 
 jest.mock('@react-native-async-storage/async-storage');
 
+jest.mock('react-native-push-notification', () => ({
+    configure: jest.fn(),
+    localNotification: jest.fn(),
+    createChannel: jest.fn(),
+}));
+
 jest.mock('./components/session/SessionProvider');

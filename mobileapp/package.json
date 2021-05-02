@@ -18,6 +18,7 @@
     "react-native-background-actions": "^2.6.0",
     "react-native-dotenv": "^2.5.5",
     "react-native-geolocation-service": "^5.2.0",
+    "react-native-push-notification": "^7.2.3",
     "restapi-client": "file:restapi-client-0.1.0.tgz"
   },
   "devDependencies": {
@@ -41,7 +42,7 @@
       "@testing-library/jest-native/extend-expect"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!(react-native|react-native-geolocation-service|react-native-background-actions|restapi-client)/)"
+      "node_modules/(?!(react-native|react-native-geolocation-service|react-native-background-actions|react-native-push-notification|restapi-client)/)"
     ]
   }
 }

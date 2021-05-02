@@ -5,7 +5,7 @@ const socketsByWebId = {};
 
 async function sendMessageToUser(webId, message) {
     try {
-        if (webId in socketsByWebId) {
+        if (isUserRegistered(webId)) {
             console.log(`ws>> Sending message to ${webId}: `, message);
             const socket = socketsByWebId[webId];
             socket.send(JSON.stringify(message));
@@ -15,6 +15,10 @@ async function sendMessageToUser(webId, message) {
     } catch (err) {
         console.log(`ws>> Failed to send '${message}' message to socket for ${webId}`);
     }
+}
+
+function isUserRegistered(webId) {
+    return webId in socketsByWebId;
 }
 
 async function onRegisterMessage(socket, message) {
@@ -107,5 +111,6 @@ function startHeartbeats() {
 
 module.exports = {
     sendMessageToUser,
+    isUserRegistered,
     start,
 }
