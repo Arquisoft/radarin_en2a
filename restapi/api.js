@@ -86,7 +86,7 @@ router.post("/locations/add", async (req, res) => {
 router.get("/locations/delete/:id", async (req, res) => {
     const locationId = req.params.id;
     await LocationsService.deleteLocation(locationId);
-    res.send("Location deleted");
+    res.send({ status: "Location deleted" });
 })
 
 router.post("/locations/modify/:id", async(req, res) =>{
@@ -95,7 +95,7 @@ router.post("/locations/modify/:id", async(req, res) =>{
     const description = req.body.description;
     const picture = req.body.picture;
     await LocationsService.modifyLocation(locationId,name,description, picture)
-    res.send("Location modified");
+    res.send({ status: "Location modified" });
 })
 
 require("./controllers/SessionController")(router)
