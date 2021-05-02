@@ -81,9 +81,9 @@ Tabular or free form text.
 [options="header"]
 |===
 | Quality attribute         | Case  | Action | Response
-| Usability| U1 |  We want to login in the application but we do not have clear the url of our POD | The application provides automatically the two most common urls to authenticate ourselves.
-| Usability    | U2 |  | 
-| 
+| Usability| U.1 |  We want to login in the application but we do not have clear the url of our POD | The application provides automatically the two most common urls to authenticate ourselves.
+| Usability | U.2 | We do not want open the application for getting notifications  | The mobile application is native, as a consequece you can get notifications from friends in the backgorund.
+| Decentralization |D.1 | We want to store as less information as possible about the user  | We identify the user with his/her POD, not using our own application
 |===
 
 
