@@ -26,7 +26,8 @@ The following table describes the solutions chosen to achieve the quality goals 
 * React components using classes instead of hooks due to the familiarity of the team with Object Oriented Programming (OOP).
 |Testability a|
 * https://jestjs.io/[Jest] test runner which integrates well with React through https://testing-library.com/docs/react-testing-library/intro/[React Testing Library].
-* Pupeteer to maand 
-* Cucumber to describe characteristics of the system. 
+* https://testing-library.com/docs/react-native-testing-library/intro/[React Native testing library] used to test the react native enviroment in the mobile app.
+* Pupeteer is used in our e2e tests to manipulate a Chromium browser and simulating user interactions.
+* Cucumber to describe characteristics of the system for testing purposes.
 |===
  
