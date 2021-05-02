@@ -38,42 +38,122 @@ activate W
 W -> W: Show Main View
 ----
 
-This diagram also applies to the mobile app. 
+This diagram also applies to the mobile app.
 
-=== Nearby friends
+=== Nearby Friend Notifications
 
-Whenever a user updates his last location with a new one, the restapi will update it in his POD and the proceed to iterate throught this user's 
-friend's list checking their most recent uploaded location and computing the distance between the user and all his friends. If this distance is below a 
-threshold which for the moment is a constant set to 5 km, it is considered to be close to the user and it is added to an array of nearby friends. 
+When a user enables the "Share Location" option, the mobileapp will connect to the WebSocket server running in the restapi server and a background process will upload the user location periodically.
+When the restapi receives the user location, it gets saved in his POD so it can later be accessed by their friends, and proceeds to iterate through this user's
+friend list checking their most recent uploaded location and computing the distance between the user and all his friends. If this distance is below a
+threshold which for the moment is a constant set to 5 km, it is considered to be close to the user and it is added to an array of nearby friends.
 
-In order for the user's nearby friends to be notified of his new near location, a Websockets server was implemented in the restapi and a Websockets 
-client endpoint was implemented in the mobileapp. The WebSocket protocol provides a way to exchange data between browser and server via a persistent 
+In order for the user's nearby friends to be notified of his new near location, a Websockets server was implemented in the restapi and a Websockets
+client endpoint was implemented in the mobileapp. The WebSocket protocol provides a way to exchange data between a client and server via a persistent
 connection. The data can be passed in both directions as “packets”, without breaking the connection and additional HTTP-requests.
 
 So the array of nearby friends which is stored in the restapi is iterated through and for each friend, a notification is sent via the connection established 
-between his mobileapp client endpoint and the restapi server and it pops up in the mobile application letting this user know that his friend is now close to him.
+between his mobileapp client endpoint and the restapi server and the mobile application pushes a notification letting this user know that his friend is now close to him.
 
 [plantuml,"Sequence diagram - Nearby friends",png]
 ----
+actor "Friend" as F
+participant "Friend Mobile App" as FApp
 actor "User" as U
 participant "Mobile App" as M
+participant "REST API Server" as R
 database "User Pod" as UPod
 database "Friend Pod" as FPod
 
-U -> M: Allows "nearby friends" notifications
+activate R
+activate FApp
+U -> M: Enables "Share Location" option
 activate M
-loop periodically
+M -> R: Connects to WebSocket server
+loop periodically (30 seconds)
     ...
-    M -> UPod: Requests friend list
+    M -> R: Uploads user location
+    R -> UPod: Save last location to Pod
+    activate UPod
+    deactivate UPod
+    R -> UPod: Requests friend list
     activate UPod
     return friend list
     loop for each friend
-        M -> FPod: Requests latest location
+        R -> FPod: Requests last location
         activate FPod
-        return latest location
-        opt If latest location is nearby
-            M -> M: Notify user
-        end
+        return last Location
+    end   
+    opt If friend location is nearby (5 km)
+        R -> M: Send WebSocket message
+        M -> M: Show notification
+        R -> FApp: Send WebSocket message
+        FApp -> FApp: Show notification
     end
 end
+----
+
+=== Saving Locations
+
+Saved locations can later be viewed by the user and his friends through the web application.
+
+The user can save his current location through the mobile app, which will send the location coordinates to the
+restapi server and these will be saved in the MongoDB database.
+
+[plantuml,"Sequence diagram - Saving Locations - mobileapp",png]
+----
+actor "User" as U
+participant "Mobile App" as M
+participant "REST API Server" as R
+database "MongoDB" as DB
+
+activate R
+activate M
+U -> M: Clicks "Save Location" button
+M -> M: Gets device location
+M -> R: Sends location coordinates
+R -> DB: Saves location
+----
+
+The user can also save locations without needing to physically be there using the web app.
+The user can click on any position on the map and the coordinates will be sent to the restapi server to be saved in the database.
+The locations in the map will be refreshed, displaying the newly saved location.
+
+[plantuml,"Sequence diagram - Saving Locations - webapp",png]
+----
+actor "User" as U
+participant "Web App" as W
+participant "REST API Server" as R
+database "MongoDB" as DB
+
+activate R
+activate W
+U -> W: Clicks on the map
+W -> R: Sends location coordinates
+R -> DB: Saves location
+W -> W: Refreshes the locations shown on the map
+----
+
+=== Editing Saved Locations
+
+Once locations are saved, the user can go to the web application to view and modify them.
+The user clicks on one of his saved locations, identified by a green marker, and pop-up with the location info is shown.
+In this pop-up, the user can delete it or edit the location name, description or image URL. The web app sends the changes
+to the restapi server which will update it or remove it from the database.
+The locations in the map will be refreshed, displaying the changes made.
+
+[plantuml,"Sequence diagram - Editing Saved Locations",png]
+----
+actor "User" as U
+participant "Web App" as W
+participant "REST API Server" as R
+database "MongoDB" as DB
+
+activate R
+activate W
+U -> W: Clicks a saved location on the map
+W -> W: Displays a pop-up with the location info
+U -> W: User edits/deletes the location
+W -> R: Sends changes
+R -> DB: Updates/removes location
+W -> W: Refreshes the locations shown on the map
 ----
