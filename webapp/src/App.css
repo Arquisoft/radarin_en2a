@@ -48,11 +48,16 @@
     transform: rotate(360deg);
   }
 }
+
 .alert{
   text-align: left;
   border-collapse: collapse;
   font-size: medium;
-  margin-left: -20px;
+
+  width: 330px;
+  color: #e0eff2;
+  background: #282c34;
+  font: italic bold Georgia, Serif;
 }
 
 table.blueTable {
@@ -61,18 +66,23 @@ table.blueTable {
   width: 8%;
   text-align: left;
   border-collapse: collapse;
+  font: italic bold Georgia, Serif;
 }
 table.blueTable td, table.blueTable th {
   border: 1px solid #AAAAAA;
   padding: 3px 2px;
+  font: italic bold Georgia, Serif;
 }
 table.blueTable tbody td {
+  font: italic bold Georgia, Serif;
   font-size: 13px;
 }
 table.blueTable tr:nth-child(even) {
+  font: italic bold Georgia, Serif;
   background: #D0E4F5;
 }
 table.blueTable thead {
+  font: italic bold Georgia, Serif;
   background: #1C6EA4;
   background: -moz-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
   background: -webkit-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
@@ -80,16 +90,19 @@ table.blueTable thead {
   border-bottom: 2px solid #444444;
 }
 table.blueTable thead th {
+  font: italic bold Georgia, Serif;
   font-size: 15px;
   font-weight: bold;
   color: #FFFFFF;
   border-left: 2px solid #D0E4F5;
 }
 table.blueTable thead th:first-child {
+  font: italic bold Georgia, Serif;
   border-left: none;
 }
 
 table.blueTable tfoot {
+  font: italic bold Georgia, Serif;
   font-size: 14px;
   font-weight: bold;
   color: #FFFFFF;
@@ -100,12 +113,15 @@ table.blueTable tfoot {
   border-top: 2px solid #444444;
 }
 table.blueTable tfoot td {
+  font: italic bold Georgia, Serif;
   font-size: 14px;
 }
 table.blueTable tfoot .links {
+  font: italic bold Georgia, Serif;
   text-align: right;
 }
 table.blueTable tfoot .links a{
+  font: italic bold Georgia, Serif;
   display: inline-block;
   background: #1C6EA4;
   color: #FFFFFF;
