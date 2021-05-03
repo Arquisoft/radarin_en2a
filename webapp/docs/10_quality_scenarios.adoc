@@ -90,10 +90,9 @@ Tabular or free form text.
 
 [options="header"]
 |===
-| Quality attribute         | Case  | Action | Response
+| Quality attribute| Case  | Action | Response
 | Usability| U1 |  We want to login in the application but we do not have clear the url of our POD | The application provides automatically the two most common urls to authenticate ourselves.
-| Usability    | U2 |  | 
-| 
+| Usability| U2 |  We want to see the information on the location another user shared| Just touching the marker, a pop-up shows the information the friend has shared in that location.
 |===
 
 
