@@ -56,6 +56,8 @@ defineFeature(feature, test => {
             await expect(page).toMatchElement('Marker', {icon: "../../src/marker-last.png"});
         });
 
-        
+        when('I click on that mark', async () => {
+            await expect(page).toClick('Marker', { icon: "../../src/marker-last.png" });
+        });
     });
 });
