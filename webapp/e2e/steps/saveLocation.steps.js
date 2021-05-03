@@ -59,5 +59,9 @@ defineFeature(feature, test => {
         when('I click on that mark', async () => {
             await expect(page).toClick('Marker', { icon: "../../src/marker-last.png" });
         });
+
+        then('I can see and edit its content', async () => {
+            await page.waitForNavigation({ 'waitUntil': 'networkidle0' });
+        })
     });
 });
