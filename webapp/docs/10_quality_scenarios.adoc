@@ -38,17 +38,27 @@ In any case the tree should include links to the scenarios of the following sect
 
 image:10_quality_scenarios.png["Quality tree"]
 
+.Privacy
+All users' personal information as well as their last known locations and their friends' lists are stored in each user's private Solid POD, which ensures that all the information remains safe and 
+the application does not access anything that is not strictly needed to work and that the user hasn't agreed to.
+
 .Usability
 The idea is to make a usable application design. This is based in the idea of achieving the goals of effectiveness , efficiency and satisfaction in a specified context of use. This is, 
 the system should be easy to learn and easy to use. Furthermore the design should be flexible and robust.
 
+.Mantainability
+The application supports modifications, upgrades and other changes inside the code without causing a noticeable impact on its usability and performance.
+
 .Decentralization
-SOLID uses decentralized peer-to-peer networking implemented in a manner that adds more control and performance features than traditional peer-to-peer networks which make the system easy to use, 
-fast and allow for simple creation of applications by developers. The central focus is the discovery and sharing of information in a way that preserves privacy. 
+SOLID uses decentralized peer-to-peer networking which makes the system easy to use, fast and allosw for simple creation of applications by developers. The central focus is the discovery and sharing of information in a way that preserves privacy. 
 Applications that are authenticated by Solid are allowed to request data if the user has given the application permission, so the user retains complete ownership and control of data in the user's pods.
 
-.Compatibility
-Another of the objectives is to create an app that can be viewed and used on different devices by following the adaptative web design.
+.Security
+Every user in tha application must log in using an identity provider like inrupt or solidcomunity, which requires a username and a password. Each pair being unique. Furthermore, decentralization 
+prevents users data leak, as all their information is stored in the solid POD's, outside the application. 
+
+.Modularity
+The application divides the whole functionality into three main modules which specialize in covering several distinct requirements of the application. These modules are the webapp, the mobilapp and the restapi.
 
 
 === Quality Scenarios
