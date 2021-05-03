@@ -93,7 +93,8 @@ Tabular or free form text.
 | Quality attribute| Case  | Action | Response
 | Usability| U1 |  We want to login in the application but we do not have clear the url of our POD | The application provides automatically the two most common urls to authenticate ourselves.
 | Usability| U2 |  We want to see the information on the location another user shared| Just touching the marker, a pop-up shows the information the friend has shared in that location.
-| Privacy | P1 |  |
+| Usability | U3 | We do not want open the application for getting notifications  | The mobile application is native, as a consequece you can get notifications from friends in the backgorund.
+| Decentralization |D1 | We want to store as less information as possible about the user  | We identify the user with his/her POD, not using our own application
 | Security| S1 | A person wants to access the location of someone who doesn't have him added as a friend| He just can't as the last location is stored in the PODs as well as the list of friends in which he is not 
 | Mantainability | M1 | We want to fix a bug or change a little something on the UI | Code for enhancements, bug fixing and updating some aspects of the application can be developed and tested with the application deplyed and running
 

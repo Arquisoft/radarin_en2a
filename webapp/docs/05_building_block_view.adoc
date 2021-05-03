@@ -18,7 +18,7 @@ application will store only the minimal information of the user needed.
 [options="header",cols="1,2"]
 |===
 |Name|Responsibility
-| Radarin | The app avaliable to the user
+| Radarin | The app available to the user
 | POD | Infraestructure used to store information for each user in a decentralized way.
 |===
 

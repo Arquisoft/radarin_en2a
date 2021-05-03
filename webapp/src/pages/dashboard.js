@@ -60,13 +60,13 @@ class DashboardPage extends React.Component {
               <th>Legend</th>
             </tr>
             <tr>
-              <td>Current location <img src={markerUser} width="20"></img></td>
+              <td>Current location <img src={markerUser} width="20" alt = "Current location"></img></td>
             </tr>
             <tr>
-              <td>Saved location <img src={markerLast} width="20"></img></td>
+              <td>Saved location <img src={markerLast} alt = "<Saved location"width="20"></img></td>
             </tr>
             <tr>
-              <td>Friend location <img src={markerIconPng} width="12"></img></td>
+              <td>Friend's location <img src={markerIconPng} width="12" alt = "Friend's location"></img></td>
             </tr>
           </table>
           <h4 class="alert">Click on the map to save a new location</h4>

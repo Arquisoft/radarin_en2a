@@ -30,11 +30,11 @@ For multiple environments or alternative deployments please copy that section of
 |Object|Description
 
 | _Users' device_ | The hardware which the users use to connect to our application. Since Radarin can be accessed from a Web browser or from a mobile app, one of the devices could be a mobile phone or a tablet. 
-| _Web browser_ |Web browser to enter the application. 
-|_Restapi_ | The server that runs our application.
-|_Restapi client_ | Package used by the client applications to interact with the restapi server. 
-|_Mobile application_ | App to enter the application.
-|_SOLID_| The SOLID server where are located users' PODS.
+| _Web browser_ | Web browser to enter the web application, where the user can view saved location. 
+| _Mobile application_ | Application to share the user last location and receive notification from nearby friends.
+| _Restapi_ | The server that runs our application.
+| _Restapi client_ | Package used by the client applications to interact with the restapi server. 
+| _SOLID_| The SOLID server where are located users' PODS.
 | _PODs_ |Represent one POD per user. They will contain the users' data. 
 |MongoDB | It is the database in which we store the persistent data for the application
 |===
